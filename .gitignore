@@ -2,8 +2,7 @@
 
 # dependencies
 /frontend/node_modules/
-/j.txt
-
+/backend/node_modules/
 # Expo
 .expo/
 dist/
@@ -31,6 +30,9 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
+/frontend/env
+/backened/env
 
 # typescript
 *.tsbuildinfo
