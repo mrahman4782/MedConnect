@@ -1,6 +1,5 @@
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
-import Login from './screens/Login/Login';
 
 const Homepage = () => {
     const id = 1
@@ -13,6 +12,7 @@ const Homepage = () => {
             <Pressable onPress={() => router.push(`/screens/User/${id}`)}>
                 <Text>User 1</Text>
             </Pressable>
+            <Link href="/Credit/CreditPage">Credit</Link>
         </View>
     )
 }
