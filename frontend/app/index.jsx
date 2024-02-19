@@ -6,12 +6,21 @@ const Homepage = () => {
     return (
         <View style={styles.root}>
             <Text>Homepage</Text>
-            <Link href="/Map/MapPage">Map</Link>
-            <Pressable onPress={() => router.push(`/screens/Login/Login/`)}>login</Pressable>
-            <Pressable onPress={() => router.push(`/screens/Register/Register/`)}>register</Pressable>
+
+            <Link href="screens/Map/Map">Map</Link>
+
+            <Pressable onPress={() => router.push(`/screens/Login/Login/`)}>
+                <Text>login</Text>
+            </Pressable>
+
+            <Pressable onPress={() => router.push(`/screens/Register/Register/`)}>
+                <Text>register</Text>
+            </Pressable>
+
             <Pressable onPress={() => router.push(`/screens/User/${id}`)}>
                 <Text>User 1</Text>
             </Pressable>
+
             <Link href="/Credit/CreditPage">Credit</Link>
         </View>
     )
