@@ -3,50 +3,46 @@ import { Text, View, StyleSheet, ScrollView } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 
-const Register = () => {
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("")
+const ConfirmAccount = () => {
+    const [code, setCode] = useState("");
 
-    const onRegisterPressed = () => {
-        console.warn("Register Pressed");
+    const onConfirmPressed = () => {
+        console.warn("Confirm Pressed");
     }
 
     const onSignInPressed = () => {
-        console.warn("Signin Pressed");
+        console.warn("Signin Pressed")
+    }
+
+    const onResendPressed = () => {
+        console.warn("Resend Pressed")
     }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Text style={styles.title}>Registration</Text>
-
-                <CustomInput
-                    placeholder="Username"
-                    value={username}
-                    setValue={setUsername}
-                />
+                <Text style={styles.title}>Confirm Account</Text>
+                {/* 
                 <CustomInput
                     placeholder="Email"
                     value={email}
                     setValue={setEmail}
-                />
+                /> */}
                 <CustomInput
-                    placeholder="Password"
-                    value={password}
-                    setValue={setPassword}
-                // secureTextEntry //temperarily commented out
-                />
-                <CustomInput
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    setValue={setConfirmPassword}
-                // secureTextEntry 
+                    placeholder="Enter your confirmation code"
+                    value={code}
+                    setValue={setCode}
+                // secureTextEntry
                 />
                 <CustomButton
-                    text="Register"
-                    onPress={onRegisterPressed}
+                    text="Confirm"
+                    onPress={onConfirmPressed}
+                />
+
+                <CustomButton
+                    text="Resend Code"
+                    onPress={onResendPressed}
+                    type="SECONDARY"
                 />
 
                 <CustomButton
@@ -74,4 +70,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Register
+export default ConfirmAccount
