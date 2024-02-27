@@ -1,62 +1,66 @@
 import { useState } from 'react'
-import { Text, View, Image, StyleSheet, useWindowDimensions, ScrollView} from "react-native";
+import { Text, View, Image, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
 import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
+import { useRouter } from 'expo-router';
 
 const Login = () => {
+    const router = useRouter();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {height} = useWindowDimensions();
+    const { height } = useWindowDimensions();
 
-    const onSignInPressed =() => {
-        console.warn("Sign In");
+    const onSignInPressed = () => {
+        // console.warn("Signin Pressed");
+
     }
 
-    const onForgotPasswordPressed =() => {
-        console.warn("Forgot Password");
+    const onForgotPasswordPressed = () => {
+        console.warn("Forgotpassword Pressed");
     }
 
-    const onSignUpPressed =() => {
-        console.warn("Forgot Password");
+    const onSignUpPressed = () => {
+        console.warn("Signup Pressed");
     }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Image 
-                    source={Logo} 
-                    style={styles.logo, {height: height * 0.3}} 
-                    resizeMode="contain" 
+                <Image
+                    source={Logo}
+                    style={styles.logo, { height: height * 0.3 }}
+                    resizeMode="contain"
                 />
                 <Text>Login</Text>
-                <CustomInput 
-                    placeholder="Email" 
-                    value={email} 
-                    setValue={setEmail} 
+                <CustomInput
+                    placeholder="Email"
+                    value={email}
+                    setValue={setEmail}
                 />
-                <CustomInput 
-                    placeholder="Password" 
-                    value={password} 
-                    setValue={setPassword} 
-                    secureTextEntry
+                <CustomInput
+                    placeholder="Password"
+                    value={password}
+                    setValue={setPassword}
+                // secureTextEntry 
                 />
-                <CustomButton 
-                    text="Sign In" 
+                <CustomButton
+                    text="Sign In"
                     onPress={onSignInPressed}
                 />
-                <CustomButton 
-                    text="Forgot Password" 
-                    onPress={onForgotPasswordPressed} 
+                <CustomButton
+                    text="Forgot Password"
+                    onPress={onForgotPasswordPressed}
                     type="TERTIARY"
                 />
-                <CustomButton 
-                    text="Don't have an account? Create one" 
-                    onPress={onSignUpPressed} 
+                <CustomButton
+                    text="Don't have an account? Create one"
+                    onPress={onSignUpPressed}
                     type="TERTIARY"
                 />
-            
+
             </View>
         </ScrollView>
     )
@@ -64,7 +68,7 @@ const Login = () => {
 
 const styles = StyleSheet.create({
     root: {
-        alignItems : 'center',
+        alignItems: 'center',
         padding: 20,
         backgroundColor: '#F9FBFC'
     },
