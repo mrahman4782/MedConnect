@@ -11,6 +11,24 @@ initializeApp({
 
 const db = getFirestore();
 
+let response = {
+  status: '',
+  data: ''
+}
+
+function passwordValid(password){
+  
+  // Ensure that the password has at least 8 characters and a number
+  if (password.length < 8) {
+    return false;
+  }
+  let containsNumber = /\d/.test(password);
+  if (!containsNumber) {
+      return false;
+  }
+  return true;  
+}
+
 export async function createUser(email, password) {
 
   let data = {
@@ -21,6 +39,7 @@ export async function createUser(email, password) {
     'ethnicity' : '',
     'firstName' : '',
     'lastName' : '',
+    'primary_physician' : '',
     'q_any_allergies?' : '',
     'q_any_medications?' : '',
     'q_do_you_drink_alcohol?' : '',
@@ -29,6 +48,12 @@ export async function createUser(email, password) {
     'sex' : '',
     'state' : '',
     'zip' : '',
+  }
+
+  if (!passwordValid(password)){
+    response.status = '403';
+    response.data = 'Password does not meet requirements';
+    return response;
   }
   
   try {
@@ -44,12 +69,21 @@ export async function createUser(email, password) {
     data.email = email;
     await docRef.set(data);
 
+    response.status = '201';
+    response.data = userRecord;
+
     console.log('Successfully created user:', userRecord.uid);
-    return userRecord;
+    return response;
+
   } catch (error) {
     console.error('Error creating user:', error);
-    throw error;
+    response.status = '500';
+    response.data = error;
+    return response;
   }
 }
 
 
+//console.log(passwordValid('66666a66'));
+let output = await createUser('joe@gmdail.com', 'joe12345');
+console.log(output.providerData);
