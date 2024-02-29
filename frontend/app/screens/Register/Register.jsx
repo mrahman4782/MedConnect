@@ -2,15 +2,32 @@ import { useState } from 'react'
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
+import userRegister from '../../functions/register.js';
+import { useRouter } from 'expo-router';
 
 const Register = () => {
-
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const onRegisterPressed = () => {
+    const onRegisterPressed = async () => {
         console.warn("Register Pressed");
+        if (email != '' && password != '' && confirmPassword != ''){
+            if (password == confirmPassword){
+                let output = await userRegister(email, password);
+
+                if ('status' in output){
+                    if (output.status == 201){
+                    
+                        router.push({
+                            pathname: "/screens/Chatbot",
+                        })
+                    }
+                }
+            }
+
+        }
     }
 
     const onSignInPressed = () => {
