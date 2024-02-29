@@ -1,13 +1,9 @@
-import { initializeApp, cert } from 'firebase-admin/app';
 import admin from 'firebase-admin'; // Import the default export for auth
-import dotenv from 'dotenv';
 import 'firebase/auth';
 
-dotenv.config({path: '../../.env'}); 
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
-initializeApp({
-  credential: cert(serviceAccount)
-});
+import initializeFirebaseApp from './firebaseAdminInit.js';
+
+initializeFirebaseApp();
 
 let response = {
   status: '',

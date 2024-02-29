@@ -3,11 +3,9 @@ import { getFirestore } from 'firebase-admin/firestore';
 import admin from 'firebase-admin'; // Import the default export for auth
 import dotenv from 'dotenv';
 
-dotenv.config({path: '../../.env'}); 
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
-initializeApp({
-  credential: cert(serviceAccount)
-});
+import initializeFirebaseApp from './firebaseAdminInit.js';
+
+initializeFirebaseApp();
 
 const db = getFirestore();
 
@@ -85,5 +83,5 @@ export async function createUser(email, password) {
 
 
 //console.log(passwordValid('66666a66'));
-let output = await createUser('joe@gmdail.com', 'joe12345');
+let output = await createUser('jooe@gmdail.com', 'joe12345');
 console.log(output.providerData);
