@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "908877767175",
+    "firebase_url": "https://medconnect-app-default-rtdb.firebaseio.com",
+    "project_id": "medconnect-app",
+    "storage_bucket": "medconnect-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908877767175:android:5a2c4fee57121d6b6f80a2",
+        "android_client_info": {
+          "package_name": "com.medConnect.seniorDesign"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB30CHBphw2sZUBCq0xRGjeHOWXD7TXTOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
