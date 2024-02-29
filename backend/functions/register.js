@@ -48,7 +48,7 @@ export async function createUser(email, password) {
   }
 
   if (!passwordValid(password)){
-    response.status = '403';
+    response.status = 403;
     response.data = 'Password does not meet requirements';
     return response;
   }
@@ -66,7 +66,7 @@ export async function createUser(email, password) {
     data.email = email;
     await docRef.set(data);
 
-    response.status = '201';
+    response.status = 201;
     response.data = userRecord;
 
     console.log('Successfully created user:', userRecord.uid);
@@ -74,7 +74,7 @@ export async function createUser(email, password) {
 
   } catch (error) {
     console.error('Error creating user:', error);
-    response.status = '500';
+    response.status = 500;
     response.data = error;
     return response;
   }
