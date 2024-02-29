@@ -2,7 +2,6 @@ import admin from 'firebase-admin'; // Import the default export for auth
 import 'firebase/auth';
 
 import initializeFirebaseApp from './firebaseAdminInit.js';
-
 initializeFirebaseApp();
 
 let response = {

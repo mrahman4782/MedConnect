@@ -1,6 +1,7 @@
 {
   "name": "reactnativeapp",
   "version": "1.0.0",
+  "type": "module",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -16,6 +17,7 @@
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.7",
     "expo-status-bar": "~1.11.1",
+    "firebase": "^10.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.2",

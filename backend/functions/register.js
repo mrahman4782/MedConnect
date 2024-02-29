@@ -1,10 +1,9 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import admin from 'firebase-admin'; // Import the default export for auth
-import dotenv from 'dotenv';
+
 
 import initializeFirebaseApp from './firebaseAdminInit.js';
-
 initializeFirebaseApp();
 
 const db = getFirestore();
@@ -83,5 +82,5 @@ export async function createUser(email, password) {
 
 
 //console.log(passwordValid('66666a66'));
-let output = await createUser('jooe@gmdail.com', 'joe12345');
-console.log(output.providerData);
+// let output = await createUser('jooe@gmdail.com', 'joe12345');
+// console.log(output.providerData);
