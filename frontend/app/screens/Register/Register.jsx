@@ -4,7 +4,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 
 const Register = () => {
-    const [username, setUsername] = useState("")
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -22,11 +22,6 @@ const Register = () => {
             <View style={styles.root}>
                 <Text style={styles.title}>Registration</Text>
 
-                <CustomInput
-                    placeholder="Username"
-                    value={username}
-                    setValue={setUsername}
-                />
                 <CustomInput
                     placeholder="Email"
                     value={email}

@@ -7,6 +7,7 @@ import ForgotPassword from "../screens/ForgotPassword";
 import ResetPassword from "../screens/ResetPassword";
 import Login from "../screens/Login";
 import Register from '../screens/Register';
+import Chatbot from '../screens/Chatbot';
 
 
 const Homepage = () => {
@@ -21,7 +22,11 @@ const Homepage = () => {
                     router.push(`/screens/Login/`)}>
                 <Text>login</Text>
             </Pressable>
-
+            <Pressable
+                onPress={() =>
+                    router.push(`/screens/Chatbot/`)}>
+                <Text>Chatbot</Text>
+            </Pressable>
             <Pressable
                 onPress={() =>
                     router.push({

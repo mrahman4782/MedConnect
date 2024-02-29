@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Text, View, Image, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
+import { Pressable, Text, View, Image, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
 import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import { useRouter } from 'expo-router';
+import userLogin from '../../functions/login.js';
+import { Link, router } from "expo-router";
 
 const Login = () => {
     const router = useRouter();
@@ -13,8 +15,22 @@ const Login = () => {
 
     const { height } = useWindowDimensions();
 
-    const onSignInPressed = () => {
-        // console.warn("Signin Pressed");
+    const onSignInPressed = async () => {
+        
+        if (email != '' && password != ''){
+
+            let output = await userLogin(email, password);
+
+            if ('status' in output){
+                if (output.status == 200){
+                
+                    router.push({
+                        pathname: "/screens/Chatbot",
+                    })
+                }
+            }
+
+        }
 
     }
 
@@ -31,7 +47,7 @@ const Login = () => {
             <View style={styles.root}>
                 <Image
                     source={Logo}
-                    style={styles.logo, { height: height * 0.3 }}
+                    style={[styles.logo, { height: height * 0.3 }]}
                     resizeMode="contain"
                 />
                 <Text>Login</Text>
