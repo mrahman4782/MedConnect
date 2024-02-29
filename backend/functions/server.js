@@ -7,7 +7,7 @@ initializeFirebaseApp();
 
 import {createUser} from './register.js';
 import {loginVerify} from './loginHandler.js';
-
+import {chat} from './openAI.js';
 
 
 const app = express();
@@ -43,6 +43,17 @@ app.post('/api/registerUser', async(req, res) => {
     
     console.log(checkUserLogin);
     res.status(checkUserLogin.status).send(`Registered!`);
+    
+})
+
+app.post('/api/chat', async(req, res) => {
+
+    console.log(req);
+    let message = req.body.message;
+    let checkAPIOutput = await chat(message);
+    
+    console.log(checkAPIOutput);
+    res.status(checkAPIOutput.status).send(checkAPIOutput.data);
     
 })
 
