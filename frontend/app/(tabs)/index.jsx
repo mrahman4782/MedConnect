@@ -1,16 +1,41 @@
-// import Navigation from "./navigation"; //not useful for expo
-
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
-import ConfirmAccount from "../screens/ConfirmAccount";
-import ForgotPassword from "../screens/ForgotPassword";
-import ResetPassword from "../screens/ResetPassword";
-import Login from "../screens/Login";
-import Register from '../screens/Register';
-import Chatbot from '../screens/Chatbot';
+import { useContext, createContext, useEffect } from "react";
+
+import authRequest from '../functions/authRequest';
+// import Login from "../screens/Login";
+// import Register from '../screens/Register';
+// import Chatbot from '../screens/Chatbot';
+// import ConfirmAccount from "../screens/ConfirmAccount";
+// import ForgotPassword from "../screens/ForgotPassword";
+// import ResetPassword from "../screens/ResetPassword";
 
 
 const Homepage = () => {
+    const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(true)
+
+    // get auth request
+    // if verified, change available linkes (i.e. if person is signed in, remove the signin and register)
+    useEffect(() => {
+        //get authentication
+        const auth = async () => {
+            //get token
+
+            //get authRequest
+        }
+
+        return () => {
+            console.log("if verified change availble links")
+        };
+
+        async function helper() {
+            await auth();
+            setLoading(false)
+        }
+
+    }, [])
+
     return (
         <View style={styles.root}>
             <Text>Homepage</Text>
@@ -43,7 +68,13 @@ const Homepage = () => {
                 <Text>User</Text>
             </Pressable>
 
-            <Link href="/Credit/CreditPage">Credit</Link>
+            <Pressable onPress={() =>
+                router.push({
+                    pathname: "/screens/Credit",
+                    params: { id: 1 }
+                })}>
+                <Text>User</Text>
+            </Pressable>
 
             {/* <Navigation /> */}
 

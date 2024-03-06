@@ -9,29 +9,35 @@ const Register = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const onRegisterPressed = async () => {
         console.warn("Register Pressed");
-        if (email != '' && password != '' && confirmPassword != ''){
-            if (password == confirmPassword){
+        if (email != '' && password != '' && confirmPassword != '') {
+            if (password == confirmPassword) {
                 let output = await userRegister(email, password);
 
-                if ('status' in output){
-                    if (output.status == 201){
-                    
+                if ('status' in output) {
+                    if (output.status == 201) {
                         router.push({
                             pathname: "/screens/Chatbot",
                         })
                     }
+                    else if (output.status == 500) {
+                        setErrorMessage("An error has occured during registration. Please try again later")
+                    }
                 }
+            } else {
+                setErrorMessage("Passwords do not match");
             }
-
+        } else {
+            setErrorMessage("Please fill in all fields");
         }
     }
 
     const onSignInPressed = () => {
-        console.warn("Signin Pressed");
+        router.push("/screens/Login")
     }
 
     return (
@@ -56,6 +62,9 @@ const Register = () => {
                     setValue={setConfirmPassword}
                 // secureTextEntry 
                 />
+
+                {errorMessage !== "" && <Text style={styles.error}>{errorMessage}</Text>}
+
                 <CustomButton
                     text="Register"
                     onPress={onRegisterPressed}
@@ -83,6 +92,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: '#051C60',
         margin: 10
+    },
+    error: {
+        color: "red",
     }
 })
 
