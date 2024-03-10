@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 import { SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native';
 
-const CustomPicker = ({ items }) => {
-    const [selectedValue, setSelectedValue] = useState();
+const CustomPicker = ({ selectedValue, setSelectedValue, items }) => {
+    // const [selectedValue, setSelectedValue] = useState();
     return (
         <Picker
             selectedValue={selectedValue}

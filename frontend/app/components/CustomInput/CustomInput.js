@@ -5,7 +5,7 @@ const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
 
 const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardType, maxLength, query }) => {
 
-    [value, setValue] = useState("");
+    // [value, setValue] = useState("");
 
     onHandleChange = (text) => {
         if (keyboardType === "numeric") {

@@ -1,6 +1,6 @@
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
-import { useContext, createContext, useEffect } from "react";
+import { useContext, createContext, useEffect, useState } from "react";
 
 import authRequest from '../functions/authRequest';
 // import Login from "../screens/Login";
@@ -73,7 +73,7 @@ const Homepage = () => {
                     pathname: "/screens/Credit",
                     params: { id: 1 }
                 })}>
-                <Text>User</Text>
+                <Text>Credit</Text>
             </Pressable>
 
             {/* <Navigation /> */}
