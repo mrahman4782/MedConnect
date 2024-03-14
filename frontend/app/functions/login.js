@@ -3,26 +3,25 @@ import { initializeApp } from "firebase/app";
 //import firebaseConfig from '../../config/firebaseConfig.json';
 import axios from 'axios';
 import sessionStorage from './sessionStorage.js';
+import { FIREBASE_APP, FIREBASE_AUTH } from "../FireBaseConfig.js";
 
+// let firebaseConfig = {
+//   "apiKey": "AIzaSyArF2BJ3f9xNt3-7FR57jIP_0nSAgz_rhg",
+//   "authDomain": "medconnect-app.firebaseapp.com",
+//   "databaseURL": "https://medconnect-app-default-rtdb.firebaseio.com",
+//   "projectId": "medconnect-app",
+//   "storageBucket": "medconnect-app.appspot.com",
+//   "messagingSenderId": "908877767175",
+//   "appId": "1:908877767175:web:e04f43e729bc122f6f80a2",
+//   "measurementId": "G-207Q92EDR7"
+// };
 
-
-let firebaseConfig = {
-  "apiKey": "AIzaSyArF2BJ3f9xNt3-7FR57jIP_0nSAgz_rhg",
-  "authDomain": "medconnect-app.firebaseapp.com",
-  "databaseURL": "https://medconnect-app-default-rtdb.firebaseio.com",
-  "projectId": "medconnect-app",
-  "storageBucket": "medconnect-app.appspot.com",
-  "messagingSenderId": "908877767175",
-  "appId": "1:908877767175:web:e04f43e729bc122f6f80a2",
-  "measurementId": "G-207Q92EDR7"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth();
 
 export async function userLogin(email, password) {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
 
     // Signed in
     const user = userCredential.user;

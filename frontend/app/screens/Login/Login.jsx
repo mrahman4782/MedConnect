@@ -28,7 +28,7 @@ const Login = () => {
                     let key = sessionStorage.sessionKey;
                     setMessage(`SessionKey: ", ${key}`)
                     router.push({
-                        pathname: "/screens/Chatbot",
+                        pathname: "/",
                     })
 
                 }
