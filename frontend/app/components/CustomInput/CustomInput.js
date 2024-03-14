@@ -3,20 +3,35 @@ import { SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, Fla
 
 const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, query}) => {
+const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardType, maxLength, query }) => {
+
+    // [value, setValue] = useState("");
+
+    onHandleChange = (text) => {
+        if (keyboardType === "numeric") {
+            //replace all nonnumeric value to ''
+            const numericValue = text.replace(/[^0-9]/g, '');
+            setValue(numericValue);
+        }
+        else {
+            setValue(text)
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
-            <TextInput 
+            <TextInput
                 value={value}
-                onChangeText={setValue}
+                onChangeText={onHandleChange}
                 placeholder={placeholder}
                 style={styles.input}
                 secureTextEntry={secureTextEntry}
                 clearButtonMode="always"
                 autoCapitalize="none"
                 autoCorrect={false}
-                // onChangeText={(query) => handleSearch(query)}
+                keyboardType={keyboardType}
+                maxLength={maxLength}
+            // onChangeText={(query) => handleSearch(query)}
             />
         </SafeAreaView>
     )
@@ -35,7 +50,7 @@ const styles = StyleSheet.create({
     input: {
         // backgroundColor: 'white'
     },
-    itemContainer:{
+    itemContainer: {
         flexDirection: "row",
         alignItems: "center",
         marginLeft: 10,

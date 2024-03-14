@@ -3,7 +3,7 @@ import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import chatWithGPT from '../../functions/apiCall';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Chatbot = () => {
 
@@ -25,8 +25,8 @@ const Chatbot = () => {
         }
     })
     const onEnterPress = async () => {
-        
-        if (input != ''){
+
+        if (input != '') {
 
             let output = await chatWithGPT(input);
 
@@ -37,23 +37,23 @@ const Chatbot = () => {
     }
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.root}>
-            <Image
-                source={Logo}
-                style={[styles.logo, { height: height * 0.3 }]}
-                resizeMode="contain"
-            />
-            <Text>Welcome to the MedChat</Text>
-            <CustomInput
-                placeholder="Enter your message"
-                value={input}
-                setValue={setInput}
-            />
-            <CustomButton
-                text="Enter"
-                onPress={onEnterPress}
-            />
-            <Text>{gptOutput}</Text>
+            <View style={styles.root}>
+                <Image
+                    source={Logo}
+                    style={[styles.logo, { height: height * 0.3 }]}
+                    resizeMode="contain"
+                />
+                <Text>Welcome to the MedChat</Text>
+                <CustomInput
+                    placeholder="Enter your message"
+                    value={input}
+                    setValue={setInput}
+                />
+                <CustomButton
+                    text="Enter"
+                    onPress={onEnterPress}
+                />
+                <Text>{gptOutput}</Text>
 
             </View>
         </ScrollView>

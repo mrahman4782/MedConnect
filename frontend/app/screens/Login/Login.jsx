@@ -6,27 +6,31 @@ import CustomButton from '../../components/CustomButton';
 import { useRouter } from 'expo-router';
 import userLogin from '../../functions/login.js';
 import { Link, router } from "expo-router";
+import sessionStorage from '../../functions/sessionStorage';
 
 const Login = () => {
     const router = useRouter();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
     const { height } = useWindowDimensions();
 
     const onSignInPressed = async () => {
-        
-        if (email != '' && password != ''){
+
+        if (email != '' && password != '') {
 
             let output = await userLogin(email, password);
 
-            if ('status' in output){
-                if (output.status == 200){
-                
+            if ('status' in output) {
+                if (output.status == 200) {
+                    let key = sessionStorage.sessionKey;
+                    setMessage(`SessionKey: ", ${key}`)
                     router.push({
                         pathname: "/screens/Chatbot",
                     })
+
                 }
             }
 
@@ -39,7 +43,7 @@ const Login = () => {
     }
 
     const onSignUpPressed = () => {
-        console.warn("Signup Pressed");
+        router.push("/screens/Register")
     }
 
     return (
@@ -77,6 +81,7 @@ const Login = () => {
                     type="TERTIARY"
                 />
 
+                {message !== "" && <Text>{message}</Text>}
             </View>
         </ScrollView>
     )
