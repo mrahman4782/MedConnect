@@ -8,9 +8,9 @@ const RootLayout = () => {
                 options={{
                     headerTitle: "Home Page",
                     title: "Home",
-                    headerStyle: {
-                        backgroundColor: "red",
-                    }
+                    // headerStyle: {
+                    //     backgroundColor: "red",
+                    // }
                 }}
             />
 
