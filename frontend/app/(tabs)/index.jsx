@@ -1,4 +1,4 @@
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Pressable, Text, View, StyleSheet, Image, Dimensions } from "react-native";
 import { Link, router } from "expo-router";
 import { useContext, createContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,6 +6,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from "../FireBaseConfig";
 import authRequest from '../functions/authRequest';
+import logoImage from '../../assets/logo1.png';
+import logoTransparent from '../../assets/logo1_background_removed.png'
+
 
 // const Stack = createNativeStackNavigator();
 // const InsideStack = createNativeStackNavigator();
@@ -45,6 +48,9 @@ const Homepage = () => {
 
     // }, [])
     useEffect(() => {
+
+
+
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
             console.log("user: ", user);
             setUser(user);
@@ -83,7 +89,7 @@ const Homepage = () => {
                             <Text>Map</Text>
                         </Pressable>
 
-                        <Pressable
+                        {/* <Pressable
                             onPress={() =>
                                 router.push({
                                     pathname: '/screens/Credit',
@@ -91,22 +97,20 @@ const Homepage = () => {
                             }
                         >
                             <Text>Credit</Text>
-                        </Pressable>
+                        </Pressable> */}
                     </View>
                 ) : (
-                    <View>
-                        <Text>Welcome</Text>
-                        <Pressable onPress={() => router.push(`/screens/Login/`)}>
-                            <Text>Login</Text>
+                    <View style={styles.background_notLoggedIn}>
+                        <Image
+                            source={logoTransparent}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
+                        <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
+                            <Text style={styles.loginButtonText}>L O G I N</Text>
                         </Pressable>
-                        <Pressable
-                            onPress={() =>
-                                router.push({
-                                    pathname: '/screens/Register',
-                                })
-                            }
-                        >
-                            <Text>Register</Text>
+                        <Pressable style={styles.registerButton} onPress={() => router.push({pathname: '/screens/Register'})}>
+                            <Text style={styles.registerButtonText}>R E G I S T E R</Text>
                         </Pressable>
                     </View>
                 )
@@ -117,9 +121,50 @@ const Homepage = () => {
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1,
+        
         backgroundColor: '#F9FBFC'
-    }
+    },
+    logo: {
+        height: 350,
+        width: 400
+    },
+    background_notLoggedIn : {
+        flex: 1,
+        backgroundColor: '#598392',
+        justifyContent: 'center', // centers vertically
+        alignItems: 'center',
+        
+    },
+    loginButton: {
+        backgroundColor: '#0a0a0a',
+        padding: 20,
+        width: 250,
+        height: 50,
+        borderRadius: 5,
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginTop: 110,
+    },
+    loginButtonText: {
+        color: '#FFFFFF',
+        fontSize: 12,
+    },
+    registerButton: {
+        backgroundColor: '#f5f0f0',
+        padding: 20,
+        width: 250,
+        height: 50,
+        borderRadius: 5,
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginTop: 7,
+        marginBottom: 400
+    },
+    registerButtonText: {
+        color: '#000000',
+        fontSize: 12,
+    },
+    
 })
 
 export default Homepage;
