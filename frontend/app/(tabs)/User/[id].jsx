@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, useWindowDimensions } from "react-native";
+import { View, Text, Pressable, ScrollView, StyleSheet, useWindowDimensions } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { Stack, useRouter, useSearchParams, useLocalSearchParams, useGlobalSearchParams } from 'expo-router'
 import { useState } from "react";
@@ -97,8 +97,8 @@ const UserPage = () => {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
-            <View>
-                <Text>This is userpage {id}</Text>
+            <View style={styles.root}>
+                {/* <Text>This is userpage {id}</Text> */}
                 <Text>First Name</Text>
                 <CustomInput
                     value={firstName}
@@ -199,5 +199,15 @@ const UserPage = () => {
         </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    root: {
+        
+        backgroundColor: '#e0e1dd',
+        padding: 10,
+    },
+    
+    
+})
 
 export default UserPage;

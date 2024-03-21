@@ -18,8 +18,14 @@ const RootLayout = () => {
             <Tabs.Screen
                 name="User/[id]"
                 options={{
-                    headerTitle: "User Page",
-                    title: "User"
+                    headerTitle: "User Details",
+                    title: "User",
+                    headerStyle: {
+                        backgroundColor: "#598392",
+                    },
+                    headerTitleStyle: {
+                        color: "#FFFFFF", 
+                      },
                 }}
             />
         </Tabs>
