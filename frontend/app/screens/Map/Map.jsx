@@ -70,7 +70,7 @@ const Map = () => {
         <SafeAreaView style={styles.root}>
             <Image
                 source={Logo}
-                style={styles.map, {height: height * 0.3}} 
+                style={[styles.map, {height: height * 0.3}]} 
                 resizeMode="contain"
             />
             <Text>Map</Text>

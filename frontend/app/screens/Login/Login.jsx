@@ -49,39 +49,45 @@ const Login = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Image
-                    source={Logo}
-                    style={[styles.logo, { height: height * 0.3 }]}
-                    resizeMode="contain"
-                />
-                <Text>Login</Text>
-                <CustomInput
-                    placeholder="Email"
-                    value={email}
-                    setValue={setEmail}
-                />
-                <CustomInput
-                    placeholder="Password"
-                    value={password}
-                    setValue={setPassword}
-                // secureTextEntry 
-                />
-                <CustomButton
-                    text="Sign In"
-                    onPress={onSignInPressed}
-                />
-                <CustomButton
-                    text="Forgot Password"
-                    onPress={onForgotPasswordPressed}
-                    type="TERTIARY"
-                />
-                <CustomButton
-                    text="Don't have an account? Create one"
-                    onPress={onSignUpPressed}
-                    type="TERTIARY"
-                />
+                <View style={styles.box}>
 
-                {message !== "" && <Text>{message}</Text>}
+                    {/* <Image
+                        source={Logo}
+                        style={[styles.logo, { height: height * 0.3 }]}
+                        resizeMode="contain"
+                    /> */}
+                    <Text style={styles.loginText}>L O G I N</Text>
+                    <CustomInput
+                        style={styles.textFields}
+                        placeholder="Email"
+                        value={email}
+                        setValue={setEmail}
+                    />
+                    <CustomInput
+                        placeholder="Password"
+                        style={styles.textFields}
+                        value={password}
+                        setValue={setPassword}
+                    // secureTextEntry 
+                    />
+                    <CustomButton
+                        text="Sign In"
+                        onPress={onSignInPressed}
+                    />
+                    {/* <CustomButton
+                        text="Forgot Password"
+                        onPress={onForgotPasswordPressed}
+                        type="TERTIARY"
+                    /> */}
+                    <CustomButton
+                        text="Create Account"
+                        onPress={onSignUpPressed}
+                        type="TERTIARY"
+                    />
+
+                    {message !== "" && <Text>{message}</Text>}
+                </View>
+
             </View>
         </ScrollView>
     )
@@ -90,15 +96,44 @@ const Login = () => {
 const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
+        flex: 1, 
         padding: 20,
-        backgroundColor: '#F9FBFC'
+        backgroundColor: '#e0e1dd',
+        paddingBottom: 130,
+        paddingTop: 80
     },
-    logo: {
-        width: '70%',
-        maxWidth: 300,
-        maxHeight: 200,
-        margin: 10,
+    box: {
+        backgroundColor: '#598392',
+        padding: 40,
+        width: 300,
+        height: 400,
+        borderRadius: 20,
+        alignContent: 'center'
+    }, 
+    loginText: {
+        
+        paddingLeft: 5,
+        fontSize: 22,
+        
+        color: "white",
+        marginTop: 10,
+        marginBottom: 50,
+        paddingBottom: 5,
+        textAlign: 'center',
+        
+    },
+    textFields: {
+        padding: 5,
+        color: '#757474',
+        outline: 'none',
+        borderWidth: 0,
+        borderRadius: 5,
+        height: 40
+    },
+    smallText: {
+
     }
+
 })
 
 export default Login

@@ -43,38 +43,44 @@ const Register = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Text style={styles.title}>Registration</Text>
+                <View style={styles.box}>
+                    <Text style={styles.loginText}>R E G I S T E R</Text>
 
-                <CustomInput
-                    placeholder="Email"
-                    value={email}
-                    setValue={setEmail}
-                />
-                <CustomInput
-                    placeholder="Password"
-                    value={password}
-                    setValue={setPassword}
-                // secureTextEntry //temperarily commented out
-                />
-                <CustomInput
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    setValue={setConfirmPassword}
-                // secureTextEntry 
-                />
+                    <CustomInput
+                        style={styles.textFields}
+                        placeholder="Email"
+                        value={email}
+                        setValue={setEmail}
+                    />
+                    <CustomInput
+                        style={styles.textFields}
+                        placeholder="Password"
+                        value={password}
+                        setValue={setPassword}
+                    // secureTextEntry //temperarily commented out
+                    />
+                    <CustomInput
+                        style={styles.textFields}
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        setValue={setConfirmPassword}
+                    // secureTextEntry 
+                    />
 
-                {errorMessage !== "" && <Text style={styles.error}>{errorMessage}</Text>}
+                    {errorMessage !== "" && <Text style={styles.error}>{errorMessage}</Text>}
 
-                <CustomButton
-                    text="Register"
-                    onPress={onRegisterPressed}
-                />
+                    <CustomButton
+                        text="Register"
+                        onPress={onRegisterPressed}
+                    />
 
-                <CustomButton
-                    text="Have an account? Sign in"
-                    onPress={onSignInPressed}
-                    type="TERTIARY"
-                />
+                    <CustomButton
+                        text="Have an account? Sign in"
+                        onPress={onSignInPressed}
+                        type="TERTIARY"
+                    />
+
+                </View>
 
             </View>
         </ScrollView>
@@ -84,9 +90,20 @@ const Register = () => {
 const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
+        flex: 1, 
         padding: 20,
-        backgroundColor: '#F9FBFC'
+        backgroundColor: '#e0e1dd',
+        paddingBottom: 120,
+        paddingTop: 80
     },
+    box: {
+        backgroundColor: '#598392',
+        padding: 40,
+        width: 300,
+        height: 400,
+        borderRadius: 20,
+        alignContent: 'center'
+    }, 
     title: {
         fontSize: 24,
         fontWeight: "bold",
@@ -95,7 +112,27 @@ const styles = StyleSheet.create({
     },
     error: {
         color: "red",
-    }
+    },
+    loginText: {
+        
+        paddingLeft: 5,
+        fontSize: 22,
+        
+        color: "white",
+        marginTop: 10,
+        marginBottom: 50,
+        paddingBottom: 5,
+        textAlign: 'center',
+        
+    },
+    textFields: {
+        padding: 5,
+        color: '#757474',
+        outline: 'none',
+        borderWidth: 0,
+        borderRadius: 5,
+        height: 30
+    },
 })
 
 export default Register
