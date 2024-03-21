@@ -1,88 +1,116 @@
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { Link, router } from "expo-router";
 import { useContext, createContext, useEffect, useState } from "react";
-
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { onAuthStateChanged } from 'firebase/auth';
+import { FIREBASE_AUTH } from "../FireBaseConfig";
 import authRequest from '../functions/authRequest';
-// import Login from "../screens/Login";
-// import Register from '../screens/Register';
-// import Chatbot from '../screens/Chatbot';
-// import ConfirmAccount from "../screens/ConfirmAccount";
-// import ForgotPassword from "../screens/ForgotPassword";
-// import ResetPassword from "../screens/ResetPassword";
 
+// const Stack = createNativeStackNavigator();
+// const InsideStack = createNativeStackNavigator();
+
+// function InsideLayout() {
+//     return (
+//         <InsideStack.Navigator>
+//             <InsideStack.Screen name="Example" component={List} />
+//         </InsideStack.Navigator>
+
+//     )
+// }
 
 const Homepage = () => {
-    const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
+    // const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
 
     // get auth request
     // if verified, change available linkes (i.e. if person is signed in, remove the signin and register)
+    // useEffect(() => {
+    //     //get authentication
+    //     const auth = async () => {
+    //         //get token
+
+    //         //get authRequest
+    //     }
+
+    //     return () => {
+    //         console.log("if verified change availble links")
+    //     };
+
+    //     async function helper() {
+    //         await auth();
+    //         setLoading(false)
+    //     }
+
+    // }, [])
     useEffect(() => {
-        //get authentication
-        const auth = async () => {
-            //get token
-
-            //get authRequest
-        }
-
-        return () => {
-            console.log("if verified change availble links")
-        };
-
-        async function helper() {
-            await auth();
-            setLoading(false)
-        }
-
+        onAuthStateChanged(FIREBASE_AUTH, (user) => {
+            console.log("user: ", user);
+            setUser(user);
+            setLoading(false);
+        })
     }, [])
 
     return (
-        <View style={styles.root}>
-            <Text>Homepage</Text>
+        <View>
+            {loading ? (<Text>Loading...</Text>
+            ) : (
+                user ? (
+                    <View>
+                        <Text>Welcome, user</Text>
+                        <Pressable
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/screens/Chatbot',
+                                })
+                            }
+                        >
+                            <Text>ChatBot</Text>
+                        </Pressable>
 
-            <Link href="screens/Map/Map">Map</Link>
+                        <Pressable onPress={() => FIREBASE_AUTH.signOut()} title="Logout" >
+                            <Text>Logout</Text>
+                        </Pressable>
 
-            <Pressable
-                onPress={() =>
-                    router.push(`/screens/Login/`)}>
-                <Text>login</Text>
-            </Pressable>
-            <Pressable
-                onPress={() =>
-                    router.push(`/screens/Chatbot/`)}>
-                <Text>Chatbot</Text>
-            </Pressable>
-            <Pressable
-                onPress={() =>
-                    router.push({
-                        pathname: "/screens/Register",
-                    })}>
-                <Text>register</Text>
-            </Pressable>
+                        <Pressable
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/screens/Map',
+                                })
+                            }
+                        >
+                            <Text>Map</Text>
+                        </Pressable>
 
-            <Pressable onPress={() =>
-                router.push({
-                    pathname: "(tabs)/User/[id]",
-                    params: { id: 1 }
-                })}>
-                <Text>User</Text>
-            </Pressable>
-
-            <Pressable onPress={() =>
-                router.push({
-                    pathname: "/screens/Credit",
-                    params: { id: 1 }
-                })}>
-                <Text>Credit</Text>
-            </Pressable>
-
-            {/* <Navigation /> */}
-
-            {/* <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            <Stack.Screen name="ConfirmAccount" component={ConfirmAccount} />
-            <Stack.Screen name="ResetPassword" component={ResetPassword} /> */}
+                        <Pressable
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/screens/Credit',
+                                })
+                            }
+                        >
+                            <Text>Credit</Text>
+                        </Pressable>
+                    </View>
+                ) : (
+                    <View>
+                        <Text>Welcome</Text>
+                        <Pressable onPress={() => router.push(`/screens/Login/`)}>
+                            <Text>Login</Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/screens/Register',
+                                })
+                            }
+                        >
+                            <Text>Register</Text>
+                        </Pressable>
+                    </View>
+                )
+            )}
         </View>
     )
 }
