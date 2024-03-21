@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, Fla
 
 const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
 
-const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardType, maxLength, query }) => {
+const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardType, maxLength, query, style }) => {
 
     // [value, setValue] = useState("");
 
@@ -24,7 +24,7 @@ const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardTy
                 value={value}
                 onChangeText={onHandleChange}
                 placeholder={placeholder}
-                style={styles.input}
+                style={[styles.input, style]}
                 secureTextEntry={secureTextEntry}
                 clearButtonMode="always"
                 autoCapitalize="none"
@@ -43,9 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         borderColor: '#E8E8E8',
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
+        borderRadius: 4
     },
     input: {
         // backgroundColor: 'white'
@@ -54,7 +52,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginLeft: 10,
-        marginTop: 10
+        
     },
     image: {
         width: 50,

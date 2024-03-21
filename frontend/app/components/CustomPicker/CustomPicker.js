@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 import { SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native';
 
-const CustomPicker = ({ selectedValue, setSelectedValue, items }) => {
+const CustomPicker = ({ selectedValue, setSelectedValue, items, style }) => {
     // const [selectedValue, setSelectedValue] = useState();
     return (
         <Picker
             selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-            }
+            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+            style={style} // Apply the style prop to the Picker
         >
-
             {items.map((item, index) => (
                 <Picker.Item key={index} label={item.label} value={item.value} />
             ))}
