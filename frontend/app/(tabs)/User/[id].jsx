@@ -8,7 +8,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomMultiSelect from "../../components/CustomMultiSelect/CustomMultiSelect";
 import CustomSelectList from "../../components/CustomSelectList/CustomSelectList";
 import { updateUserInfo } from "../../functions/updateUserInfo";
-
+import Toast from 'react-native-toast-message';
 
 const UserPage = () => {
 
@@ -39,6 +39,10 @@ const UserPage = () => {
         phoneNumber,
         emailAddress,
         address,
+        city,
+        stateUS,
+        zip,
+        physician,
         ethnicity,
         sex,
         insurer,
@@ -93,11 +97,12 @@ const UserPage = () => {
         { label: 'Insulin', value: 'insulin' },
     ];
 
-    const onPressSave = () => {
+    const onPressSave = async () => {
         // console.warn("Save Button Pressed")
         //send info to backend
         console.log("UserPage: ", userData)
-        updateUserInfo(userData)
+        let res = await updateUserInfo(userData);
+        
     }
 
     return (

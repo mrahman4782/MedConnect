@@ -1,16 +1,26 @@
 import axios from 'axios';
 import sessionStorage from './sessionStorage.js';
 
-const url = ""
 
 export async function updateUserInfo(userData) {
     try {
-        const res = await axios.post(url,
-            {});
-        return console.log("UserData: ", userData)
-        //remove token? firebase does this automatically?
 
-    } catch (err) {
-        throw err
+        let token = sessionStorage.sessionKey;
+
+        // Make request to backend
+        const response = await axios.post('http://localhost:3000/api/updateUser', { token: token, data: userData});
+        console.log("MOOO");
+        return response;
+
+    } catch (error) {
+        
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        return error;
     }
 }
+
+
+export default updateUserInfo;

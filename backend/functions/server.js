@@ -57,4 +57,16 @@ app.post('/api/chat', async(req, res) => {
     
 })
 
+app.post('/api/updateUser', async(req, res) => {
+
+    console.log(req);
+    let token = req.body.token;
+    let data = req.body.data;
+    //let checkUserLogin = await loginVerify(token);
+    let checkUserLogin = await loginVerify(token);
+    console.log(checkUserLogin);
+    res.status(checkUserLogin.status).send(`Logged in! Expiration time: ${checkUserLogin.data.exp}`);
+    
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
