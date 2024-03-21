@@ -26,12 +26,12 @@ export async function userLogin(email, password) {
     // Signed in
     const user = userCredential.user;
     // console.log('Signed in!');
-    //console.log(user);
+    console.log(user);
 
     const token = await getIdToken(user, true);
     // console.log(token);
 
-    // Make request to backend
+    // Make request to backend. Response handling needed
     const response = await axios.post('http://localhost:3000/api/verifyLogin', { token: token });
 
     // Store Async session token to Async Storage

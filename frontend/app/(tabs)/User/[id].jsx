@@ -32,6 +32,8 @@ const UserPage = () => {
     const [smoke, setSmoke] = useState("no");
     const [medicalHistory, setMedicalHistory] = useState("");
 
+    <Toast ref={(ref) => Toast.setRef(ref)} />
+
     const userData = {
         firstName,
         lastName,
@@ -74,11 +76,11 @@ const UserPage = () => {
     ]
 
     const insurerItems = [
-        { label: 'Insurer 1', value: 'insurer1' },
-        { label: 'Insurer 2', value: 'insurer2' },
-        { label: 'Insurer 3', value: 'insurer3' },
-        { label: 'Insurer 4', value: 'insurer4' },
-        { label: 'Insurer 5', value: 'insurer5' },
+        { label: 'Excellus', value: 'excellus' },
+        { label: 'Healthfirst', value: 'healthfirst' },
+        { label: 'MetroPlux', value: 'metroPlux' },
+        { label: 'Out-Of-Pocket', value: 'self-pay' },
+        { label: 'United HealthCare', value: 'united' },
     ];
 
     const allergyItems = [
@@ -102,7 +104,14 @@ const UserPage = () => {
         //send info to backend
         console.log("UserPage: ", userData)
         let res = await updateUserInfo(userData);
-        
+        if (res.status == 200){
+            console.log("Profile status updated");
+            Toast.show({
+                type: 'success',
+                text1: 'Profile Updated',
+                visibilityTime: 2000,
+              });
+        }
     }
 
     return (

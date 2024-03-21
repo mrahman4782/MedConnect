@@ -8,7 +8,7 @@ import { FIREBASE_AUTH } from "../FireBaseConfig";
 import authRequest from '../functions/authRequest';
 import logoImage from '../../assets/logo1.png';
 import logoTransparent from '../../assets/logo1_background_removed.png'
-
+import sessionStorage from '../functions/sessionStorage.js';
 
 // const Stack = createNativeStackNavigator();
 // const InsideStack = createNativeStackNavigator();
@@ -75,7 +75,7 @@ const Homepage = () => {
                             <Text>ChatBot</Text>
                         </Pressable>
 
-                        <Pressable onPress={() => FIREBASE_AUTH.signOut()} title="Logout" >
+                        <Pressable onPress={() => {FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey('');}} title="Logout" >
                             <Text>Logout</Text>
                         </Pressable>
 
