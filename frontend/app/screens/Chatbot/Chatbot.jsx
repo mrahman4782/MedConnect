@@ -28,12 +28,13 @@ const Chatbot = () => {
         },
         container: {
             flex: 1,
+            padding: 10,
             justifyContent: 'center',
             alignItems: 'center',
         },
         messageContainer: {
             flexDirection: 'row',
-            padding: 10,
+            padding: 5,
             marginVertical: 4,
             maxWidth: '80%',
             alignSelf: 'flex-end',
@@ -61,14 +62,16 @@ const Chatbot = () => {
             flexDirection: 'row',
             width: '80%',
             borderColor: '#000', 
-            padding: 10,
+            padding: 5,
             justifyContent: 'space-between', 
             minHeight: 50,
+            marginTop: 30
         },
         textInput: {
             flex: 1, 
             marginRight: 10,
-            fontSize: 18, 
+            fontSize: 14, 
+            padding: 10
         },
         sendButtonContainer: {
             paddingHorizontal: 12,
@@ -77,7 +80,7 @@ const Chatbot = () => {
             justifyContent: 'center', 
         },
         sendButtonText: {
-            color: '#fff',
+            color: '#000000',
             fontWeight: 'bold',
             textAlign: 'center',
             fontSize: 16, 
@@ -97,14 +100,14 @@ const Chatbot = () => {
     };
 
     return (
-        <ImageBackground source={Logo} style={styles.background} resizeMode="cover">
+        // <ImageBackground source={Logo} style={styles.background} resizeMode="cover">
             <View style={styles.container}>
                 <ScrollView
                     style={styles.scrollViewContainer}
                     contentContainerStyle={{ flexGrow: 1 }}
                     showsVerticalScrollIndicator={false}
                     ref={scrollViewRef}>
-                <Text>Welcome to the MedChat</Text>
+                {/* <Text>Welcome to the MedChat</Text> */}
                 {gptOutput.map((msg, index) => (    // Iterate chat history and display
                     <View key={index} style={[styles.messageContainer, msg.type === 'user' ? styles.userMessage : styles.gptMessage, { alignSelf: msg.type === 'user' ? 'flex-end' : 'flex-start' }]}>
                         <Text style={styles.messageText}>{msg.text}</Text>
@@ -126,7 +129,7 @@ const Chatbot = () => {
                    </View>
                 </ScrollView>
             </View>
-        </ImageBackground>
+        // </ImageBackground>
     );
 };
 

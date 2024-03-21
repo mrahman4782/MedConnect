@@ -126,12 +126,12 @@ const styles = StyleSheet.create({
         
     },
     textFields: {
-        padding: 5,
+        padding: 10,
         color: '#757474',
         outline: 'none',
         borderWidth: 0,
         borderRadius: 5,
-        height: 30
+        height: 35
     },
 })
 
