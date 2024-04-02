@@ -14,7 +14,7 @@ const app = express();
 const port = 3000;
 app.use(cors());
 
-app.use(express.json());
+app.use(express.json()); //middleware to parse json 
 
 // GET Requests
 app.get('/', (req, res) => {
@@ -54,7 +54,11 @@ app.post('/api/chat', async(req, res) => {
     
     console.log(checkAPIOutput);
     res.status(checkAPIOutput.status).send(checkAPIOutput.data);
-    
+
 })
+
+
+
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

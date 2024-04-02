@@ -4,8 +4,6 @@ import { initializeApp } from "firebase/app";
 import axios from 'axios';
 import sessionStorage from './sessionStorage.js';
 
-
-
 let firebaseConfig = {
     "apiKey": "AIzaSyArF2BJ3f9xNt3-7FR57jIP_0nSAgz_rhg",
     "authDomain": "medconnect-app.firebaseapp.com",

@@ -3,14 +3,14 @@ import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import chatWithGPT from '../../functions/apiCall';
-import { useState } from 'react'
+import { useState } from 'react';
 
 const Chatbot = () => {
 
     const { height } = useWindowDimensions();
     const [input, setInput] = useState("");
     const [gptOutput, setGptOutput] = useState("Hello!");
-
+    
     const styles = StyleSheet.create({
         root: {
             alignItems: 'center',
@@ -24,6 +24,7 @@ const Chatbot = () => {
             margin: 10,
         }
     })
+
     const onEnterPress = async () => {
         
         if (input != ''){
@@ -31,10 +32,9 @@ const Chatbot = () => {
             let output = await chatWithGPT(input);
 
             setGptOutput(output);
-
         }
-
-    }
+    } 
+    
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
@@ -44,6 +44,7 @@ const Chatbot = () => {
                 resizeMode="contain"
             />
             <Text>Welcome to the MedChat</Text>
+
             <CustomInput
                 placeholder="Enter your message"
                 value={input}
@@ -56,6 +57,10 @@ const Chatbot = () => {
             <Text>{gptOutput}</Text>
 
             </View>
+
+        <View style={styles.mapContainer}>
+        </View>
+
         </ScrollView>
     )
 }
