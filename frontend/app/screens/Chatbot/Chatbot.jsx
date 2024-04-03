@@ -1,9 +1,10 @@
-import { Text, View, ImageBackground, StyleSheet, useWindowDimensions, ScrollView  } from "react-native";
+import { Text, View, ImageBackground, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
 import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import chatWithGPT from '../../functions/apiCall';
 import { useState, useRef, useEffect } from 'react';
+import { Stack } from "expo-router";
 
 const Chatbot = () => {
     const { height } = useWindowDimensions();
@@ -61,29 +62,29 @@ const Chatbot = () => {
         inputContainer: {
             flexDirection: 'row',
             width: '80%',
-            borderColor: '#000', 
+            borderColor: '#000',
             padding: 5,
-            justifyContent: 'space-between', 
+            justifyContent: 'space-between',
             minHeight: 50,
             marginTop: 30
         },
         textInput: {
-            flex: 1, 
+            flex: 1,
             marginRight: 10,
-            fontSize: 14, 
+            fontSize: 14,
             padding: 10
         },
         sendButtonContainer: {
             paddingHorizontal: 12,
             paddingVertical: 8,
-            borderRadius: 5, 
-            justifyContent: 'center', 
+            borderRadius: 5,
+            justifyContent: 'center',
         },
         sendButtonText: {
             color: '#000000',
             fontWeight: 'bold',
             textAlign: 'center',
-            fontSize: 16, 
+            fontSize: 16,
         },
 
     });
@@ -101,12 +102,19 @@ const Chatbot = () => {
 
     return (
         // <ImageBackground source={Logo} style={styles.background} resizeMode="cover">
-            <View style={styles.container}>
-                <ScrollView
-                    style={styles.scrollViewContainer}
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    showsVerticalScrollIndicator={false}
-                    ref={scrollViewRef}>
+        <View style={styles.container}>
+            <Stack.Screen
+                options={{
+                    headerTitle: 'HeaderTitle'
+                }}
+            />
+
+
+            <ScrollView
+                style={styles.scrollViewContainer}
+                contentContainerStyle={{ flexGrow: 1 }}
+                showsVerticalScrollIndicator={false}
+                ref={scrollViewRef}>
                 {/* <Text>Welcome to the MedChat</Text> */}
                 {gptOutput.map((msg, index) => (    // Iterate chat history and display
                     <View key={index} style={[styles.messageContainer, msg.type === 'user' ? styles.userMessage : styles.gptMessage, { alignSelf: msg.type === 'user' ? 'flex-end' : 'flex-start' }]}>
@@ -126,9 +134,9 @@ const Chatbot = () => {
                         text="Enter"
                         onPress={onEnterPress}
                     />
-                   </View>
-                </ScrollView>
-            </View>
+                </View>
+            </ScrollView>
+        </View>
         // </ImageBackground>
     );
 };
