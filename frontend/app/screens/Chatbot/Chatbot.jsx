@@ -3,17 +3,20 @@ import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import chatWithGPT from '../../functions/apiCall';
+
 import { useState, useRef, useEffect } from 'react';
 
 const Chatbot = () => {
     const { height } = useWindowDimensions();
     const [input, setInput] = useState("");
+
     const [gptOutput, setGptOutput] = useState([{ type: 'gpt', text: 'Hello!' }]); // store chat history
     const scrollViewRef = useRef(); // manage scroll for scrollView
 
     useEffect(() => { //Scroll down, input new message 
         scrollViewRef.current.scrollToEnd({ animated: true });
     }, [gptOutput]);
+
 
 
     const styles = StyleSheet.create({
@@ -30,7 +33,7 @@ const Chatbot = () => {
             flex: 1,
             padding: 10,
             justifyContent: 'center',
-            alignItems: 'center',
+
         },
         messageContainer: {
             flexDirection: 'row',

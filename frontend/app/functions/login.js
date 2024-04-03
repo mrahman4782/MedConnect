@@ -19,6 +19,7 @@ import { FIREBASE_APP, FIREBASE_AUTH } from "../FireBaseConfig.js";
 // const app = initializeApp(firebaseConfig);
 // const auth = getAuth();
 
+
 export async function userLogin(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
@@ -30,6 +31,7 @@ export async function userLogin(email, password) {
 
     const token = await getIdToken(user, true);
     // console.log(token);
+
 
     // Make request to backend. Response handling needed
     const response = await axios.post('http://localhost:3000/api/verifyLogin', { token: token });
