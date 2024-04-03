@@ -3,7 +3,7 @@ import axios from 'axios';
 // this can be used to get users input
 
 async function fetchPlaceDetails() {
- const apiKey = 'AIzaSyA-a5E85PYhJh7UOxhs7eMfMn_toz99-vA';
+ const apiKey = '';
  const query = 'City College of New York';
  const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&key=${apiKey}`;
  try {
