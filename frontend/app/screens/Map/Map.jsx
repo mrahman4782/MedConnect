@@ -90,6 +90,8 @@ const Map = () => {
             <Image
                 source={Logo}
                 style={[styles.logo, { height: height * 0.3 }]}
+
+
                 resizeMode="contain"
             />
             <Text>Welcome to the MedChat</Text>

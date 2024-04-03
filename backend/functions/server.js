@@ -8,7 +8,7 @@ initializeFirebaseApp();
 import {createUser} from './register.js';
 import {loginVerify} from './loginHandler.js';
 import {chat} from './openAI.js';
-
+import {updateProfile} from './updateProfile.js';
 
 const app = express();
 const port = 3000;
@@ -57,8 +57,17 @@ app.post('/api/chat', async(req, res) => {
 
 })
 
+app.post('/api/updateUser', async(req, res) => {
 
+    console.log(req);
+    let token = req.body.token;
+    let data = req.body.data;
 
+    let returnMessage = await updateProfile(data, token);
+    //let checkUserLogin = await loginVerify(token);
 
+    console.log(returnMessage);
+    res.status(returnMessage.status).send(returnMessage.data);
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

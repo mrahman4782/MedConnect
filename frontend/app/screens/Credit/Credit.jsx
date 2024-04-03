@@ -1,11 +1,13 @@
-import {View, Text} from 'react-native';
+import { Text, View, Image, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
 
 const Credit = () => {
-    return(
+    return (
         <View>
-            <Text>Your name here</Text>
+            <Text>
+                Your name here
+            </Text>
         </View>
-    )    
+    )
 }
 
-export default Credit
+export default Credit;

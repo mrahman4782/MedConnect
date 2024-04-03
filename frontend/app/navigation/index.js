@@ -22,12 +22,14 @@ const Navigation = () => {
         // <Stack.Navigator screenOptions={{ headerShown: false }}>
         <View>
             {/* <Stack.Screen name="Index" component={Index} /> */}
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            <Stack.Screen name="ConfirmAccount" component={ConfirmAccount} />
-            <Stack.Screen name="ResetPassword" component={ResetPassword} />
-        </View>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                <Stack.Screen name="ConfirmAccount" component={ConfirmAccount} />
+                <Stack.Screen name="ResetPassword" component={ResetPassword} />
+            </Stack.Navigator>
+         </View>
         // {/* </Stack.Navigator> */ }
     )
 }

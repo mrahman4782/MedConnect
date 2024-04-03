@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
 
     container_PRIMARY: {
-        backgroundColor: '#3B71F3',
+        backgroundColor: '#000000',
     },
 
     container_SECONDARY: {
@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
     },
 
     text_TERTIARY: {
-        color: 'gray',
+        color: 'white',
+        fontSize: 11,
+        marginBottom: -90
     },
 
     text_SECONDARY: {
