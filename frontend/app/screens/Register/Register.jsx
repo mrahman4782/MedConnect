@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Platform, Alert, Text, View, StyleSheet, ScrollView } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import userRegister from '../../functions/register.js';
-import { useRouter } from 'expo-router';
+import { useRouter, Stack } from 'expo-router';
 
 const Register = () => {
     const router = useRouter();
@@ -13,37 +13,68 @@ const Register = () => {
     const [errorMessage, setErrorMessage] = useState("");
 
     const onRegisterPressed = async () => {
-        console.warn("Register Pressed");
-        if (email != '' && password != '' && confirmPassword != '') {
-            if (password == confirmPassword) {
-                let output = await userRegister(email, password);
-
-                if ('status' in output) {
-                    if (output.status == 201) {
-                        router.push({
-                            pathname: "/screens/Chatbot",
-                        })
-                    }
-                    else if (output.status == 500) {
-                        setErrorMessage("An error has occured during registration. Please try again later")
-                    }
-                }
-            } else {
-                setErrorMessage("Passwords do not match");
-            }
-        } else {
+        // console.warn("Register Pressed");
+        // if (email != '' && password != '' && confirmPassword != '') {
+        //     if (password == confirmPassword) {
+        //         let output = await userRegister(email, password);
+        //         if ('status' in output) {
+        //             if (output.status == 201) {
+        //                 router.push({
+        //                     pathname: "/screens/Chatbot",
+        //                 })
+        //             }
+        //             else if (output.status == 500) {
+        //                 setErrorMessage("An error has occured during registration. Please try again later")
+        //             }
+        //         }
+        //     } else {
+        //         setErrorMessage("Passwords do not match");
+        //     }
+        // } else {
+        //     setErrorMessage("Please fill in all fields");
+        // }
+        if (email === '' || password === '' || confirmPassword === '') {
             setErrorMessage("Please fill in all fields");
+        } else if (password !== confirmPassword) {
+            setErrorMessage("Passwords do not match");
+        } else {
+            try {
+                let result = await userRegister(email, password);
+                console.log("Result: ", result)
+                router.push({
+                    pathname: "/"
+                })
+                return;
+            } catch (error) {
+                if (error.message === "Request failed with status code 403") {
+                    setErrorMessage("Email already registered")
+                }
+                else {
+                    setErrorMessage("An error has occured during registration. Please try again later")
+                }
+            }
+
+        }
+        if (errorMessage && (Platform.OS === 'ios' || Platform.OS === 'android')) {
+            Alert.alert(errorMessage);
         }
     }
+
 
     const onSignInPressed = () => {
         router.push("/screens/Login")
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.viewScroll}>
+            <Stack.Screen
+                options={{
+                    headerShown: false,
+                    headerTitle: 'Registration',
+                }}
+            />
             <View style={styles.root}>
-                <View style={styles.box}>
+                <View style={[styles.box, errorMessage ? styles.boxWithErrorMessage : null]}>
                     <Text style={styles.loginText}>R E G I S T E R</Text>
 
                     <CustomInput
@@ -67,8 +98,6 @@ const Register = () => {
                     // secureTextEntry 
                     />
 
-                    {errorMessage !== "" && <Text style={styles.error}>{errorMessage}</Text>}
-
                     <CustomButton
                         text="Register"
                         onPress={onRegisterPressed}
@@ -80,6 +109,9 @@ const Register = () => {
                         type="TERTIARY"
                     />
 
+                    {Platform.OS !== 'android' && Platform.OS !== 'ios' && errorMessage !== "" && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+
+
                 </View>
 
             </View>
@@ -88,13 +120,18 @@ const Register = () => {
 }
 
 const styles = StyleSheet.create({
+    viewScroll: {
+        flex: 1,
+        backgroundColor: '#000080',
+    },
     root: {
         alignItems: 'center',
-        flex: 1, 
-        padding: 20,
-        backgroundColor: '#e0e1dd',
-        paddingBottom: 120,
-        paddingTop: 80
+        justifyContent: 'center',
+        flex: 1,
+        padding: 200,
+        // backgroundColor: '#e0e1dd',
+        // paddingBottom: 120,
+        // paddingTop: 80
     },
     box: {
         backgroundColor: '#598392',
@@ -103,27 +140,35 @@ const styles = StyleSheet.create({
         height: 400,
         borderRadius: 20,
         alignContent: 'center'
-    }, 
+    },
+    boxWithErrorMessage: {
+        height: 450, // Adjust this value based on your requirements
+    },
     title: {
         fontSize: 24,
         fontWeight: "bold",
         color: '#051C60',
         margin: 10
     },
-    error: {
-        color: "red",
+    errorMessage: {
+        backgroundColor: 'red',
+        color: 'white',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        textAlign: 'center',
+        justifyContent: 'center'
     },
     loginText: {
-        
+
         paddingLeft: 5,
         fontSize: 22,
-        
+
         color: "white",
         marginTop: 10,
         marginBottom: 50,
         paddingBottom: 5,
         textAlign: 'center',
-        
+
     },
     textFields: {
         padding: 10,
