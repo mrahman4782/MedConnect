@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../FireBaseConfig';
 import { View, Text } from 'react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 const RootLayout = () => {
 
@@ -29,6 +30,7 @@ const RootLayout = () => {
                     headerStyle: {
                         backgroundColor: "purple",
                     },
+                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
                     tabBarStyle: { display: !user ? 'none' : 'flex' }
                 }}
             />
@@ -44,6 +46,7 @@ const RootLayout = () => {
                     headerTitleStyle: {
                         color: "#FFFFFF",
                     },
+                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
                     tabBarStyle: { display: !user ? 'none' : 'flex' }
                 }}
             />
