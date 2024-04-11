@@ -7,7 +7,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from "../FireBaseConfig";
 import authRequest from '../functions/authRequest';
 import logoImage from '../../assets/logo1.png';
-import logoTransparent from '../../assets/logo1_background_removed.png'
+import logoTransparent from '../../assets/logo1_cropped.png'
 import sessionStorage from '../functions/sessionStorage.js';
 
 // const Stack = createNativeStackNavigator();
@@ -25,6 +25,7 @@ import sessionStorage from '../functions/sessionStorage.js';
 const Homepage = () => {
     // const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
+    const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true)
 
     // get auth request
@@ -48,46 +49,74 @@ const Homepage = () => {
 
     // }, [])
     useEffect(() => {
-
-
-
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            console.log("user: ", user);
+            //console.log("user: ", user);
             setUser(user);
+            if (user) {
+                // console.log("username: ", user.displayName);
+                setUsername(user.displayName) //need api to get username. or atleast set up displayname
+            }
             setLoading(false);
         })
     }, [])
 
     return (
-        <View>
+        <View style={styles.background}>
+            <Image
+                source={logoTransparent}
+                style={styles.logo}
+                resizeMode="center"
+            />
             {loading ? (<Text>Loading...</Text>
             ) : (
                 user ? (
                     <View>
-                        <Text>Welcome, user</Text>
+                        {/* <Image
+                            source={logoTransparent}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        /> */}
+                        {username != null && <Text style={{ paddingBottom: 10, fontSize: 20, color: 'skyblue' }}>Welcome, {username}</Text>}
                         <Pressable
+                            style={styles.chatButton}
                             onPress={() =>
                                 router.push({
                                     pathname: '/screens/Chatbot',
                                 })
                             }
                         >
-                            <Text>ChatBot</Text>
-                        </Pressable>
-
-                        <Pressable onPress={() => {FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey('');}} title="Logout" >
-                            <Text>Logout</Text>
+                            <Text style={styles.chatButtonText}>ChatBot</Text>
                         </Pressable>
 
                         <Pressable
+                            style={styles.mapButton}
                             onPress={() =>
                                 router.push({
                                     pathname: '/screens/Map',
                                 })
                             }
                         >
-                            <Text>Map</Text>
+                            <Text style={styles.mapButtonText}>Map</Text>
                         </Pressable>
+
+                        <Pressable
+                            style={styles.mapButton}
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/screens/TestPage',
+                                })
+                            }
+                        >
+                            <Text style={styles.mapButtonText}>Test</Text>
+                        </Pressable>
+
+                        <Pressable
+                            style={styles.logoutButton}
+                            onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
+                            <Text style={styles.logoutButtonText}>Logout</Text>
+                        </Pressable>
+
+
 
                         {/* <Pressable
                             onPress={() =>
@@ -100,16 +129,16 @@ const Homepage = () => {
                         </Pressable> */}
                     </View>
                 ) : (
-                    <View style={styles.background_notLoggedIn}>
-                        <Image
+                    <View >
+                        {/* <Image
                             source={logoTransparent}
                             style={styles.logo}
                             resizeMode="contain"
-                        />
+                        /> */}
                         <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
                             <Text style={styles.loginButtonText}>L O G I N</Text>
                         </Pressable>
-                        <Pressable style={styles.registerButton} onPress={() => router.push({pathname: '/screens/Register'})}>
+                        <Pressable style={styles.registerButton} onPress={() => router.push({ pathname: '/screens/Register' })}>
                             <Text style={styles.registerButtonText}>R E G I S T E R</Text>
                         </Pressable>
                     </View>
@@ -121,28 +150,41 @@ const Homepage = () => {
 
 const styles = StyleSheet.create({
     root: {
-        
+
         backgroundColor: '#F9FBFC'
     },
     logo: {
+        marginTop: 100,
         height: 350,
-        width: 400
+        width: 500
     },
-    background_notLoggedIn : {
+    background: {
         flex: 1,
-        backgroundColor: '#598392',
-        justifyContent: 'center', // centers vertically
+        backgroundColor: '#000080',
+        justifyContent: 'center',
         alignItems: 'center',
-        
     },
+    // background_notLoggedIn: {
+    //     flex: 1,
+    //     backgroundColor: '#598392',
+    //     justifyContent: 'center', // centers vertically
+    //     alignItems: 'center',
+    // },
+    // background_LoggedIn: {
+    //     flex: 1,
+    //     backgroundColor: '#598392',
+    //     justifyContent: 'center', // Start aligning content from the top
+    //     alignItems: 'center',
+    //     paddingTop: '10%', // Adjust this value based on the desired starting point of your content
+    // },
     loginButton: {
         backgroundColor: '#0a0a0a',
         padding: 20,
         width: 250,
         height: 50,
         borderRadius: 5,
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 110,
     },
     loginButtonText: {
@@ -155,8 +197,8 @@ const styles = StyleSheet.create({
         width: 250,
         height: 50,
         borderRadius: 5,
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 7,
         marginBottom: 400
     },
@@ -164,7 +206,51 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontSize: 12,
     },
-    
+    chatButton: {
+        backgroundColor: '#7da2a9',
+        padding: 10,
+        margin: 5,
+        width: 250,
+        height: 50,
+        borderRadius: 5,
+        alignItems: 'center', // Center text horizontally
+        justifyContent: 'center', // Center text vertically
+    },
+    chatButtonText: {
+        color: '#ffffff',
+        fontSize: 16,
+    },
+    mapButton: {
+        backgroundColor: '#41636c',
+        padding: 10,
+        margin: 5,
+        width: 250,
+        height: 50,
+        borderRadius: 5,
+        alignItems: 'center', // Center text horizontally
+        justifyContent: 'center', // Center text vertically
+    },
+    mapButtonText: {
+        color: '#ffffff',
+        fontSize: 16,
+    },
+    logoutButton: {
+        backgroundColor: '#3c4a50',
+        padding: 10,
+        margin: 5,
+        width: 250,
+        height: 50,
+        borderRadius: 5,
+        alignItems: 'center', // Center text horizontally
+        justifyContent: 'center', // Center text vertically
+        marginBottom: 400
+
+    },
+    logoutButtonText: {
+        color: '#ffffff', // White for contrast
+        fontSize: 16,
+    }
+
 })
 
 export default Homepage;
