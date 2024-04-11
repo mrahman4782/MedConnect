@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useWindowDimensions, SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native';
+import { View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
 import Logo from '../../../assets/icon.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-
-const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
+import { providerRetrieve } from "../../functions/providerRetrieve";
 
 const Map = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -12,106 +11,115 @@ const Map = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [error, setError] = useState(null);
     const [fullData, setFullData] = useState([]);
-    const [locationName, setLocationName] = useState("");
+    const [specialty, setSpecialty] = useState("");
 
     const {height} = useWindowDimensions();
-    const onPressSearch = () => {
-        console.warn("Searching")
-    }
-
-    useEffect(() => {
-        setIsLoading(true);
-        fetchData(API_ENDPOINT)
-    }, []);
-
-    const fetchData = async(url) => {
-        try{
-            const response = await fetch(url);
-            const json = await response.json();
-            setData(json.results);
-
-            console.log(json.results)
-
-            setIsLoading(false);
-
-        } catch(error) {
-             
-            setError(error);
-            console.error(error);
-            setIsLoading(false);
+    
+    const onPressSubmit = async () => {
+        let res = await providerRetrieve(specialty);
+        if (res.status == 200){
+            console.log("Information received");
+            setFullData(res.data);
         }
     }
 
-    handleSearch = (query) => {
-        setSearchQuery(query)
-    }
-
-
-    if( isLoading ){
-        return(
-            <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-                <ActivityIndicator 
-                    size={"large"}
-                    color="#5500dc"
-                />
-            </View>
-        )
-    }
-
-    if(error){
-        return(
-            <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-                <Text>Error in fetch data ... Please try again later</Text>
-            </View>
-        )
-    }
+    function transformData(data) {
+        let items = [];
+        const itemNumbers = Object.keys(data).reduce((acc, key) => {
+          const match = key.match(/\d+$/);
+          if (match) {
+            acc.add(match[0]);
+          }
+          return acc;
+        }, new Set());
+      
+        itemNumbers.forEach(number => {
+          items.push({
+            name: data[`Name${number}`],
+            address: data[`Address${number}`],
+            link: data[`Link${number}`]
+          });
+        });
+      
+        return items;
+      }
+      
+      //const itemsArray = transformData(data);
 
     return (
-        <SafeAreaView style={styles.root}>
-            <Image
-                source={Logo}
-                style={[styles.map, {height: height * 0.3}]} 
-                resizeMode="contain"
+        <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.root}>
+            {/* <Text>This is userpage {id}</Text> */}
+            <Text style={styles.text}>SPECIALTY</Text>
+            <CustomInput
+                value={specialty}
+                setValue={setSpecialty}
+                placeholder="Enter the name of any specialty"
+                style={styles.textFields}
             />
-            <Text>Map</Text>
-            <CustomInput 
-                placeholder = "location"
-                value = {locationName}
-                setValue = {setLocationName}
-            />
-            <FlatList 
-                data={data}
-                keyExtractor={(item) => item.login.username}
-                renderItem={({item}) => (
-                    <View styles={styles.itemContainer}>
-                        <Image source={{url: item.picture.thumbnail}} style={styles.image}/>
-                        <View>
-                            <Text style={styles.textName}>{item.name.first} {item.name.last}</Text>
-                            <Text style={styles.textLocation}>{item.name.email}</Text>
-                        </View>
-                    </View>
-                )}
-            />
+            {transformData(fullData).map((item, index) => (
+            <TouchableOpacity
+                key={index}
+                style={styles.box}
+                onPress={() => Linking.openURL(item.link)}
+            >
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.address}>{item.address}</Text>
+            </TouchableOpacity>
+            ))}
             <CustomButton
-                text="Search"
-                onPress={onPressSearch}
+                text="Submit"
+                onPress={onPressSubmit}
             />
-        </SafeAreaView>
+        </View>
+    </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     root: {
-        alignItems : 'center',
         padding: 20,
-        backgroundColor: '#F9FBFC'
+        backgroundColor: '#e0e1dd',
     },
     map: {
         width: '70%',
-        maxWidth: 300,
+        maxWidth: 30,
         maxHeight: 200,
         margin: 10,
-    }
+    },
+    textFields: {
+        padding: 5,
+        color: '#757474',
+        outline: 'none',
+        borderWidth: 0,
+        borderRadius: 5,
+        
+    },
+    text: {
+        paddingLeft: 5,
+        fontSize: 10,
+        marginTop: 10,
+        paddingBottom: 5
+    },
+    box: {
+        // Style for each 'box'
+        borderWidth: 1,
+        borderColor: 'black',
+        borderRadius: 4,
+        padding: 10,
+        marginBottom: 10,
+        backgroundColor: 'white',
+      },
+      name: {
+        // Style for the name text
+        fontWeight: 'bold',
+      },
+      address: {
+        // Style for the address text
+      }
+    
+    
+
 })
 
 export default Map;
