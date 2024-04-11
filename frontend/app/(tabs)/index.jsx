@@ -70,7 +70,7 @@ const Homepage = () => {
             {loading ? (<Text>Loading...</Text>
             ) : (
                 user ? (
-                    <View style={styles.login}>
+                    <View>
                         {/* <Image
                             source={logoTransparent}
                             style={styles.logo}
@@ -129,13 +129,12 @@ const Homepage = () => {
                         </Pressable> */}
                     </View>
                 ) : (
-                    <View style={styles.logout}>
+                    <View >
                         {/* <Image
                             source={logoTransparent}
                             style={styles.logo}
                             resizeMode="contain"
                         /> */}
-
                         <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
                             <Text style={styles.loginButtonText}>L O G I N</Text>
                         </Pressable>
@@ -165,13 +164,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    box: {
-        alignItems: 'center',
-        flex: 1,
-        padding: 20,
-        paddingBottom: 130,
-        paddingTop: 80
-    },
     // background_notLoggedIn: {
     //     flex: 1,
     //     backgroundColor: '#598392',
@@ -185,21 +177,15 @@ const styles = StyleSheet.create({
     //     alignItems: 'center',
     //     paddingTop: '10%', // Adjust this value based on the desired starting point of your content
     // },
-    login: {
-        marginBottom: 200,
-    },
-    logout: {
-        marginBottom: 300,
-    },
     loginButton: {
         backgroundColor: '#0a0a0a',
-        padding: 10,
-        margin: 5,
+        padding: 20,
         width: 250,
         height: 50,
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 110,
     },
     loginButtonText: {
         color: '#FFFFFF',
@@ -207,13 +193,14 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         backgroundColor: '#f5f0f0',
-        padding: 10,
-        margin: 5,
+        padding: 20,
         width: 250,
         height: 50,
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 7,
+        marginBottom: 400
     },
     registerButtonText: {
         color: '#000000',
@@ -256,6 +243,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center', // Center text horizontally
         justifyContent: 'center', // Center text vertically
+        marginBottom: 400
+
     },
     logoutButtonText: {
         color: '#ffffff', // White for contrast
@@ -265,3 +254,4 @@ const styles = StyleSheet.create({
 })
 
 export default Homepage;
+
