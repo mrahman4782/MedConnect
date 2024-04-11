@@ -43,11 +43,11 @@ export async function userLogin(email, password) {
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(errorCode);
-    console.log(errorMessage);
-    console.log('AHHHHHHHHHHHHHHHHHhh');
-
-    return error;
+    console.log("Error Code: ", errorCode);
+    console.log("Error Msg: ", errorMessage);
+    // console.log('AHHHHHHHHHHHHHHHHHhh');
+    // return error;
+    throw error;
   }
 }
 
