@@ -10,18 +10,6 @@ import logoImage from '../../assets/logo1.png';
 import logoTransparent from '../../assets/logo1_background_removed(cropped).png'
 import sessionStorage from '../functions/sessionStorage.js';
 
-// const Stack = createNativeStackNavigator();
-// const InsideStack = createNativeStackNavigator();
-
-// function InsideLayout() {
-//     return (
-//         <InsideStack.Navigator>
-//             <InsideStack.Screen name="Example" component={List} />
-//         </InsideStack.Navigator>
-
-//     )
-// }
-
 const Homepage = () => {
     // const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
@@ -53,12 +41,36 @@ const Homepage = () => {
             //console.log("user: ", user);
             setUser(user);
             if (user) {
-                // console.log("username: ", user.displayName);
+                console.log("user: ", user);
                 setUsername(user.displayName) //need api to get username. or atleast set up displayname
             }
             setLoading(false);
         })
     }, [])
+
+    const onPressFakeLogin = () => {
+        // Simulate fake user login
+        setUser({}); // Set a dummy user object
+        setUsername("Fake User"); // Set a dummy username
+        setLoading(true); // Simulate loading state
+
+        // Simulate page refresh after fake user login
+        setTimeout(() => {
+            setLoading(false); // Turn off loading state
+        }, 1000); // Wait for 1 second before refreshing
+    };
+
+    const onPressFakeLogout = () => {
+        // Simulate fake user logout
+        setUser(null); // Set a dummy user object
+        setUsername(null);
+        setLoading(true); // Simulate loading state
+
+        // Simulate page refresh after fake user login
+        setTimeout(() => {
+            setLoading(false); // Turn off loading state
+        }, 1000); // Wait for 1 second before refreshing
+    };
 
     return (
         <View style={styles.background}>
@@ -70,6 +82,7 @@ const Homepage = () => {
             {loading ? (<Text>Loading...</Text>
             ) : (
                 user ? (
+                    //logged in users
                     <View style={styles.login}>
                         {/* <Image
                             source={logoTransparent}
@@ -116,7 +129,11 @@ const Homepage = () => {
                             <Text style={styles.logoutButtonText}>Logout</Text>
                         </Pressable>
 
-
+                        <Pressable
+                            style={styles.logoutButton}
+                            onPress={onPressFakeLogout}>
+                            <Text style={styles.logoutButtonText}>Fake Logout</Text>
+                        </Pressable>
 
                         {/* <Pressable
                             onPress={() =>
@@ -129,6 +146,7 @@ const Homepage = () => {
                         </Pressable> */}
                     </View>
                 ) : (
+                    // logged out users
                     <View style={styles.logout}>
                         {/* <Image
                             source={logoTransparent}
@@ -139,8 +157,13 @@ const Homepage = () => {
                         <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
                             <Text style={styles.loginButtonText}>L O G I N</Text>
                         </Pressable>
+
                         <Pressable style={styles.registerButton} onPress={() => router.push({ pathname: '/screens/Register' })}>
                             <Text style={styles.registerButtonText}>R E G I S T E R</Text>
+                        </Pressable>
+
+                        <Pressable style={styles.loginButton} onPress={onPressFakeLogin}>
+                            <Text style={styles.loginButtonText}>Fake Login</Text>
                         </Pressable>
                     </View>
                 )

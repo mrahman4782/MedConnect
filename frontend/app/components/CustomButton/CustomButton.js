@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     text_SECONDARY: {
         color: 'blue',
     },
+
 })
 
 export default CustomButton;

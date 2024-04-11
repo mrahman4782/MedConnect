@@ -29,11 +29,13 @@ const Chatbot = () => {
             width: '100%',
             height: '100%',
             position: 'absolute',
+
         },
         container: {
             flex: 1,
             padding: 10,
-            justifyContent: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: '#000080',
 
         },
         messageContainer: {
@@ -43,6 +45,8 @@ const Chatbot = () => {
             maxWidth: '80%',
             alignSelf: 'flex-end',
             flexWrap: 'wrap',
+            borderWidth: 4,
+            borderColor: '#000000',
         },
         userMessage: {
             backgroundColor: '#add8e6',
@@ -52,7 +56,7 @@ const Chatbot = () => {
 
         },
         gptMessage: {
-            backgroundColor: '#90ee90',
+            backgroundColor: '#f8f8ff',
             borderTopLeftRadius: 20,
             borderBottomLeftRadius: 20,
             borderTopRightRadius: 20,
@@ -64,33 +68,35 @@ const Chatbot = () => {
         },
         inputContainer: {
             flexDirection: 'row',
-            width: '80%',
-            borderColor: '#000',
-            padding: 5,
             justifyContent: 'space-between',
-            minHeight: 50,
-            marginTop: 30
+            alignItems: 'center',
+            width: '100%',
+            paddingHorizontal: 10,
+            marginBottom: 20,
         },
         textInput: {
-            flex: 1,
+            flex: 4, 
             marginRight: 10,
-            fontSize: 14,
-            padding: 10
+            padding: 10,
+            backgroundColor: '#FFF',
+            minHeight: 40, 
+            maxHeight: 200,
+            textAlignVertical: 'top',
         },
         sendButtonContainer: {
-            paddingHorizontal: 12,
-            paddingVertical: 8,
-            borderRadius: 5,
+            flex: 1, 
             justifyContent: 'center',
+            alignItems: 'center',
+            padding: 10,
+            backgroundColor: '#D3D3D3',
+            borderRadius: 5,
         },
-        sendButtonText: {
-            color: '#000000',
+          sendButtonText: {
+            color: '#FFFFFF',
             fontWeight: 'bold',
-            textAlign: 'center',
-            fontSize: 16,
-        },
-
+          },
     });
+    
 
     //Function when you press 'Enter', Send user message to GPT and append answer
     const onEnterPress = async () => {
@@ -125,18 +131,24 @@ const Chatbot = () => {
                     </View>
                 ))}
                 <View style={styles.inputContainer}>
-                    <CustomInput
-                        style={styles.textInput}
-                        placeholder="Enter your message"
-                        value={input}
-                        setValue={setInput}
-                    />
-                    <CustomButton
-                        containerStyle={styles.sendButtonContainer}
-                        textStyle={styles.sendButtonText}
-                        text="Enter"
-                        onPress={onEnterPress}
-                    />
+                    <View style={{ flex: 4, marginRight: 10 }}>
+                        <CustomInput
+                            style={styles.textInput}
+                            placeholder="Enter your message"
+                            value={input}
+                            setValue={setInput}
+                            multiline={true}
+                            numberOfLines={4}
+                        />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <CustomButton
+                            containerStyle={styles.sendButtonContainer}
+                            textStyle={styles.sendButtonText}
+                            text="Enter"
+                            onPress={onEnterPress}
+                        />
+                    </View>
                 </View>
             </ScrollView>
         </View>
