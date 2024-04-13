@@ -4,13 +4,19 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import { useState, useEffect } from 'react';
 import MapView, { Marker } from 'react-native-maps'
+import {logo1} from '../../../assets/logo1.png';
+// import dotenv from 'dotenv';
+// dotenv.config({path: '../../.env'}); 
 
+// const apiKey = process.env.GOOGLE_MAP_KEY;
+
+const apiKey = '';
 
 const Map = () => {
 
     const { height } = useWindowDimensions();
     const [markers, setMarkers] = useState([]);  
-    const [mapInput, setMapInput] = useState("");
+    const [mapInput, setMapInput] = useState("");   
     const [userLatitude, setUserLatitude] = useState(40.7128);
     const [userLongitude, setUserLongitude] = useState( -74.0060);
     const [address, setAddress] = useState('');
@@ -46,7 +52,9 @@ const Map = () => {
     useEffect(() => {
 
         if (userLatitude && userLongitude && mapInput.trim()) {
-            const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=5000&type=${mapInput.trim()}&key=`;
+            const apiUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(mapInput.trim())}&location=${userLatitude},${userLongitude}&radius=5000&key=${apiKey}`;
+
+        // const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${userLatitude},${userLongitude}&radius=5000&type=${mapInput.trim()}&key=${apiKey}`;
 
             fetch(apiUrl)
                 .then((response) => response.json())
@@ -66,7 +74,7 @@ const Map = () => {
     }, [userLatitude, userLongitude, mapInput]); 
 
     const convertAddressToCoords = async (address) => {
-        const geocodeApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=`;
+        const geocodeApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
         try {
             const response = await fetch(geocodeApiUrl);
             const data = await response.json();
@@ -88,15 +96,14 @@ const Map = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
             <Image
-                source={Logo}
-                style={[styles.logo, { height: height * 0.3 }]}
-
+                source={logo1}
+                // style={[styles.logo1, { height: height * 0.3 }]}
 
                 resizeMode="contain"
             />
             <Text>Welcome to the MedChat</Text>
 
-            <CustomInput
+            {/* <CustomInput
             style={styles.input}
             value={userLatitude}
             setValue={setUserLatitude}
@@ -107,7 +114,7 @@ const Map = () => {
             value={userLongitude}
             setValue={setUserLongitude}
             placeholder="Enter longitude"
-            />
+            /> */}
 
             <CustomInput
                 style={styles.input}
@@ -124,7 +131,7 @@ const Map = () => {
             />
 
             <CustomButton
-                text="Convert and Search"
+                text="Search"
                 onPress={() => convertAddressToCoords(address)}
             />
             
@@ -153,6 +160,7 @@ const Map = () => {
         ))}
         
         </MapView>
+    
         </View>
 
         </ScrollView>

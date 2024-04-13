@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
     "react-native": "^0.73.5",
     "react-native-maps": "^1.10.3"
   }
