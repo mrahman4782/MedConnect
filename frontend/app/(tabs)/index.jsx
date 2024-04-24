@@ -9,45 +9,15 @@ import authRequest from '../functions/authRequest';
 import logoImage from '../../assets/logo1.png';
 import logoTransparent from '../../assets/logo1_cropped_nobg.png'
 import sessionStorage from '../functions/sessionStorage.js';
-
-// const Stack = createNativeStackNavigator();
-// const InsideStack = createNativeStackNavigator();
-
-// function InsideLayout() {
-//     return (
-//         <InsideStack.Navigator>
-//             <InsideStack.Screen name="Example" component={List} />
-//         </InsideStack.Navigator>
-
-//     )
-// }
+import LottieView from 'lottie-react-native'
 
 const Homepage = () => {
     // const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true)
+    const [animationPlayed, setAnimationPlayed] = useState(true)
 
-    // get auth request
-    // if verified, change available linkes (i.e. if person is signed in, remove the signin and register)
-    // useEffect(() => {
-    //     //get authentication
-    //     const auth = async () => {
-    //         //get token
-
-    //         //get authRequest
-    //     }
-
-    //     return () => {
-    //         console.log("if verified change availble links")
-    //     };
-
-    //     async function helper() {
-    //         await auth();
-    //         setLoading(false)
-    //     }
-
-    // }, [])
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
             //console.log("user: ", user);
@@ -62,86 +32,88 @@ const Homepage = () => {
 
     return (
         <View style={styles.background}>
-            <Image
-                source={logoTransparent}
-                style={styles.logo}
-                resizeMode="center"
-            />
-            {loading ? (<Text>Loading...</Text>
+            {animationPlayed ? (
+                <View style={styles.animationStyle}>
+                    <LottieView
+                        source={require('../../assets/Test1.json')}
+                        autoPlay
+                        loop={false}
+                        onAnimationFinish={() => setAnimationPlayed(false)}
+                    />
+                </View>
+            ) : loading ? (
+                <Text>Loading...</Text>
             ) : (
-                user ? (
-                    <View style={styles.login}>
-                        {/* <Image
-                            source={logoTransparent}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        /> */}
-                        {username != null && <Text style={{ paddingBottom: 10, fontSize: 20, color: 'skyblue' }}>Welcome, {username}</Text>}
-                        <Pressable
-                            style={styles.chatButton}
-                            onPress={() =>
-                                router.push({
-                                    pathname: '/screens/Chatbot',
-                                })
-                            }
-                        >
-                            <Text style={styles.chatButtonText}>ChatBot</Text>
-                        </Pressable>
+                <View style={styles.logoContainer}>
+                    <Image
+                        source={logoTransparent}
+                        style={styles.logo}
+                        resizeMode="center"
+                    />
+                    {user ? (
+                        <View style={styles.login}>
+                            {username != null && <Text style={{ paddingBottom: 10, fontSize: 20, color: 'skyblue' }}>Welcome, {username}</Text>}
+                            <Pressable
+                                style={styles.chatButton}
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/screens/Chatbot',
+                                    })
+                                }
+                            >
+                                <Text style={styles.chatButtonText}>ChatBot</Text>
+                            </Pressable>
 
-                        <Pressable
-                            style={styles.mapButton}
-                            onPress={() =>
-                                router.push({
-                                    pathname: '/screens/Map',
-                                })
-                            }
-                        >
-                            <Text style={styles.mapButtonText}>Map</Text>
-                        </Pressable>
+                            <Pressable
+                                style={styles.mapButton}
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/screens/Map',
+                                    })
+                                }
+                            >
+                                <Text style={styles.mapButtonText}>Map</Text>
+                            </Pressable>
 
-                        <Pressable
-                            style={styles.logoutButton}
-                            onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
-                            <Text style={styles.logoutButtonText}>Logout</Text>
-                        </Pressable>
+                            <Pressable
+                                style={styles.logoutButton}
+                                onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
+                                <Text style={styles.logoutButtonText}>Logout</Text>
+                            </Pressable>
 
-                        <Pressable
-                            style={styles.mapButton}
-                            onPress={() =>
-                                router.push({
-                                    pathname: '/screens/Credit',
-                                })
-                            }
-                        >
-                            <Text style={styles.mapButtonText}>Credit</Text>
-                        </Pressable>
-                    </View>
-                ) : (
-                    <View style={styles.logout}>
-                        {/* <Image
-                            source={logoTransparent}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        /> */}
+                            <Pressable
+                                style={styles.mapButton}
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/screens/Credit',
+                                    })
+                                }
+                            >
+                                <Text style={styles.mapButtonText}>Credit</Text>
+                            </Pressable>
+                        </View>
+                    ) : (
+                        <View style={styles.logout}>
 
-                        <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
-                            <Text style={styles.loginButtonText}>L O G I N</Text>
-                        </Pressable>
-                        <Pressable style={styles.registerButton} onPress={() => router.push({ pathname: '/screens/Register' })}>
-                            <Text style={styles.registerButtonText}>R E G I S T E R</Text>
-                        </Pressable>
-                        <Pressable
-                            style={styles.mapButton}
-                            onPress={() =>
-                                router.push({
-                                    pathname: '/screens/Credit',
-                                })
-                            }
-                        >
-                            <Text style={styles.mapButtonText}>Credit</Text>
-                        </Pressable>
-                    </View>
-                )
+                            <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
+                                <Text style={styles.loginButtonText}>L O G I N</Text>
+                            </Pressable>
+                            <Pressable style={styles.registerButton} onPress={() => router.push({ pathname: '/screens/Register' })}>
+                                <Text style={styles.registerButtonText}>R E G I S T E R</Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.mapButton}
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/screens/Credit',
+                                    })
+                                }
+                            >
+                                <Text style={styles.mapButtonText}>Credit</Text>
+                            </Pressable>
+                        </View>
+                    )}
+                </View>
             )}
         </View>
     )
@@ -169,19 +141,9 @@ const styles = StyleSheet.create({
         paddingBottom: 130,
         paddingTop: 80
     },
-    // background_notLoggedIn: {
-    //     flex: 1,
-    //     backgroundColor: '#598392',
-    //     justifyContent: 'center', // centers vertically
-    //     alignItems: 'center',
-    // },
-    // background_LoggedIn: {
-    //     flex: 1,
-    //     backgroundColor: '#598392',
-    //     justifyContent: 'center', // Start aligning content from the top
-    //     alignItems: 'center',
-    //     paddingTop: '10%', // Adjust this value based on the desired starting point of your content
-    // },
+    animationStyle: {
+        flex: 1
+    },
     login: {
         marginBottom: 200,
     },
