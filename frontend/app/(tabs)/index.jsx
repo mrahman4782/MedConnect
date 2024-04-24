@@ -100,33 +100,21 @@ const Homepage = () => {
                         </Pressable>
 
                         <Pressable
-                            style={styles.mapButton}
-                            onPress={() =>
-                                router.push({
-                                    pathname: '/screens/TestPage',
-                                })
-                            }
-                        >
-                            <Text style={styles.mapButtonText}>Test</Text>
-                        </Pressable>
-
-                        <Pressable
                             style={styles.logoutButton}
                             onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
                             <Text style={styles.logoutButtonText}>Logout</Text>
                         </Pressable>
 
-
-
-                        {/* <Pressable
+                        <Pressable
+                            style={styles.mapButton}
                             onPress={() =>
                                 router.push({
                                     pathname: '/screens/Credit',
                                 })
                             }
                         >
-                            <Text>Credit</Text>
-                        </Pressable> */}
+                            <Text style={styles.mapButtonText}>Credit</Text>
+                        </Pressable>
                     </View>
                 ) : (
                     <View style={styles.logout}>
@@ -142,6 +130,16 @@ const Homepage = () => {
                         <Pressable style={styles.registerButton} onPress={() => router.push({ pathname: '/screens/Register' })}>
                             <Text style={styles.registerButtonText}>R E G I S T E R</Text>
                         </Pressable>
+                        <Pressable
+                            style={styles.mapButton}
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/screens/Credit',
+                                })
+                            }
+                        >
+                            <Text style={styles.mapButtonText}>Credit</Text>
+                        </Pressable>
                     </View>
                 )
             )}
@@ -151,7 +149,6 @@ const Homepage = () => {
 
 const styles = StyleSheet.create({
     root: {
-
         backgroundColor: '#F9FBFC'
     },
     logo: {
