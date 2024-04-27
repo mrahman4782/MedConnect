@@ -285,8 +285,31 @@ const styles = StyleSheet.create({
         fontSize: 10,
         marginTop: 10,
         paddingBottom: 5
-    }
+    },
     
+    root: {
+        flex: 1,
+        backgroundColor: '#FFFFFF', // Change to match design
+        padding: 20,
+    },
+    textFields: {
+        backgroundColor: '#FFFFFF', // Input field background
+        borderWidth: 1,
+        borderColor: '#e8e8e8', // Light grey border for input
+        borderRadius: 8, // Rounded corners
+        padding: 15, // Generous padding for spacing
+        marginTop: 5, // Space between inputs
+        marginBottom: 5, // Space between inputs
+        fontSize: 16, // Increase font size
+    },
+    text: {
+
+        fontSize: 16,
+        color: '#757474', // Darker color for text
+        fontWeight: 'bold', // Bold font weight
+        paddingTop: 15, // Space above label
+        paddingLeft: 5, // Align text with input
+    },
     
 })
 
