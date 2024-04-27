@@ -10,6 +10,7 @@ import { chat } from "./openAI.js";
 import { assistantAI } from "./assistantai.js";
 import { updateProfile } from "./updateProfile.js";
 import { zocdocExtracter2 } from "./zocdocExtracter2.js";
+import { geocodeHandler } from "./geocode.js";
 
 const app = express();
 const port = 3000;
@@ -83,5 +84,18 @@ app.post("/api/getProviders", async (req, res) => {
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
 });
+
+app.post("/api/getGeocode", async (req, res) => {
+  console.log(req);
+  let token = req.body.token;
+  let data = req.body.data;
+
+  let returnMessage = await geocodeHandler(data, token);
+  //let checkUserLogin = await loginVerify(token);
+
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
