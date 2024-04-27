@@ -3,6 +3,7 @@ import { View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimens
 import Logo from '../../../assets/icon.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
+import CustomExpandableCard from '../../components/CustomExpandableCard';
 import { providerRetrieve } from "../../functions/providerRetrieve";
 
 const Map = () => {
@@ -24,22 +25,23 @@ const Map = () => {
     }
 
     function transformData(data) {
-        let items = [];
-        const itemNumbers = Object.keys(data).reduce((acc, key) => {
-          const match = key.match(/\d+$/);
-          if (match) {
-            acc.add(match[0]);
-          }
-          return acc;
-        }, new Set());
+        let items = ['poop'];
+        // let items = [];
+        // const itemNumbers = Object.keys(data).reduce((acc, key) => {
+        //   const match = key.match(/\d+$/);
+        //   if (match) {
+        //     acc.add(match[0]);
+        //   }
+        //   return acc;
+        // }, new Set());
       
-        itemNumbers.forEach(number => {
-          items.push({
-            name: data[`Name${number}`],
-            address: data[`Address${number}`],
-            link: data[`Link${number}`]
-          });
-        });
+        // itemNumbers.forEach(number => {
+        //   items.push({
+        //     name: data[`Name${number}`],
+        //     address: data[`Address${number}`],
+        //     link: data[`Link${number}`]
+        //   });
+        //});
       
         return items;
       }
@@ -58,14 +60,15 @@ const Map = () => {
                 style={styles.textFields}
             />
             {transformData(fullData).map((item, index) => (
-            <TouchableOpacity
-                key={index}
-                style={styles.box}
-                onPress={() => Linking.openURL(item.link)}
-            >
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.address}>{item.address}</Text>
-            </TouchableOpacity>
+            // <TouchableOpacity
+            //     key={index}
+            //     style={styles.box}
+            //     onPress={() => Linking.openURL(item.link)}
+            // >
+            //     <Text style={styles.name}>{item.name}</Text>
+            //     <Text style={styles.address}>{item.address}</Text>
+            // </TouchableOpacity>
+            <CustomExpandableCard></CustomExpandableCard>
             ))}
             <CustomButton
                 text="Submit"

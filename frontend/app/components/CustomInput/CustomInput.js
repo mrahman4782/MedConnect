@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native';
 
-const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
+//const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
 
 const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardType, maxLength, query, style }) => {
 
