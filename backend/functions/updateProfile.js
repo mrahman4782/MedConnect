@@ -1,5 +1,4 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import admin from 'firebase-admin'; // Import the default export for auth
 import {loginVerify} from './loginHandler.js';
 
 
