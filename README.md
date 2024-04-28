@@ -4,7 +4,7 @@
 
 - [Purpose](#Purpose)
 - [Description](#Description)
-- [Technologies Used](#TechnologiesUsed)
+- [Technologies Used](#Technologies-Used)
 - [Installation](#Installation)
 - [Credit](#Credit)
 - [Future Plans](#FuturePlans)
