@@ -44,11 +44,11 @@ This will bring up a few options to run on ios simulator, andriod simulator, or 
 ## Credit
 | Name               | Main Roles|
 |--------------------|-------------| 
-| [Mohammad Rahman](#https://github.com/mrahman4782)| Backend, Firebase, ZocDoc | 
-| [Namgyal Thily](#https://github.com/Namgyal9)     | Chatbot AI|
-| [Elizabeth Palacios](#https://github.com/elypalacios) | Backend, Frontend UI, Map|
-| [Yeongho Lee](#https://github.com/k205leeyh)| Chat Page| 
-| [Richard Yeung](#https://github.com/ryrichard)      | Frontend, Debugging | 
+| [Mohammad Rahman](https://github.com/mrahman4782)| Backend, Firebase, ZocDoc | 
+| [Namgyal Thily](https://github.com/Namgyal9)     | Chatbot AI|
+| [Elizabeth Palacios](https://github.com/elypalacios) | Backend, Frontend UI, Map|
+| [Yeongho Lee](https://github.com/k205leeyh)| Chat Page| 
+| [Richard Yeung](https://github.com/ryrichard)      | Frontend, Debugging | 
 
 ## Future Plans
 - Make the switch from chat page to Map/Zocdoc seemless
