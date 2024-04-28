@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, ScrollView, Pressable, TouchableOpacity, Linking } from 'react-native'
 import { useRouter, Stack, Link, router } from 'expo-router';
-import tempImg from '../../../assets/icon.png'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import logo from '../../../assets/MedConnect-12-transparent 2.png';
 import EP from '../../../assets/Elizabeth Palacios.png'
