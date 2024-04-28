@@ -21,11 +21,14 @@ React Native, Expo, ZocDoc, ChatGPT, Netlify, Node, Firebase
 
 
 ## Installation
-It is recommended to use Visual Studio Code. Also, in order to run this locally, you would need to have firebase and open chatgpt set up. But once you do:
+It is recommended to use Visual Studio Code. Also, in order to run this locally, you would need to have Firebase and Open ChatGPT set up. But once you do:
 
-1. git clone 'repo'
-2. In the base of folder, add the .env with Firebase service account and OPENAI key
-3. In both the backend and frontend, create a config file and add your firebase json here
+1. run in the folder of your choosing:
+```
+    git clone https://github.com/mrahman4782/MedConnect.git
+```
+2. In the base of folder, add the .env with Firebase Service Account key and OPENAI key
+3. In both the backend and frontend, create a config folder and add your firebase json there
 4. Then in both the backend and frontend folder, run 
 ```
     npm install
