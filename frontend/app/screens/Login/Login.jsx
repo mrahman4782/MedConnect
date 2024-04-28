@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Platform, Alert, Pressable, Text, View, Image, StyleSheet, useWindowDimensions, ScrollView } from "react-native";
-import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
 import { useRouter, Stack, Link, router } from 'expo-router';

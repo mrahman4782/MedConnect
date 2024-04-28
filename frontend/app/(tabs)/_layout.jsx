@@ -38,13 +38,19 @@ const RootLayout = () => {
             <Tabs.Screen
                 name="User/[id]"
                 options={{
-                    headerTitle: "User Details",
+                    headerTitle: "Update your profile",
                     title: "User",
                     headerStyle: {
-                        backgroundColor: "#598392",
+                        backgroundColor: "#fff",
+                        height:150,
+               
                     },
                     headerTitleStyle: {
-                        color: "#FFFFFF",
+                        color: "#000",
+                        fontSize: 30, 
+                        fontWeight: 'bold', 
+                        marginTop: 20,
+                
                     },
                     tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />,
                     tabBarStyle: { display: !user ? 'none' : 'flex' }
@@ -55,6 +61,7 @@ const RootLayout = () => {
 
     return (
         renderTabs()
+        
     )
 }
 

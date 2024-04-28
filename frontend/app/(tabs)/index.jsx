@@ -8,7 +8,7 @@ import { FIREBASE_AUTH } from "../FireBaseConfig";
 import authRequest from '../functions/authRequest';
 import sessionStorage from '../functions/sessionStorage.js';
 import LottieView from 'lottie-react-native'
-import logoT from '../../assets/logo_transparent.png'
+import logoT from '../../assets/MedConnect-12-transparent 2.png'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
@@ -84,7 +84,7 @@ const Homepage = () => {
                         <Pressable style={[styles.gridOption, { backgroundColor: '#4FA2D3' }]} 
                          onPress={() =>
                             router.push({
-                              pathname: '/User',
+                              pathname: '/User/[id]',
                             })
                           }
                         >
@@ -94,41 +94,52 @@ const Homepage = () => {
                         </Pressable>
 
                         <Pressable style={[styles.gridOption, { backgroundColor: '#5483B3' }]} 
+                            onPress={() =>
+                            router.push({
+                                pathname: '/screens/Credit/Credit',
+                            })
+                            }
                         >
                          <FontAwesome5 name='info-circle' size={35} color="white" solid />
 
                         <Text style={styles.optionText}> About MedConnect </Text>
                         </Pressable>
+
+                        <Pressable
+                        style={styles.logoutButton}
+                        onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
+                       <Text  style={styles.logoutButtonText}> Logout</Text>
+                     </Pressable>
+
+
                       </View>
 
-                      <View>
-                     <Pressable
-                        onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
-                       <Text> Logout</Text>
-                     </Pressable>
+                     
                      </View>
 
-                      </View>
+                
             </SafeAreaView>
 
 
             ) : ( // When no user is logged in
-                <View style={styles.background}>
-                    <View style={styles.logoContainer}> 
+                <View style={styles.root}>
+                    <View style={styles.headerlogo}> 
                     <Image
                         source={logoT}
                         style={styles.logoT}
-                        resizeMode="center"
                     />
                     </View>
-                    <View style={styles.logout}>
-                        <Pressable style={styles.loginButton} onPress={() => router.push(`/screens/Login/`)}>
-                            <Text style={styles.loginButtonText}>Login</Text>
+
+                   
+                    <View style={styles.container2}>
+                        <Pressable style={styles.Button} onPress={() => router.push(`/screens/Login/`)}>
+                            <Text style={styles.ButtonText}>Login</Text>
+                    
                         </Pressable>
-                        <Pressable style={styles.registerButton} onPress={() => router.push({ pathname: '/screens/Register' })}>
-                            <Text style={styles.registerButtonText}>Sign Up </Text>
+                        <Pressable style={styles.Button} onPress={() => router.push({ pathname: '/screens/Register' })}>
+                            <Text style={styles.ButtonText}>Sign Up </Text>
                         </Pressable>
-                    </View>
+                    </View> 
                 </View>
             )}
         </View>
@@ -137,80 +148,57 @@ const Homepage = () => {
 }
 
 const styles = StyleSheet.create({
-    root: {
-        backgroundColor: '#F9FBFC'
-    },
-
+  
     background: {
         flex: 1,
         backgroundColor: '#F5F8FE',
     },
-    // box: {
-    //     alignItems: 'center',
-    //     flex: 1,
-    //     padding: 20,
-    //     paddingBottom: 130,
-    //     paddingTop: 80
-    // },
 
     animationStyle: {
         flex: 1
     },
-    login: {
-        marginBottom: 200,
-    },
-    logout: {
-        marginBottom: 400,
-   
-    },
-    loginButton: {
-        backgroundColor: '#19233C',
-        padding: 15, 
-        marginVertical: 5, 
+
+    logoutButton: {
+        backgroundColor: '#2B4F7A',
         alignItems: 'center',
+        justifyContent: 'center',
         borderRadius: 10,
+        alignSelf: 'center',  
+        width: '93%',
+        height: 70,
+        bottom: 10, 
+        marginTop:20,
+      
+    },
+    logoutButtonText: {
+        color: '#ffffff', 
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center', // Center the text horizontally
+
+    },
+
+    
+    Button: {
+        borderRadius: 10,
+        backgroundColor: '#19233C',
+        marginVertical: 15, 
+        alignItems: 'center',
+        justifyContent: 'center', 
         width: '95%', 
         alignSelf: 'center',
         height:70, 
+        
+        
 
     },
-    loginButtonText: {
+    ButtonText: {
         color: '#FFFFFF',
-        fontSize: 20,
-        fontWeight: 'bold',
-
-    },
-    registerButton: {
-        backgroundColor: '#19233C', 
-        padding: 15,
-        marginVertical: 5,
-        alignItems: 'center',
-        borderRadius: 10,
-        width: '95%',
-        alignSelf: 'center',
-        height:70, 
-
-    },
-    registerButtonText: {
-        color: '#fff',
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: 'bold',
 
     },
     
-    logoutButton: {
-        backgroundColor: '#3c4a50',
-
-        width: 250,
-        height: 50,
-        borderRadius: 5,
-        alignItems: 'center', 
-        justifyContent: 'center', 
-    },
-    logoutButtonText: {
-        color: '#ffffff', 
-        fontSize: 16,
-    },
 
 /////////////////////////////
 
@@ -227,7 +215,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: '#19233C', 
         width: '100%',
-        marginBottom: 50,
+        marginBottom: 40,
         borderBottomRightRadius: 20, 
         borderBottomLeftRadius: 20, 
         paddingVertical: 16,
@@ -238,9 +226,9 @@ const styles = StyleSheet.create({
       headerText: {
         fontSize: 40,
         color: '#fff',
-        fontWeight: 'semi-bold',
+        fontWeight: 'bold',
         marginTop: 80, 
-        marginBottom: 100,
+        marginBottom: 70,
         letterSpacing: -0.5,
         textAlign: 'left',
     },
@@ -256,20 +244,23 @@ const styles = StyleSheet.create({
       },
 
       gridOption: {
-        width: '42%',
+        width: '43%',
         aspectRatio: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 18,
-        padding: 20,
-        margin: 10,
+        paddingTop: 25,
+        paddingLeft:10,
+        paddingRight:10,
+        margin: 12,
       },
 
       optionText: {
         color: '#fff',
-        marginTop: 10,
+        marginTop: 20,
         textAlign: 'center',
         fontWeight: 'bold',
+        fontSize: 20,
       },
 
       centered: {
@@ -278,19 +269,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
 
-      logoContainer: {
-        width: '100%',
-        alignItems: 'center',
+      root: {
         justifyContent: 'center',
-      },
-
-      logoT: {
-        resizeMode: 'cover', 
-        width: 900, // Adjust the width to match the design
-        height: 500, // Adjust the height to maintain aspect ratio
-        alignSelf: 'center', // Center logo horizontally
+        paddingTop: 70,
+        flex: 1,
     },
+
+        headerlogo: {
+        // padding: 40,
+        marginTop: 100,
+        width: '100%',
+        height: '25%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
   
+      logoT: {
+        height: 100,
+        width: 430,
+},
+
+    container2: {
+        flex: 1,
+        backgroundColor: '#F5F8FE',
+        marginTop: 60,
+    },
+
+
 })
 
 
