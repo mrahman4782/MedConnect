@@ -3,10 +3,11 @@ import { Platform, Alert, Pressable, Text, View, Image, StyleSheet, useWindowDim
 import Logo from '../../../assets/icon.png';
 import CustomInput from "../../components/CustomInput";
 import CustomButton from '../../components/CustomButton';
-import { useRouter, Stack } from 'expo-router';
+import { useRouter, Stack, Link, router } from 'expo-router';
 import userLogin from '../../functions/login.js';
-import { Link, router } from "expo-router";
 import sessionStorage from '../../functions/sessionStorage';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import logo from '../../../assets/MedConnect-12-transparent 2.png';
 
 const Login = () => {
     const router = useRouter();
@@ -72,30 +73,47 @@ const Login = () => {
         <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
             <Stack.Screen
                 options={{
-                    headerTitle: 'HeaderTitle',
-                    headerShown: false, //change if you want
+                    headerTitle: '',
+                    // headerShown: true, //change if you want
+                    headerLeft: ({ color }) =>
+                        <Pressable
+                            onPress={() =>
+                                router.push({
+                                    pathname: '/',
+                                })
+                            }>
+                            <FontAwesome size={40} name="arrow-circle-o-left" color={color} />
+                        </Pressable>
                 }}
             />
             <View style={styles.root}>
-                <View style={[styles.box, errorMessage ? styles.boxWithErrorMessage : null]}>
-                    {/* <Image
-                        source={Logo}
-                        style={[styles.logo, { height: height * 0.3 }]}
-                        resizeMode="contain"
-                    /> */}
-                    <Text style={styles.loginText}>L O G I N</Text>
+                <View style={styles.header}>
+                    <Image
+                        source={logo}
+                        style={styles.logo}
+                    />
+                </View>
+
+                <View style={styles.welcomeBox}>
+                    <Text style={styles.welcomeText}>Let's Get Started!</Text>
+                </View>
+
+                {/* <View style={[styles.box, errorMessage ? styles.boxWithErrorMessage : null]}> */}
+                <View styles={styles.box}>
+                    <Text style={styles.text}>Email</Text>
                     <CustomInput
                         style={styles.textFields}
                         placeholder="Email"
                         value={email}
                         setValue={setEmail}
                     />
+                    <Text style={styles.text}>Password</Text>
                     <CustomInput
                         placeholder="Password"
                         style={styles.textFields}
                         value={password}
                         setValue={setPassword}
-                    // secureTextEntry 
+                        secureTextEntry
                     />
                     <CustomButton
                         text="Sign In"
@@ -106,15 +124,22 @@ const Login = () => {
                         onPress={onForgotPasswordPressed}
                         type="TERTIARY"
                     /> */}
-                    <CustomButton
+                    {/* <CustomButton
                         text="Create Account"
                         onPress={onSignUpPressed}
                         type="TERTIARY"
-                    />
-
-                    {Platform.OS !== 'android' && Platform.OS !== 'ios' && errorMessage !== "" && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+                    /> */}
+                    <Pressable onPress={onSignUpPressed}>
+                        <Text style={styles.loginText}>
+                            Dont Have An Account?
+                            <Text style={{ color: '#0C4485' }}> Signup Here </Text>
+                        </Text>
+                    </Pressable>
                 </View>
-
+            </View>
+            <View>
+                {/* {Platform.OS !== 'android' && Platform.OS !== 'ios' && errorMessage !== "" && <Text style={styles.errorMessage}>{errorMessage}</Text>} */}
+                {errorMessage !== "" && <Text style={styles.errorMessage}>{errorMessage}</Text>}
             </View>
         </ScrollView>
     )
@@ -123,47 +148,60 @@ const Login = () => {
 const styles = StyleSheet.create({
     scrollView: {
         flex: 1,
-        backgroundColor: '#000080',
+        backgroundColor: '#F5F8FE',
     },
     root: {
-        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        padding: 200,
+        flex: 1,
+        padding: 50,
         // backgroundColor: '#e0e1dd',
         // paddingBottom: 130,
         // paddingTop: 80,
     },
-    box: {
-        backgroundColor: '#598392',
+    header: {
+        // backgroundColor: 'blue',
         padding: 40,
-        width: 300,
-        height: 400,
-        borderRadius: 20,
-        alignContent: 'center',
+        width: '100%',
+        height: '20%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    welcomeBox: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    welcomeText: {
+        paddingBottom: 10,
+        fontWeight: 'bold',
+        fontSize: 22,
+    },
+    box: {
+        justifyContent: 'center',
+        alignItems: 'left',
     },
     boxWithErrorMessage: {
         height: 450,
     },
+    logo: {
+        height: 100,
+        width: 300,
+    },
+    text: {
+        fontWeight: 'bold',
+        paddingTop: 10,
+    },
     loginText: {
-
-        paddingLeft: 5,
-        fontSize: 22,
-
-        color: "white",
-        marginTop: 10,
-        marginBottom: 50,
-        paddingBottom: 5,
-        textAlign: 'center',
-
+        fontWeight: 'bold',
+        padding: 5,
+        textAlign: 'center'
     },
     textFields: {
-        padding: 5,
-        color: '#757474',
+        padding: 10,
+        color: '#626262',
         outline: 'none',
         borderWidth: 0,
         borderRadius: 5,
-        height: 40
+        height: 45
     },
     smallText: {
 
