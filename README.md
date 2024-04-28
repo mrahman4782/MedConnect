@@ -7,7 +7,7 @@
 - [Technologies Used](#Technologies-Used)
 - [Installation](#Installation)
 - [Credit](#Credit)
-- [Future Plans](#FuturePlans)
+- [Future Plans](#Future-Plans)
 
 ## Purpose
 The US healthcare system is increasingly burdensome and costly. Medconnect offers a solution by providing a one-stop platform for medical services. Our AI offers reliable medical information, while our integration with Zoc Doc and Google Maps simplifies booking appointments with medical professionals and pharmacies. With Medconnect, access to healthcare is streamlined in one convenient app
