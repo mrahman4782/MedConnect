@@ -31,6 +31,7 @@ export async function updateProfile(userData, session){
         'q_do_you_smoke?' : "",
         'q_medical_history' : "",
         'sex' : "",
+        'threadId': "",
         'state' : "",
         'zip' : "",
     };
@@ -53,6 +54,7 @@ export async function updateProfile(userData, session){
     data['q_do_you_smoke?'] = userData.smoke;
     data.state = userData.stateUS;
     data.zip = userData.zip;
+    data.threadId = userData.threadId;
 
 
     // verify the user is logged in

@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Animated, StyleSheet } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 const CustomExpandableCard = (data) => {
 
     const [expanded, setExpanded] = useState(false);
     const [animation] = useState(new Animated.Value(100));
 
+
+    const [region, setRegion] = React.useState({
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+      const pinpointLocation = {
+    latitude: 37.78825, // Replace with the actual latitude
+    longitude: -122.4324, // Replace with the actual longitude
+  };
     const toggleExpansion = () => {
         // Start the animation when the box is clicked
         Animated.timing(animation, {
