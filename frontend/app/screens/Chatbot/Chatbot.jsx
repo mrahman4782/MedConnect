@@ -4,6 +4,10 @@ import { Text, View, StyleSheet, ScrollView, TextInput,
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import chatWithGPT from '../../functions/apiCall';
+import Stack from "expo-router";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+
+
 const Chatbot = () => {
   const [input, setInput] = useState('');
   const [gptOutput, setGptOutput] = useState([{ type: 'gpt', text: 'Hello, how can I help you?' }]);
@@ -20,10 +24,12 @@ const Chatbot = () => {
       setInput('');
     }
   };
+
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#1D3151',
+      backgroundColor: '#19233C',
     },
     scrollViewContainer: {
       flex: 1,
@@ -36,15 +42,17 @@ const Chatbot = () => {
       alignSelf: 'flex-end',
       flexWrap: 'wrap',
     },
-    userMessage: {
-      backgroundColor: '#ADD8E6',
+
+    gptMessage: {
+      backgroundColor: '#001446',
       borderTopRightRadius: 20,
       borderBottomRightRadius: 20,
       borderTopLeftRadius: 20,
       alignSelf: 'flex-start',
     },
-    gptMessage: {
-      backgroundColor: '#111823',
+
+    userMessage: {
+      backgroundColor: '#40414F',
       borderTopLeftRadius: 20,
       borderBottomLeftRadius: 20,
       borderTopRightRadius: 20,
@@ -58,13 +66,13 @@ const Chatbot = () => {
     },
     inputContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-end',
       padding: 10,
     },
     textInput: {
       flex: 1,
       padding: 10,
-      backgroundColor: '#78797A',
+      backgroundColor: 'white',
       borderRadius: 20,
       marginRight: 10,
     },
@@ -79,8 +87,35 @@ const Chatbot = () => {
       height: '100%',
       },
   });
+
+
+
+
+
+
   return (
+
+
     <View style={styles.container}>
+
+      {/* <Stack.Screen
+                      options={{
+                          headerTitle: ‘’,
+                          // headerShown: true, //change if you want
+                          headerLeft: ({ color }) =>
+                              <Pressable
+                                  onPress={() =>
+                                      router.push({
+                                          pathname: ‘/’,
+                                      })
+                                  }>
+                                  <FontAwesome size={40} name=“arrow-circle-o-left” color={color} />
+                              </Pressable>
+                      }}
+                  /> */}
+
+
+
       <ScrollView
         style={styles.scrollViewContainer}
         contentContainerStyle={{ flexGrow: 0 }}
@@ -121,4 +156,6 @@ const Chatbot = () => {
     </View>
   );
 };
+
+
 export default Chatbot;
