@@ -85,6 +85,7 @@ app.post("/api/getProviders", async (req, res) => {
   res.status(returnMessage.status).send(returnMessage.data);
 });
 
+// Function & route no longer needed.
 app.post("/api/getGeocode", async (req, res) => {
   console.log(req);
   let token = req.body.token;

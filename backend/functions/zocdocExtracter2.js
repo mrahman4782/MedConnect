@@ -19,7 +19,7 @@ export async function zocdocExtracter2(specialty, session){
     if (checkUserLogin.status == 200){
         
         try {
-            const docRef = db.collection('providers').doc(specialty);
+            const docRef = db.collection('specialties').doc(specialty);
             const doc = await docRef.get();
             response.status = 200;
             response.data = doc.data();

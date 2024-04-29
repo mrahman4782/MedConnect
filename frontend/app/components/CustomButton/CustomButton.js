@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
 
     container_PRIMARY: {
         backgroundColor: '#000000',
+        whiteSpace: 'nowrap',
+        textAlign: 'center',
     },
 
     container_SECONDARY: {
