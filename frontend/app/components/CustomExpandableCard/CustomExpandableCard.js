@@ -18,8 +18,9 @@ const MarkerComponent = ({ text }) => (
   </div>
 );
 
-const CustomExpandableCard = (data) => {
+const CustomExpandableCard = (provider) => {
 
+    const [loaded, setLoaded] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [animation] = useState(new Animated.Value(100));
 
@@ -37,55 +38,52 @@ const CustomExpandableCard = (data) => {
     const toggleExpansion = () => {
         // Start the animation when the box is clicked
         Animated.timing(animation, {
-          toValue: expanded ? 80 : 330,
+          toValue: expanded ? 85 : 390,
           duration: 300, 
-          useNativeDriver: true
+          useNativeDriver: false
         }).start();
-    
+        
+        console.log(provider)
         setExpanded(!expanded);  
+        setLoaded(true);
       };
     
       return (
         <TouchableOpacity onPress={toggleExpansion}>
           <Animated.View style={[styles.box, { height: animation }]}>
-          <View style={styles.headerContainer}>
-            <View style={styles.textContainer}>
-              <Text style={styles.headerText}>Header Text</Text>
-              <Text style={styles.subText}>This is the subtext</Text>
-            </View>
-            <View style={styles.buttonContainer}>
-              <CustomButton 
-                text="Book Now"
-                type='PRIMARY'
-                onPress={bookAppointmentButton}
-              />
-              {/* <Button
-                title="Press Me"
-                onPress={() => console.log('Button Pressed')}
-              /> */}
-            </View>
+            <View style={styles.headerContainer}>
+              <View style={styles.textContainer}>
+                <Text style={styles.headerText}>{provider.provider.name}</Text>
+                <Text style={styles.subText}>{`${provider.provider.address} ${provider.provider.city}, ${provider.provider.state} ${provider.provider.zip}`}</Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <CustomButton 
+                  text="Book"
+                  type='PRIMARY'
+                  onPress={bookAppointmentButton}
+                />
+              </View>
             </View>
             <View style={styles.mapOuterContainer}>
-            <View style={styles.mapContainer}>
-            <GoogleMapReact
-            // Keep this key here
-            bootstrapURLKeys={{ key: 'AIzaSyBJX_S6YGC-kIExuWzU_stPGi8gi7r9W1M'}}
-            defaultCenter={defaultLocation.center}
-            defaultZoom={defaultLocation.zoom}
-           
-            >
-            <MarkerComponent
-              lat={-50}
-              lng={77} 
-              text="My Marker"
-            />
-            </GoogleMapReact>
+              <View style={styles.mapContainer}>
+                {loaded ? 
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: 'AIzaSyBJX_S6YGC-kIExuWzU_stPGi8gi7r9W1M'}}
+                    defaultCenter={defaultLocation.center}
+                    defaultZoom={defaultLocation.zoom}
+                  >
+                    <MarkerComponent
+                      lat={-50}
+                      lng={77} 
+                      text="My Marker"
+                    />
+                  </GoogleMapReact>
+                : null} {/* Use null instead of empty string for conditional rendering */}
+              </View>
             </View>
-            </View>
-  
-
           </Animated.View>
         </TouchableOpacity>
+
       );
 };
 
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
       borderRadius: '5px',
       paddingRight: 20,
       paddingLeft: 20,
-      paddingBottom: 20,
+      paddingBottom: 40,
     },
     container: {
       position: 'absolute',
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
     },
     mapContainer: {
       width: '100%',
-      height: '70%',
+      height: '80%',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '20px'
@@ -136,16 +134,17 @@ const styles = StyleSheet.create({
       flex: 3, // gives more space to the text side
     },
     headerText: {
-      fontSize: 24,
+      fontSize: 18,
       fontWeight: 'bold',
       color: '#333',
     },
     subText: {
-      fontSize: 16,
+      marginTop: 4,
+      fontSize: 12,
       color: '#666',
     },
     buttonContainer: {
-      flex: 1.5, // lesser space for the button
+      flex: 1.4, // lesser space for the button
     },
     mapOuterContainer: {
       width: '100%',

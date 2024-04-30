@@ -20,34 +20,26 @@ const Map = () => {
         let res = await providerRetrieve(specialty);
         if (res.status == 200){
             console.log("Information received");
+            console.log(res.data.provider1);
             setFullData(res.data);
         }
     }
 
     function transformData(data) {
-        let items = ['poop'];
-        // let items = [];
-        // const itemNumbers = Object.keys(data).reduce((acc, key) => {
-        //   const match = key.match(/\d+$/);
-        //   if (match) {
-        //     acc.add(match[0]);
-        //   }
-        //   return acc;
-        // }, new Set());
-      
-        // itemNumbers.forEach(number => {
-        //   items.push({
-        //     name: data[`Name${number}`],
-        //     address: data[`Address${number}`],
-        //     link: data[`Link${number}`]
-        //   });
-        //});
-      
-        return items;
+
+        // Transform returned object into array for further map computation
+        const objToArr = Object.keys(data).map(key => {
+            return {
+              ...data[key],
+              value: data[key].value + 1
+            };
+          });
+        console.log('hi');
+        console.log(objToArr);
+
+        return objToArr;
       }
       
-      //const itemsArray = transformData(data);
-
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
@@ -60,15 +52,7 @@ const Map = () => {
                 style={styles.textFields}
             />
             {transformData(fullData).map((item, index) => (
-            // <TouchableOpacity
-            //     key={index}
-            //     style={styles.box}
-            //     onPress={() => Linking.openURL(item.link)}
-            // >
-            //     <Text style={styles.name}>{item.name}</Text>
-            //     <Text style={styles.address}>{item.address}</Text>
-            // </TouchableOpacity>
-            <CustomExpandableCard></CustomExpandableCard>
+                <CustomExpandableCard key={index} provider={item} />
             ))}
             <CustomButton
                 text="Submit"
