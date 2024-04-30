@@ -45,18 +45,14 @@ app.post("/api/registerUser", async (req, res) => {
 });
 
 app.post("/api/chat", async (req, res) => {
-  console.log(req);
   let message = req.body.message;
   let checkAPIOutput = await chat(message);
-
-  console.log(checkAPIOutput);
   res.status(checkAPIOutput.status).send(checkAPIOutput.data);
 });
 
 app.post("/api/assistantai", async (req, res) => {
   let message = req.body.message;
   let token = req.body.token;
-  console.log("inAssistantai", message, token);
   let checkAPIOutput = await assistantAI(message, token);
 
   res.status(checkAPIOutput.status).send(checkAPIOutput.data);
