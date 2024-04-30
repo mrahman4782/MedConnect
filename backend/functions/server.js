@@ -55,7 +55,9 @@ app.post("/api/chat", async (req, res) => {
 
 app.post("/api/assistantai", async (req, res) => {
   let message = req.body.message;
-  let checkAPIOutput = await assistantAI(message);
+  let token = req.body.token;
+  console.log("inAssistantai", message, token);
+  let checkAPIOutput = await assistantAI(message, token);
 
   res.status(checkAPIOutput.status).send(checkAPIOutput.data);
 });

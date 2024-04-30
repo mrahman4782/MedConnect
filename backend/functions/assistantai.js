@@ -3,9 +3,12 @@ dotenv.config({ path: "../../.env" });
 import OpenAI from "openai";
 import fs from "fs";
 import axios from "axios";
+import { retrieveUserData } from "./retrieveData.js";
+import { updateThreadId } from "./updateThreadId.js";
 
 const openai_key = process.env.OPENAI_API_KEY;
 const summary_key = process.env.SUMMARIZER_API_KEY;
+const assistant_key = process.env.OPENAI_ASSISTANT_ID;
 const model = "gpt-4-turbo-preview";
 
 // Function to get news summary from a topic using axios and an external API
@@ -44,6 +47,9 @@ class AssistantManager {
   }
 
   // Create an assistant with provided details
+
+  // this can be removed as we are manually making the assistant and just using the id.
+
   async createAssistant(name, instructions, tools) {
     if (!this.assistant) {
       const file = await this.client.files.create({
@@ -64,6 +70,12 @@ class AssistantManager {
       console.log(`Assistant ID: ${this.assistant.id}`);
     }
   }
+  async retrieveAssistant(id) {
+    const assistantObj = { id: id };
+    AssistantManager.assistant_id = assistantObj.id;
+    this.assistant = assistantObj;
+    console.log(`Assistant ID: ${this.assistant.id}`);
+  }
 
   // Create a new thread for conversation
   async createThread() {
@@ -72,6 +84,28 @@ class AssistantManager {
       AssistantManager.thread_id = threadObj.id;
       this.thread = threadObj;
       console.log(`Thread ID: ${this.thread.id}`);
+    }
+  }
+
+  async retrieveThread(token) {
+    const response = await retrieveUserData(token);
+    console.log("response-blah-blah", response);
+    if (response.data.threadId) {
+      console.log("threadId exists");
+      const threadObj = { id: response.data.threadId };
+      AssistantManager.thread_id = threadObj.id;
+      this.thread = threadObj;
+      console.log(`Thread ID: ${this.thread.id}`);
+    } else {
+      console.log("create new threadId");
+      //separate create thread id
+      const threadObj = await this.client.beta.threads.create();
+      AssistantManager.thread_id = threadObj.id;
+      this.thread = threadObj;
+      console.log(`Thread ID: ${this.thread.id}`);
+      const response = updateThreadId(threadObj.id, token);
+      console.log("response after writing", response);
+      //error handiling needed
     }
   }
 
@@ -86,12 +120,11 @@ class AssistantManager {
   }
 
   // Main logic to run the assistant and process messages
-  async runAssistant(instructions) {
+  async runAssistant() {
     console.log("Running assistant now..");
     if (this.thread && this.assistant) {
       this.run = await this.client.beta.threads.runs.create(this.thread.id, {
         assistant_id: this.assistant.id,
-        instructions: instructions,
       });
     }
   }
@@ -177,41 +210,19 @@ let response = {
   data: "",
 };
 
-// Main function to execute the flow
-export async function assistantAI(instruction) {
-  //const instructions = "How much does nyquil cost"; // Example user instructions
-  const manager = new AssistantManager();
-  await manager.createAssistant(
-    "Medical Assistant",
-    "you are a medical doctor well versed in all the field of medicine. You can give proper diagnosis based on user's symptoms and give recommendations.",
-    [
-      {
-        type: "function",
-        function: {
-          name: "get_summary",
-          description: "Get the list of article/news for given topic",
-          parameters: {
-            type: "object",
-            properties: {
-              topic: {
-                type: "string",
-                description: "The topic for the news",
-              },
-            },
-            required: ["topic"],
-          },
-        },
-      },
-      { type: "retrieval" },
-    ]
-  );
-
-  await manager.createThread();
+const manager = new AssistantManager();
+export async function assistantAI(instruction, token) {
+  if (!manager.assistant) {
+    console.log("retrieveAssist");
+    await manager.retrieveAssistant(assistant_key);
+  }
+  if (!manager.thread) {
+    console.log("retrieve adas");
+    await manager.retrieveThread(token);
+  }
   await manager.addMessageToThread("user", instruction);
 
-  await manager.runAssistant(
-    "you are a medical doctor well versed in all the field of medicine. You can give proper diagnosis based on user's symptoms and give recommendations. Do not mention that your answers are from the document if you did find it from there. "
-  );
+  await manager.runAssistant();
   const result = await manager.waitForCompleted();
 
   response.status = 200;

@@ -9,87 +9,31 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
-  Animated,
 } from "react-native";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
 import chatWithGPT from "../../functions/apiCall";
-
 const Chatbot = () => {
   const [input, setInput] = useState("");
   const [gptOutput, setGptOutput] = useState([
     { type: "gpt", text: "Hello, how can I help you?" },
   ]);
-  const [isTyping, setIsTyping] = useState(false);
   const scrollViewRef = useRef();
-  const dot1 = useRef(new Animated.Value(1)).current;
-  const dot2 = useRef(new Animated.Value(1)).current;
-  const dot3 = useRef(new Animated.Value(1)).current;
-
   useEffect(() => {
     scrollViewRef.current.scrollToEnd({ animated: true });
   }, [gptOutput]);
-
-  useEffect(() => {
-    if (isTyping) {
-      animate();
-    } else {
-      dot1.setValue(1);
-      dot2.setValue(1);
-      dot3.setValue(1);
-    }
-  }, [isTyping]);
-
-  const animate = () => {
-    const sequence = Animated.sequence([
-      Animated.timing(dot1, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(dot1, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(dot2, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(dot2, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(dot3, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(dot3, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]);
-
-    Animated.loop(sequence).start();
-  };
-
   const onEnterPress = async () => {
     if (input.trim() !== "") {
       const newGptOutput = { type: "user", text: input };
       setGptOutput([...gptOutput, newGptOutput]);
-      setInput("");
-      setIsTyping(true); // Show typing indicator
       const output = await chatWithGPT(input);
-      setIsTyping(false); // Hide typing indicator when response received
       setGptOutput((currentGptOutput) => [
         ...currentGptOutput,
         { type: "gpt", text: output },
       ]);
+      setInput("");
     }
   };
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -148,32 +92,7 @@ const Chatbot = () => {
       width: "100%",
       height: "100%",
     },
-    typingIndicatorContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      marginVertical: 4,
-      backgroundColor: "#111823",
-      borderTopLeftRadius: 20,
-      borderBottomLeftRadius: 20,
-      borderTopRightRadius: 20,
-      alignSelf: "flex-end",
-      maxWidth: "80%",
-      padding: 10,
-    },
-    typingIndicatorDot: {
-      width: 12,
-      height: 12,
-      borderRadius: 6,
-      backgroundColor: "white",
-      marginRight: 4,
-    },
-    typingIndicatorText: {
-      color: "white",
-      fontSize: 18,
-      fontWeight: "500",
-    },
   });
-
   return (
     <View style={styles.container}>
       <ScrollView
@@ -193,19 +112,6 @@ const Chatbot = () => {
             <Text style={styles.messageText}>{msg.text}</Text>
           </View>
         ))}
-        {isTyping && (
-          <View style={styles.typingIndicatorContainer}>
-            <Animated.View
-              style={{ ...styles.typingIndicatorDot, opacity: dot1 }}
-            />
-            <Animated.View
-              style={{ ...styles.typingIndicatorDot, opacity: dot2 }}
-            />
-            <Animated.View
-              style={{ ...styles.typingIndicatorDot, opacity: dot3 }}
-            />
-          </View>
-        )}
       </ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -233,5 +139,4 @@ const Chatbot = () => {
     </View>
   );
 };
-
 export default Chatbot;
