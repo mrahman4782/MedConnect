@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Button, Text} from 'react-native';
+import { View, TouchableOpacity, Animated, StyleSheet, Button, Text, Linking} from 'react-native';
 import GoogleMapReact from 'google-map-react';
 import CustomButton from "../CustomButton";
 
@@ -24,10 +24,6 @@ const CustomExpandableCard = (provider) => {
     const [expanded, setExpanded] = useState(false);
     const [animation] = useState(new Animated.Value(100));
 
-
-    const bookAppointmentButton = () => {
-
-    }
     const defaultLocation = {
       center: {
         lat: 40.715465,
@@ -38,7 +34,7 @@ const CustomExpandableCard = (provider) => {
     const toggleExpansion = () => {
         // Start the animation when the box is clicked
         Animated.timing(animation, {
-          toValue: expanded ? 85 : 390,
+          toValue: expanded ? 90 : 390,
           duration: 300, 
           useNativeDriver: false
         }).start();
@@ -60,7 +56,7 @@ const CustomExpandableCard = (provider) => {
                 <CustomButton 
                   text="Book"
                   type='PRIMARY'
-                  onPress={bookAppointmentButton}
+                  onPress={() => Linking.openURL(provider.provider.link)}
                 />
               </View>
             </View>
@@ -78,7 +74,7 @@ const CustomExpandableCard = (provider) => {
                       text="My Marker"
                     />
                   </GoogleMapReact>
-                : null} {/* Use null instead of empty string for conditional rendering */}
+                : null} 
               </View>
             </View>
           </Animated.View>
@@ -122,16 +118,17 @@ const styles = StyleSheet.create({
       height: '80%',
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: '20px'
+      borderRadius: '20'
     },
     headerContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 20,
+      marginBottom: 25,
     },
     textContainer: {
-      flex: 3, // gives more space to the text side
+      flex: 3.7,
+      marginRight: 15 // gives more space to the text side
     },
     headerText: {
       fontSize: 18,
