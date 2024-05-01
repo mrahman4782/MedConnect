@@ -4,18 +4,50 @@ import GoogleMapReact from 'google-map-react';
 import CustomButton from "../CustomButton";
 import geocodeGet from '../../functions/geocodeGet.js'
 
-const MarkerComponent = ({ text }) => (
+
+const defaultLocation = {
+  center: {
+    lat: 40.715465,
+    lng: -74.000473
+  },
+  zoom: 12
+};
+
+const MarkerComponent = ({ text, zoom }) => (
+  // <div style={{
+  //   position: 'absolute',
+  //   transform: 'translate(-50%, -100%)'
+  // }}>
+  //   <svg height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+  //     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+  //     <path d="M0 0h24v24H0z" fill="none"/>
+  //   </svg>
+  //   <div style={styles.markerText}>
+  //     <h3>{text}</h3>
+  //   </div>
+  // </div>
   <div style={{
     position: 'absolute',
-    transform: 'translate(-50%, -100%)'
+    transform: 'translate(-50%, -100%)', // This keeps the marker tip at the exact location
+    textAlign: 'center', // Centers the text horizontally
   }}>
-    <svg height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-    </svg>
-    <div style={styles.markerText}>
-      <h3>{text}</h3>
+    <div style={{ width: 40, height: 40 }}>
+      <svg height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
     </div>
+    {zoom > 11 && ( // Change this value based on when you want the text to appear
+      <div style={{
+        color: 'black',
+        fontSize: 12,
+        fontWeight: 'bold',
+        whiteSpace: 'nowrap',
+        marginTop: 2, // Adjust as needed to position below the marker
+      }}>
+        <h3>{text}</h3>
+      </div>
+    )}
   </div>
 );
 
@@ -26,13 +58,14 @@ const CustomExpandableCard = (provider) => {
     const [animation] = useState(new Animated.Value(100));
     const [providerLat, setProviderLat] = useState('');
     const [providerLon, setProviderLon] = useState('');
+    const [zoom, setZoom] = useState(defaultLocation.zoom);  
 
     useEffect(() => {
 
       async function getProviderGeocode(){
         if (provider) {
 
-          let providerGeo = await geocodeGet(provider.provider.address);
+          let providerGeo = await geocodeGet(`${provider.provider.address} ${provider.provider.city}, ${provider.provider.state} ${provider.provider.zip}`);
           setProviderLon(providerGeo.data.lon);
           setProviderLat(providerGeo.data.lat);
           console.log(providerGeo);
@@ -50,13 +83,7 @@ const CustomExpandableCard = (provider) => {
     //   }
     // }
 
-    const defaultLocation = {
-      center: {
-        lat: 40.715465,
-        lng: -74.000473
-      },
-      zoom: 12
-    };
+
     const toggleExpansion = () => {
         // Start the animation when the box is clicked
         Animated.timing(animation, {
@@ -67,7 +94,10 @@ const CustomExpandableCard = (provider) => {
         
         console.log(provider)
         setExpanded(!expanded);  
-        setLoaded(true);
+        if (loaded == false){
+          setLoaded(true);
+        }
+        
       };
     
       return (
@@ -93,11 +123,13 @@ const CustomExpandableCard = (provider) => {
                     bootstrapURLKeys={{ key: 'AIzaSyBJX_S6YGC-kIExuWzU_stPGi8gi7r9W1M'}}
                     defaultCenter={defaultLocation.center}
                     defaultZoom={defaultLocation.zoom}
+                    onChange={({ zoom }) => setZoom(zoom)}
                   >
                     <MarkerComponent
                       lat={providerLat}
                       lng={providerLon} 
                       text={provider.provider.name}
+                      zoom={zoom}
                     />
                   </GoogleMapReact>
                 : null} 
