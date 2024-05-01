@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Animated, StyleSheet, Button, Text, Linking} from 'react-native';
 import GoogleMapReact from 'google-map-react';
 import CustomButton from "../CustomButton";
+import geocodeGet from '../../functions/geocodeGet.js'
 
 const MarkerComponent = ({ text }) => (
   <div style={{
@@ -23,6 +24,23 @@ const CustomExpandableCard = (provider) => {
     const [loaded, setLoaded] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [animation] = useState(new Animated.Value(100));
+    const [providerLat, setProviderLat] = useState('');
+    const [providerLon, setProviderLon] = useState('');
+
+    useEffect(() => {
+
+      async function getProviderGeocode(){
+        if (provider) {
+
+          let providerGeo = await geocodeGet(provider.provider.address);
+          // setProviderLon(providerGeo.data.lon);
+          // setProviderLat(providerGeo.data.lat);
+          console.log(providerGeo);
+        }
+      }
+      getProviderGeocode();
+
+    }, [provider]);
 
     const defaultLocation = {
       center: {
@@ -69,9 +87,9 @@ const CustomExpandableCard = (provider) => {
                     defaultZoom={defaultLocation.zoom}
                   >
                     <MarkerComponent
-                      lat={-50}
-                      lng={77} 
-                      text="My Marker"
+                      lat={providerLat}
+                      lng={providerLon} 
+                      text={provider.provider.name}
                     />
                   </GoogleMapReact>
                 : null} 

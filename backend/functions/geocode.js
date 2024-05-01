@@ -11,6 +11,15 @@ let response = {
     }
   }
 
+  function waitOneSecond() {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.log('1 second has passed.');
+            resolve(); // Resolve the promise after 1 second
+        }, 1000);
+    });
+}
+
 export async function geocodeHandler(address, session){
 
     const url = `https://geocode.maps.co/search?q=${address}&api_key=${process.env.GEOCODE_KEY}`;
@@ -19,6 +28,7 @@ export async function geocodeHandler(address, session){
 
     if (checkUserLogin.status == 200){
         try {    
+            await waitOneSecond();
             let output = await axios.get(url);
             response.data.lat = output.data[0].lat;
             response.data.lon = output.data[0].lon;

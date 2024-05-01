@@ -4,7 +4,7 @@ import Logo from '../../../assets/icon.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import CustomExpandableCard from '../../components/CustomExpandableCard';
-import { providerRetrieve } from "../../functions/providerRetrieve";
+import providerRetrieve from "../../functions/providerRetrieve";
 
 const Map = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,6 @@ const Map = () => {
         let res = await providerRetrieve(specialty);
         if (res.status == 200){
             console.log("Information received");
-            console.log(res.data.provider1);
             setFullData(res.data);
         }
     }
@@ -34,9 +33,6 @@ const Map = () => {
               value: data[key].value + 1
             };
           });
-        console.log('hi');
-        console.log(objToArr);
-
         return objToArr;
       }
       
