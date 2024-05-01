@@ -3,7 +3,8 @@ import { View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimens
 import Logo from '../../../assets/icon.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import { providerRetrieve } from "../../functions/providerRetrieve";
+import CustomExpandableCard from '../../components/CustomExpandableCard';
+import providerRetrieve from "../../functions/providerRetrieve";
 
 const Map = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -24,28 +25,17 @@ const Map = () => {
     }
 
     function transformData(data) {
-        let items = [];
-        const itemNumbers = Object.keys(data).reduce((acc, key) => {
-          const match = key.match(/\d+$/);
-          if (match) {
-            acc.add(match[0]);
-          }
-          return acc;
-        }, new Set());
-      
-        itemNumbers.forEach(number => {
-          items.push({
-            name: data[`Name${number}`],
-            address: data[`Address${number}`],
-            link: data[`Link${number}`]
+
+        // Transform returned object into array for further map computation
+        const objToArr = Object.keys(data).map(key => {
+            return {
+              ...data[key],
+              value: data[key].value + 1
+            };
           });
-        });
-      
-        return items;
+        return objToArr;
       }
       
-      //const itemsArray = transformData(data);
-
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
@@ -58,14 +48,7 @@ const Map = () => {
                 style={styles.textFields}
             />
             {transformData(fullData).map((item, index) => (
-            <TouchableOpacity
-                key={index}
-                style={styles.box}
-                onPress={() => Linking.openURL(item.link)}
-            >
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.address}>{item.address}</Text>
-            </TouchableOpacity>
+                <CustomExpandableCard key={index} provider={item} />
             ))}
             <CustomButton
                 text="Submit"

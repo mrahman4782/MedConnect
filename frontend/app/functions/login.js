@@ -29,7 +29,8 @@ export async function userLogin(email, password) {
     console.log(user);
 
     const token = await getIdToken(user, true);
-    // console.log(token);
+    console.log('------------');
+    console.log(token);
 
     // Make request to backend. Response handling needed
     const response = await axios.post('http://localhost:3000/api/verifyLogin', { token: token });

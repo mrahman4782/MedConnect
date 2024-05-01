@@ -22,8 +22,13 @@ const styles = StyleSheet.create({
     },
 
     container_PRIMARY: {
+
+        backgroundColor: '#000000',
+        whiteSpace: 'nowrap',
+        textAlign: 'center',
         marginVertical: 10,
         backgroundColor: '#19233C',
+
     },
 
     container_SECONDARY: {

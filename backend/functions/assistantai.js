@@ -47,7 +47,7 @@ class AssistantManager {
   async createAssistant(name, instructions, tools) {
     if (!this.assistant) {
       const file = await this.client.files.create({
-        file: fs.createReadStream("../../Documents/comments.txt"),
+        file: fs.createReadStream("../../documents/comments.txt"),
         purpose: "assistants",
       });
 
