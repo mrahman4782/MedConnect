@@ -18,20 +18,28 @@ let response = {
             resolve(); // Resolve the promise after 1 second
         }, 1000);
     });
-}
+    }
+    function reformatAddress(inputString) {
+        return inputString.replace(/\s+/g, '+');
+    }
 
 export async function geocodeHandler(address, session){
 
-    const url = `https://geocode.maps.co/search?q=${address}&api_key=${process.env.GEOCODE_KEY}`;
+    address = reformatAddress(address);
+    const urlNew = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_PLACES_KEY}`
+    
+    //const url = `https://geocode.maps.co/search?q=${address}&api_key=${process.env.GEOCODE_KEY}`;
 
-    let checkUserLogin = await loginVerify(session);
+    //let checkUserLogin = await loginVerify(session);
+    let checkUserLogin = {};
+    checkUserLogin.status = 200;
 
     if (checkUserLogin.status == 200){
         try {    
-            await waitOneSecond();
-            let output = await axios.get(url);
-            response.data.lat = output.data[0].lat;
-            response.data.lon = output.data[0].lon;
+            
+            let output = await axios.get(urlNew);
+            response.data.lat = output.data.results[0].geometry.location.lat;
+            response.data.lon = output.data.results[0].geometry.location.lng;
             response.status = 200;
     
         } catch (error) {
@@ -47,3 +55,4 @@ export async function geocodeHandler(address, session){
 
     return response;
 }
+

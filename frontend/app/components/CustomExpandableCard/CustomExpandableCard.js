@@ -33,14 +33,22 @@ const CustomExpandableCard = (provider) => {
         if (provider) {
 
           let providerGeo = await geocodeGet(provider.provider.address);
-          // setProviderLon(providerGeo.data.lon);
-          // setProviderLat(providerGeo.data.lat);
+          setProviderLon(providerGeo.data.lon);
+          setProviderLat(providerGeo.data.lat);
           console.log(providerGeo);
         }
       }
       getProviderGeocode();
 
-    }, [provider]);
+    }, [loaded]);
+
+    // const getProviderGeocode = async () => {
+    //   if (provider) {
+    //     let providerGeo = await geocodeGet(provider.provider.address);
+    //     setProviderLon(providerGeo.data.lon);
+    //     setProviderLat(providerGeo.data.lat);
+    //   }
+    // }
 
     const defaultLocation = {
       center: {
@@ -124,11 +132,11 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent'
     },
     markerText: {
-      transform: 'translateX(-10%)',
+      //transform: 'translateX(-10%)',
       color: 'black',
       fontSize: 12,
       fontWeight: 'bold',
-      margin: -7,
+      marginLeft: -7,
       whiteSpace: 'nowrap'
     },
     mapContainer: {
