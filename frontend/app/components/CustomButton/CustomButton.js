@@ -18,13 +18,17 @@ const styles = StyleSheet.create({
         padding: 15,
         marginVertical: 5,
         alignItems: 'center',
-        borderRadius: 5,
+        borderRadius: 10,
     },
 
     container_PRIMARY: {
+
         backgroundColor: '#000000',
         whiteSpace: 'nowrap',
         textAlign: 'center',
+        marginVertical: 10,
+        backgroundColor: '#19233C',
+
     },
 
     container_SECONDARY: {

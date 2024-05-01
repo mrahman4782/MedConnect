@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, View, Text, TextInput, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native';
 
-//const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
+
+
+// const API_ENDPOINT = "https://randomuser.me/api/?results=30" //for testing only
+
 
 const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardType, maxLength, query, style }) => {
 
@@ -40,19 +43,20 @@ const CustomInput = ({ value, setValue, placeholder, secureTextEntry, keyboardTy
 const styles = StyleSheet.create({
     container: {
         marginVertical: 5,
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(125, 160, 202, 0.1)',
         width: '100%',
-        borderColor: '#E8E8E8',
-        borderRadius: 4
+        borderWidth: 1.5,
+        borderColor: 'rgba(125, 160, 202, 0.4)',
+        borderRadius: 10,
+
     },
     input: {
-        // backgroundColor: 'white'
+        // color: '#626262',
     },
     itemContainer: {
         flexDirection: "row",
         alignItems: "center",
         marginLeft: 10,
-        
     },
     image: {
         width: 50,

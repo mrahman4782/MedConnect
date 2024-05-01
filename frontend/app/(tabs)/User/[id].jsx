@@ -9,6 +9,8 @@ import CustomMultiSelect from "../../components/CustomMultiSelect/CustomMultiSel
 import CustomSelectList from "../../components/CustomSelectList/CustomSelectList";
 import { updateUserInfo } from "../../functions/updateUserInfo";
 import Toast from 'react-native-toast-message';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
 
 const UserPage = () => {
 
@@ -117,7 +119,10 @@ const UserPage = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                {/* <Text>This is userpage {id}</Text> */}
+            <View style={{ flex: 1, alignItems: 'center'}}>
+                <FontAwesome name="user" size={60} color="#000" />
+                </View>
+    
                 <Text style={styles.text}>FIRST NAME</Text>
                 <CustomInput
                     value={firstName}
@@ -259,7 +264,7 @@ const UserPage = () => {
                 />
 
                 <CustomButton
-                    text="Save"
+                    text="Update"
                     onPress={onPressSave}
                 />
             </View>
@@ -269,12 +274,12 @@ const UserPage = () => {
 
 const styles = StyleSheet.create({
     root: {
-        backgroundColor: '#e0e1dd',
+        backgroundColor: '#F5F8FE',
         padding: 10,
     },
     textFields: {
         padding: 5,
-        color: '#757474',
+        // color: '#757474',
         outline: 'none',
         borderWidth: 0,
         borderRadius: 5,
@@ -285,8 +290,25 @@ const styles = StyleSheet.create({
         fontSize: 10,
         marginTop: 10,
         paddingBottom: 5
-    }
+    },
     
+    root: {
+        flex: 1,
+        backgroundColor: '#FFFFFF', // Change to match design
+        padding: 20,
+    },
+    textFields: {
+        borderRadius: 8, // Rounded corners
+        padding: 15, // Generous padding for spacing
+        fontSize: 16, // Increase font size
+    },
+    text: {
+        fontSize: 16,
+        color: '#000', // Darker color for text
+        fontWeight: 'bold', // Bold font weight
+        paddingTop: 15, // Space above label
+        paddingLeft: 5, // Align text with input
+    },
     
 })
 
