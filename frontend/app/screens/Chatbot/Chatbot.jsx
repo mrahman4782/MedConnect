@@ -17,9 +17,13 @@ const Chatbot = () => {
   const dot1 = useRef(new Animated.Value(1)).current;
   const dot2 = useRef(new Animated.Value(1)).current;
   const dot3 = useRef(new Animated.Value(1)).current;
+  
+
   useEffect(() => {
     scrollViewRef.current.scrollToEnd({ animated: true });
   }, [gptOutput]);
+
+
   useEffect(() => {
     if (isTyping) {
       animate();
@@ -29,20 +33,48 @@ const Chatbot = () => {
       dot3.setValue(1);
     }
   }, [isTyping]);
+  
+
   const animate = () => {
     const sequence = Animated.sequence([
-      Animated.timing(dot1, { toValue: 0, duration: 200, useNativeDriver: true }),
-      Animated.timing(dot1, { toValue: 1, duration: 200, useNativeDriver: true }),
-      Animated.timing(dot2, { toValue: 0, duration: 200, useNativeDriver: true }),
-      Animated.timing(dot2, { toValue: 1, duration: 200, useNativeDriver: true }),
-      Animated.timing(dot3, { toValue: 0, duration: 200, useNativeDriver: true }),
-      Animated.timing(dot3, { toValue: 1, duration: 200, useNativeDriver: true }),
+      Animated.timing(dot1, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(dot1, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(dot2, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(dot2, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(dot3, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(dot3, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
     ]);
+
     Animated.loop(sequence).start();
   };
+
   const onEnterPress = async () => {
-    if (input.trim() !== '') {
-      const newGptOutput = { type: 'user', text: input };
+    if (input.trim() !== "") {
+      const newGptOutput = { type: "user", text: input };
       setGptOutput([...gptOutput, newGptOutput]);
       setInput('');
       setIsTyping(true);
@@ -73,7 +105,7 @@ const Chatbot = () => {
       flex: 1,
     },
     messageContainer: {
-      flexDirection: 'row',
+      flexDirection: "row",
       padding: 5,
       marginVertical: 4,
       maxWidth: '80%',
@@ -81,6 +113,12 @@ const Chatbot = () => {
       flexWrap: 'wrap',
       margin: 15,
     },
+
+//    gptMessage: {
+//      backgroundColor: "#111823",
+//    }
+
+
     gptMessage: {
       backgroundColor: '#90ee90',
       borderTopRightRadius: 20,
@@ -93,16 +131,23 @@ const Chatbot = () => {
       backgroundColor: '#add8e6',
       borderTopLeftRadius: 20,
       borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
       borderTopRightRadius: 20,
-      alignSelf: 'flex-end',
+      alignSelf: "flex-end",
     },
     messageText: {
       padding: 10,
+      // color: 'white',
       color: 'black',
       fontSize: 18,
-      fontWeight: '500',
+      fontWeight: "500",
     },
     inputContainer: {
+
+//      flexDirection: "row",
+//      alignItems: "center",
+//      padding: 10,
+
       flexDirection: 'row',
       alignItems: 'flex-end',
       padding: 15,
@@ -112,17 +157,22 @@ const Chatbot = () => {
       minHeight: 40,
       maxHeight: 120,
       padding: 10,
+
+      //backgroundColor: "#78797A",
+
       backgroundColor: 'white',
       borderRadius: 20,
       marginRight: 10,
     },
     sendButtonContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       width: 50,
       height: 50,
     },
     sendButtonImage: {
+      //width: "100%",
+      //height: "100%",
       width: '80%',
       height: '80%',
       borderRadius: 15,
@@ -132,6 +182,14 @@ const Chatbot = () => {
       flexDirection: "row",
       alignItems: "center",
       marginVertical: 4,
+
+//      backgroundColor: "#111823",
+//      borderTopLeftRadius: 20,
+//      borderBottomLeftRadius: 20,
+//      borderTopRightRadius: 20,
+//      alignSelf: "flex-end",
+//      maxWidth: "80%",
+//      padding: 10,
       backgroundColor: "#90ee90",
       borderTopLeftRadius: 20,
       borderBottomRightRadius: 20,
@@ -145,6 +203,10 @@ const Chatbot = () => {
       width: 12,
       height: 12,
       borderRadius: 6,
+      backgroundColor: "white",
+    },
+    typingIndicatorText2: {
+      color: "white",
       backgroundColor: "black",
       marginRight: 4,
     },
@@ -154,6 +216,7 @@ const Chatbot = () => {
       fontWeight: "500",
     },
   });
+
   return (
 
     <View style={styles.container}>
@@ -222,8 +285,10 @@ const Chatbot = () => {
           onPress={onEnterPress}
         >
           <Image
+
             source={require('../../../assets/send_button.png')}
             resizeMode='contain'
+
             style={styles.sendButtonImage}
           />
         </TouchableOpacity>
@@ -231,4 +296,5 @@ const Chatbot = () => {
     </View >
   );
 };
+
 export default Chatbot;

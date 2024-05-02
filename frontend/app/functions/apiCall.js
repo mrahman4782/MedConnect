@@ -1,11 +1,16 @@
 import axios from "axios";
+import sessionStorage from "./sessionStorage.js";
 
 export async function chatWithGPT(message) {
   try {
     // Make request to backend
-    console.log("message frontent", message);
+    console.log("enteredFunction");
+    let token = await sessionStorage.sessionKey;
+    console.log("message frontend", message);
+    console.log("token", token);
     const response = await axios.post("http://localhost:3000/api/assistantai", {
       message: message,
+      token: token,
     });
     console.log("Content", response.data);
     return response.data;
