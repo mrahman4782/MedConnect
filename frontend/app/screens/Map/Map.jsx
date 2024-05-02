@@ -30,8 +30,8 @@ const Map = () => {
                 setErrorMessage("No results found. Please check your spelling or try another specialty.");
             }
         }
-        else if (res.status == 403){
-            setErrorMessage("Unauthorized request. Please login again.");
+        else {
+            setErrorMessage("Unauthorized request. Please login again or try later.");
         }
         // 
         if (errorMessage && (Platform.OS === 'ios' || Platform.OS === 'android')) {
@@ -120,9 +120,9 @@ const styles = StyleSheet.create({
     address: {
         
       },
-    errorMessageContainer:{
-        marginTop: '60vh',
-    },
+    // errorMessageContainer:{
+    //     marginTop: '60vh',
+    // },
     errorMessage: {
         backgroundColor: 'red',
         color: 'white',
