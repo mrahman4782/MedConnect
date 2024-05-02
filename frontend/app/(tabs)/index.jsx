@@ -1,4 +1,4 @@
-import { Pressable, Text, View, StyleSheet, Image, SafeAreaView, StatusBar } from "react-native";
+import { Pressable, Text, View, StyleSheet, Image, SafeAreaView, StatusBar, ScrollView } from "react-native";
 import { Link, router } from "expo-router";
 import { useContext, createContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,27 +10,73 @@ import sessionStorage from '../functions/sessionStorage.js';
 import LottieView from 'lottie-react-native'
 import logoT from '../../assets/MedConnect-12-transparent 2.png'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { Dimensions, Platform } from 'react-native';
 
 
 const Homepage = () => {
-    // const [isUserLoggedin, setIsUserLoggedIn] = useState(false);
+
+    const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const [user, setUser] = useState(null);
     const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true)
     const [animationPlayed, setAnimationPlayed] = useState(true)
+
+
+
+    useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+        setDimensions(window);
+    });
+
+    // Return a clean-up function that removes the event listener
+    return () => subscription.remove();
+    }, []);
+
+
 
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
             //console.log("user: ", user);
             setUser(user);
             if (user) {
-                // console.log("username: ", user.displayName);
                 setUsername(user.displayName) //need api to get username. or atleast set up displayname
             }
             setLoading(false);
         })
     }, [])
+
+    const dynamicStyles = {
+        gridOption: {
+            width: dimensions.width > 600 ? '32%' : '43%',
+            height: dimensions.width > 600 ? '42%' : '33%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 18,
+            margin: 12,
+            paddingTop: 30,
+            paddingBottom: 30,
+            paddingLeft: dimensions.width > 992 ? 30 : dimensions.width > 768 ? 25 : dimensions.width > 600 ? 20 : 10,
+            paddingRight: dimensions.width > 992 ? 30 : dimensions.width > 768 ? 25 : dimensions.width > 600 ? 20 : 10,
+        },
+        optionText: {
+            color: '#fff',
+            marginTop: 20,
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: dimensions.width > 992 ? 30 : dimensions.width > 768 ? 28 : dimensions.width > 600 ? 25 : 20,
+        },
+        logoutButton: {
+            backgroundColor: '#2B4F7A',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 10,
+            alignSelf: 'center',
+            width: dimensions.width > 992 ? '65%' : dimensions.width > 768 ? '70%' : dimensions.width > 600 ? '75%': '90%',
+            height: dimensions.width > 768 ? '20%' : 70,
+            marginTop: 20,
+        },
+    };
+
 
 
     return (
@@ -49,7 +95,7 @@ const Homepage = () => {
 
 
             ) : user ? ( // When user is logged in
-
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <SafeAreaView style={styles.safeArea}>
                     <StatusBar barStyle="light-content" backgroundColor="#19233C" />
                     <View style={styles.container}>
@@ -58,7 +104,7 @@ const Homepage = () => {
                       </View>
 
                       <View style={styles.gridContainer}> 
-                      <Pressable style={[styles.gridOption, { backgroundColor: '#052659' }]} 
+                      <Pressable style={[dynamicStyles.gridOption, { backgroundColor: '#052659' }]} 
                        onPress={() =>
                         router.push({
                             pathname: '/screens/Chatbot',
@@ -66,11 +112,11 @@ const Homepage = () => {
                       }
                       >
                         <FontAwesome5 name='comments' size={35} color="white" solid />
-                        <Text style={styles.optionText}> Chat With AI Doctor </Text>
+                        <Text style={dynamicStyles.optionText}> Chat With AI Doctor </Text>
                         </Pressable>
 
                         
-                        <Pressable style={[styles.gridOption, { backgroundColor: '#7DA0CA' }]} 
+                        <Pressable style={[dynamicStyles.gridOption, { backgroundColor: '#7DA0CA' }]} 
                           onPress={() =>
                               router.push({
                                 pathname: '/screens/Map',
@@ -78,10 +124,10 @@ const Homepage = () => {
                             }
                     >
                         <FontAwesome5 name='search' size={35} color="white" solid />
-                        <Text style={styles.optionText}> Find Affordable Treatment </Text>
+                        <Text style={dynamicStyles.optionText}> Find Affordable Treatment </Text>
                         </Pressable>
 
-                        <Pressable style={[styles.gridOption, { backgroundColor: '#4FA2D3' }]} 
+                        <Pressable style={[dynamicStyles.gridOption, { backgroundColor: '#4FA2D3' }]} 
                          onPress={() =>
                             router.push({
                               pathname: '/User/[id]',
@@ -90,10 +136,10 @@ const Homepage = () => {
                         >
                          <FontAwesome5 name='user-edit' size={35} color="white" solid />
 
-                        <Text style={styles.optionText}> Update Account </Text>
+                        <Text style={dynamicStyles.optionText}> Update Account </Text>
                         </Pressable>
 
-                        <Pressable style={[styles.gridOption, { backgroundColor: '#5483B3' }]} 
+                        <Pressable style={[dynamicStyles.gridOption, { backgroundColor: '#5483B3' }]} 
                             onPress={() =>
                             router.push({
                                 pathname: '/screens/Credit/Credit',
@@ -102,11 +148,11 @@ const Homepage = () => {
                         >
                          <FontAwesome5 name='info-circle' size={35} color="white" solid />
 
-                        <Text style={styles.optionText}> About MedConnect </Text>
+                        <Text style={dynamicStyles.optionText}> About MedConnect </Text>
                         </Pressable>
 
                         <Pressable
-                        style={styles.logoutButton}
+                        style={dynamicStyles.logoutButton}
                         onPress={() => { FIREBASE_AUTH.signOut(), sessionStorage.setSessionKey(''); }} title="Logout" >
                        <Text  style={styles.logoutButtonText}> Logout</Text>
                      </Pressable>
@@ -119,6 +165,7 @@ const Homepage = () => {
 
                 
             </SafeAreaView>
+            </ScrollView>
 
 
             ) : ( // When no user is logged in
@@ -155,7 +202,8 @@ const styles = StyleSheet.create({
     },
 
     animationStyle: {
-        flex: 1
+        flex: 1,
+        alignSelf: 'center',
     },
 
     logoutButton: {
@@ -164,17 +212,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 10,
         alignSelf: 'center',  
-        width: '93%',
+        width:  '75%',      
         height: 70,
         bottom: 10, 
         marginTop:20,
-      
+
     },
+
     logoutButtonText: {
         color: '#ffffff', 
         fontSize: 25,
         fontWeight: 'bold',
-        textAlign: 'center', // Center the text horizontally
+        textAlign: 'center', 
 
     },
 
@@ -199,9 +248,6 @@ const styles = StyleSheet.create({
 
     },
     
-
-/////////////////////////////
-
     safeArea: {
         flex: 1,
         backgroundColor: '#19233C'
@@ -218,7 +264,7 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         borderBottomRightRadius: 20, 
         borderBottomLeftRadius: 20, 
-        paddingVertical: 16,
+        paddingVertical: 10,
         alignItems: 'center',
         justifyContent: 'center',
       },
@@ -233,35 +279,39 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
 
-      gridContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        marginBottom: 30,
-        paddingHorizontal: 10, 
-        paddingTop: 10, 
-      },
+ ////////
 
-      gridOption: {
-        width: '43%',
-        aspectRatio: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 18,
-        paddingTop: 25,
-        paddingLeft:10,
-        paddingRight:10,
-        margin: 12,
-      },
+//       gridContainer: {
+//         flex: 1,
+//         flexDirection : 'row',
+//         flexWrap: 'wrap',
+//         justifyContent: 'space-around',
+//         marginBottom: 30,
+//         paddingHorizontal: 10, 
+//         paddingTop: 10, 
+//       },
 
-      optionText: {
-        color: '#fff',
-        marginTop: 20,
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 20,
-      },
+//    gridOption: {
+//         width:'43%',
+//         aspectRatio: 1,
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         borderRadius: 18,
+//         paddingTop: 25,
+//         paddingLeft:10,
+//         paddingRight:10,
+//         margin: 12,
+//       },
+    ///////////
+
+    gridContainer: {
+    flex: 1,
+    flexDirection : 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    paddingHorizontal: 10, 
+    justifyContent: 'center',
+  },
 
       centered: {
         flex: 1,
@@ -276,7 +326,6 @@ const styles = StyleSheet.create({
     },
 
         headerlogo: {
-        // padding: 40,
         marginTop: 100,
         width: '100%',
         height: '25%',
