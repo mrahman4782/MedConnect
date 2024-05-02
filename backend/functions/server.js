@@ -47,7 +47,9 @@ app.post("/api/registerUser", async (req, res) => {
 
 app.post("/api/chat", async (req, res) => {
   let message = req.body.message;
-  let checkAPIOutput = await chat(message);
+  let token = req.body.token;
+  let conversationHistory = req.body.conversationHistory;
+  let checkAPIOutput = await chat(message, conversationHistory, token);
   res.status(checkAPIOutput.status).send(checkAPIOutput.data);
 });
 

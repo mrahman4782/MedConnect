@@ -75,7 +75,8 @@ class AssistantManager {
         file: fs.createReadStream("../../documents/comments.txt"),
         purpose: "assistants",
       });
-
+  }
+}
 
   // async createAssistant(name, instructions, tools) {
   //   if (!this.assistant) {

@@ -13,6 +13,7 @@ const Chatbot = () => {
   const [inputHeight, setInputHeight] = useState(40);
   const [gptOutput, setGptOutput] = useState([{ type: 'gpt', text: 'Hello, how can I help you?' }]);
   const [isTyping, setIsTyping] = useState(false);
+  const [messageHistory, setMessageHistory] = useState([]);
   const scrollViewRef = useRef();
   const dot1 = useRef(new Animated.Value(1)).current;
   const dot2 = useRef(new Animated.Value(1)).current;
@@ -33,7 +34,6 @@ const Chatbot = () => {
       dot3.setValue(1);
     }
   }, [isTyping]);
-  
 
   const animate = () => {
     const sequence = Animated.sequence([
@@ -79,9 +79,20 @@ const Chatbot = () => {
       setInput('');
       setIsTyping(true);
       setInputHeight(40);
-      const output = await chatWithGPT(input);
+
+      // Set message history
+      if (messageHistory.len >= 6){
+        setMessageHistory(curHistory => curHistory.slice(1));
+        setMessageHistory(curHistory => [...curHistory, input]);
+      }
+      else {
+        setMessageHistory(curHistory => [...curHistory, input]);
+      }
+
+      const output = await chatWithGPT(input, messageHistory);
+      console.log(`THE OUTPUT ISSSSSSSSSSS ${JSON.stringify(output)}`);
       setIsTyping(false);
-      setGptOutput(currentGptOutput => [...currentGptOutput, { type: 'gpt', text: output }]); // Add GPT response to chat output
+      setGptOutput(currentGptOutput => [...currentGptOutput, { type: 'gpt', text: output.content }]); // Add GPT response to chat output
     }
   };
 
