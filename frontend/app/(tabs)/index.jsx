@@ -100,7 +100,7 @@ const Homepage = () => {
                     <StatusBar barStyle="light-content" backgroundColor="#19233C" />
                     <View style={styles.container}>
                     <View style={styles.headerContainer}>
-                      <Text style={styles.headerText}> Let's find you medical help</Text>
+                      <Text style={styles.headerText}>Let's find the medical help you need</Text>
                       </View>
 
                       <View style={styles.gridContainer}> 
@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
         marginBottom: 70,
         letterSpacing: -0.5,
         textAlign: 'left',
+        paddingHorizontal: 10, // Adjust this for desired padding on the sides
     },
 
  ////////
