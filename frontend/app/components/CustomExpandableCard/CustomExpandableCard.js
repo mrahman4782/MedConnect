@@ -111,7 +111,7 @@ const CustomExpandableCard = (provider) => {
               <View style={styles.buttonContainer}>
                 <CustomButton 
                   text="Book"
-                  type='PRIMARY'
+                  type='TERTIARY'
                   onPress={() => Linking.openURL(provider.provider.link)}
                 />
               </View>
@@ -143,7 +143,7 @@ const CustomExpandableCard = (provider) => {
 
 const styles = StyleSheet.create({
     box: {
-      backgroundColor: '#7498EF',
+      backgroundColor: '#19233C',
       width: '100%', 
       overflow: 'hidden',
       marginTop: 5,
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     headerText: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: '#333',
+      color: 'white',
     },
     subText: {
       marginTop: 4,

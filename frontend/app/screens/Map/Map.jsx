@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
+import { Platform, Alert, View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
 import Logo from '../../../assets/icon.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
@@ -13,15 +13,31 @@ const Map = () => {
     const [error, setError] = useState(null);
     const [fullData, setFullData] = useState([]);
     const [specialty, setSpecialty] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const {height} = useWindowDimensions();
     
     const onPressSubmit = async () => {
         let res = await providerRetrieve(specialty);
         if (res.status == 200){
-            console.log("Information received");
+            console.log("Information received from API");
+            console.log(res.data);
             setFullData(res.data);
+            setErrorMessage("");
+
+            if (res.data == ''){
+                console.log("womp");
+                setErrorMessage("No results found. Please check your spelling or try another specialty.");
+            }
         }
+        else if (res.status == 403){
+            setErrorMessage("Unauthorized request. Please login again.");
+        }
+        // 
+        if (errorMessage && (Platform.OS === 'ios' || Platform.OS === 'android')) {
+            Alert.alert(errorMessage);
+        }
+
     }
 
     function transformData(data) {
@@ -54,7 +70,11 @@ const Map = () => {
                 text="Submit"
                 onPress={onPressSubmit}
             />
+                    <View style={styles.errorMessageContainer}>
+                    {errorMessage !== "" && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+                    </View>
         </View>
+
     </ScrollView>
     )
 }
@@ -63,6 +83,7 @@ const styles = StyleSheet.create({
     root: {
         padding: 20,
         backgroundColor: '#e0e1dd',
+        minHeight: '100vh'
     },
     map: {
         width: '70%',
@@ -85,7 +106,6 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     box: {
-        // Style for each 'box'
         borderWidth: 1,
         borderColor: 'black',
         borderRadius: 4,
@@ -93,14 +113,25 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: 'white',
       },
-      name: {
-        // Style for the name text
+    name: {
+        
         fontWeight: 'bold',
       },
-      address: {
-        // Style for the address text
-      }
-    
+    address: {
+        
+      },
+    errorMessageContainer:{
+        marginTop: '60vh',
+    },
+    errorMessage: {
+        backgroundColor: 'red',
+        color: 'white',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        textAlign: 'center',
+        justifyContent: 'center',
+
+    },
     
 
 })

@@ -31,12 +31,19 @@ const styles = StyleSheet.create({
 
     },
 
+
     container_SECONDARY: {
         borderColor: '#3B71F3',
         borderWidth: 2,
     },
 
-    container_TERTIARY: {},
+    container_TERTIARY: {
+        backgroundColor: '#FFFFFF',
+        whiteSpace: 'nowrap',
+        textAlign: 'center',
+        marginVertical: 10,
+ 
+    },
 
     text: {
         fontWeight: 'bold',
@@ -44,9 +51,8 @@ const styles = StyleSheet.create({
     },
 
     text_TERTIARY: {
-        color: 'white',
-        fontSize: 11,
-        marginBottom: -90
+        color: 'black',
+        fontWeight: 'bold',
     },
 
     text_SECONDARY: {
