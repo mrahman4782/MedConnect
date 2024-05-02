@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
+import { Platform, Alert, View, Text, Pressable, Linking, ScrollView, StyleSheet, useWindowDimensions, TouchableOpacity } from "react-native";
 import Logo from '../../../assets/icon.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import { providerRetrieve } from "../../functions/providerRetrieve";
+import CustomExpandableCard from '../../components/CustomExpandableCard';
+import providerRetrieve from "../../functions/providerRetrieve";
 
 const Map = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -12,40 +13,45 @@ const Map = () => {
     const [error, setError] = useState(null);
     const [fullData, setFullData] = useState([]);
     const [specialty, setSpecialty] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const {height} = useWindowDimensions();
     
     const onPressSubmit = async () => {
         let res = await providerRetrieve(specialty);
         if (res.status == 200){
-            console.log("Information received");
+            console.log("Information received from API");
+            console.log(res.data);
             setFullData(res.data);
+            setErrorMessage("");
+
+            if (res.data == ''){
+                console.log("womp");
+                setErrorMessage("No results found. Please check your spelling or try another specialty.");
+            }
         }
+        else {
+            setErrorMessage("Unauthorized request. Please login again or try later.");
+        }
+        // 
+        if (errorMessage && (Platform.OS === 'ios' || Platform.OS === 'android')) {
+            Alert.alert(errorMessage);
+        }
+
     }
 
     function transformData(data) {
-        let items = [];
-        const itemNumbers = Object.keys(data).reduce((acc, key) => {
-          const match = key.match(/\d+$/);
-          if (match) {
-            acc.add(match[0]);
-          }
-          return acc;
-        }, new Set());
-      
-        itemNumbers.forEach(number => {
-          items.push({
-            name: data[`Name${number}`],
-            address: data[`Address${number}`],
-            link: data[`Link${number}`]
+
+        // Transform returned object into array for further map computation
+        const objToArr = Object.keys(data).map(key => {
+            return {
+              ...data[key],
+              value: data[key].value + 1
+            };
           });
-        });
-      
-        return items;
+        return objToArr;
       }
       
-      //const itemsArray = transformData(data);
-
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
@@ -58,20 +64,17 @@ const Map = () => {
                 style={styles.textFields}
             />
             {transformData(fullData).map((item, index) => (
-            <TouchableOpacity
-                key={index}
-                style={styles.box}
-                onPress={() => Linking.openURL(item.link)}
-            >
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.address}>{item.address}</Text>
-            </TouchableOpacity>
+                <CustomExpandableCard key={index} provider={item} />
             ))}
             <CustomButton
                 text="Submit"
                 onPress={onPressSubmit}
             />
+                    <View style={styles.errorMessageContainer}>
+                    {errorMessage !== "" && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+                    </View>
         </View>
+
     </ScrollView>
     )
 }
@@ -80,6 +83,7 @@ const styles = StyleSheet.create({
     root: {
         padding: 20,
         backgroundColor: '#e0e1dd',
+        minHeight: '100vh'
     },
     map: {
         width: '70%',
@@ -102,7 +106,6 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     box: {
-        // Style for each 'box'
         borderWidth: 1,
         borderColor: 'black',
         borderRadius: 4,
@@ -110,14 +113,25 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: 'white',
       },
-      name: {
-        // Style for the name text
+    name: {
+        
         fontWeight: 'bold',
       },
-      address: {
-        // Style for the address text
-      }
-    
+    address: {
+        
+      },
+    // errorMessageContainer:{
+    //     marginTop: '60vh',
+    // },
+    errorMessage: {
+        backgroundColor: 'red',
+        color: 'white',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        textAlign: 'center',
+        justifyContent: 'center',
+
+    },
     
 
 })

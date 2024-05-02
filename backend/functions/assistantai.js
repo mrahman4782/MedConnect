@@ -62,10 +62,20 @@ class AssistantManager {
     this.summary = null;
   }
 
+
   // the below code creates an assistant which in returns gets an assistant id ,
   // but we are not using the code since we already have created it through the
   // website and using the assistant id we stored in OPENAI_ASSISTANT_ID
   // --- -- - - - - - -- -- - -- - - -
+
+  // Create an assistant with provided details
+  async createAssistant(name, instructions, tools) {
+    if (!this.assistant) {
+      const file = await this.client.files.create({
+        file: fs.createReadStream("../../documents/comments.txt"),
+        purpose: "assistants",
+      });
+
 
   // async createAssistant(name, instructions, tools) {
   //   if (!this.assistant) {

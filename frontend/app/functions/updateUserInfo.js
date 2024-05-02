@@ -1,7 +1,6 @@
 import axios from 'axios';
 import sessionStorage from './sessionStorage.js';
 
-
 export async function updateUserInfo(userData) {
     try {
 
