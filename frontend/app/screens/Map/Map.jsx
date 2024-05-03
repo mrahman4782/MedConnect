@@ -5,6 +5,8 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import CustomExpandableCard from '../../components/CustomExpandableCard';
 import providerRetrieve from "../../functions/providerRetrieve";
+import { Stack, router } from "expo-router";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const Map = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -53,8 +55,28 @@ const Map = () => {
       }
       
     return (
+        
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.root}>
+        <Stack.Screen
+        options={{
+          headerTitle: '',
+          // headerShown: true, //change if you want
+          headerStyle: {
+            backgroundColor: '#e0e1dd'
+          },
+          headerLeft: ({ color }) =>
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: '/',
+                })
+              }>
+              <FontAwesome size={40} name="arrow-circle-o-left" color='#19233C' />
+            </Pressable>
+        }}
+      />
+
             {/* <Text>This is userpage {id}</Text> */}
             <Text style={styles.text}>SPECIALTY</Text>
             <CustomInput
