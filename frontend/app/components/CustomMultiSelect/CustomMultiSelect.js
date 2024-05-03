@@ -3,7 +3,7 @@ import { View, Text, } from 'react-native';
 import { useState } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-const CustomMultiSelect = ({ items }) => {
+const CustomMultiSelect = ({ items, value, setValue }) => {
     const [selectedItems, setSelectedItems] = useState([])
 
     onSelectItemChange = selectedItems => {

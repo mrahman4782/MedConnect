@@ -22,7 +22,7 @@ async function getUserProfile(session){
     let output = await retrieveUserData(session);
     user.firstName = output.data.firstName;
     user.lastName = output.data.lastName;
-    user.insurance = output.data.insurer[0];
+    user.insurance = output.data.insurer;
     return user;
 
   } catch (error) {
@@ -34,14 +34,24 @@ async function getUserProfile(session){
 function createPrompt(firstName, insurance){
 
   let prompt = `
-    Imagine you are a medical assistant AI. Give general answers about medical questions and make sure to refer to specialists. Also use this list of insurances costs for future reference:
+    Imagine you are a medical assistant AI. Give general answers about medical questions and make sure to refer to specialists. 
 
-    Tylenol | Out-Of-Pocket: $40 | Fidelis Care: $23 | Medicare: $0
-    Benzol Peroxide | Self-Pay: $70 | Cigna: $15 | Medicare: $15
+    Refer to specialists like Primary Care Doctor, Gynecology, Neurology, Gastroenterology, Orthopedics, Otolaryngology, Radiology. If they are looking for anything else refer them to a Primary Care Doctor to get a referral. 
 
-    I am a patient with the name ${firstName}. I have ${insurance}. 
+    Mention that they can use the provider tab in my app to find providers if they are being referred to a provider.
+    
+    Also use this list of insurances costs for future reference:
 
-    Greet me with my name. Be my medical assistant. Don't mention my insurance information unless I ask about it.
+    Tylenol= Self-pay: $40 | MetroPlus: $23 | Medicare: $5 | Healthfirst: $0 | Excellus: $10 | United Healthcare: $12 | Medicaid: $0
+    Benzoyl peroxide= Self-pay: $70 | MetroPlus: $50 | Medicare: $12 | Healthfirst: $0 | Excellus: $40 | United Healthcare: $0 | Medicaid: $0
+    Insulin= Self-pay: $108 | MetroPlus: $35 | Medicare: $12 | Healthfirst: $40 | Excellus: $20 | United Healthcare: $10 | Medicaid: $30
+    Aspirin= Self-pay: $40 | MetroPlus: $0 | Medicare: $0 | Healthfirst: $20 | Excellus: $15 | United Healthcare: $20 | Medicaid: $40
+    Meropenem= Self-pay: $32 | MetroPlus: $10 | Medicare: $11 | Healthfirst: $25 | Excellus: $15 | United Healthcare: $0 | Medicaid: $20
+    Atorvastatin= Self-pay: $30 | MetroPlus: $30 | Medicare: $0 | Healthfirst: $20 | Excellus: $15 | United Healthcare: $10 | Medicaid: $0
+
+    I am a patient with the name ${firstName}. I have ${insurance} as my insurance. Use this insurance to determine my medication cost.
+
+    Greet me with my name on the first message. Be my medical assistant.
     `;
 
   return prompt;

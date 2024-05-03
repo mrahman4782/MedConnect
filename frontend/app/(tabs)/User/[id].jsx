@@ -27,7 +27,7 @@ const UserPage = () => {
     const [physician, setPhysician] = useState("");
     const [ethnicity, setEthnicity] = useState("african_american"); //set pickers to default value, otherwise they are empty
     const [sex, setSex] = useState("male")
-    const [insurer, setInsurer] = useState([]);
+    const [insurer, setInsurer] = useState('');
     const [allergies, setAllergies] = useState([]);
     const [medications, setMedications] = useState([]);
     const [drinkAlcohol, setDrinkAlcohol] = useState("no");
@@ -78,11 +78,13 @@ const UserPage = () => {
     ]
 
     const insurerItems = [
-        { label: 'Excellus', value: 'excellus' },
-        { label: 'Healthfirst', value: 'healthfirst' },
-        { label: 'MetroPlux', value: 'metroPlux' },
-        { label: 'Out-Of-Pocket', value: 'self-pay' },
-        { label: 'United HealthCare', value: 'united' },
+        { label: 'Excellus', value: 'Excellus' },
+        { label: 'Healthfirst', value: 'Healthfirst' },
+        { label: 'MetroPlus', value: 'MetroPlus' },
+        { label: 'Out-Of-Pocket', value: 'Self-pay' },
+        { label: 'United HealthCare', value: 'United Healthcare' },
+        { label: 'Medicare', value: 'Medicare' },
+        { label: 'Medicaid', value: 'Medicaid' },
     ];
 
     const allergyItems = [
@@ -214,12 +216,19 @@ const UserPage = () => {
                     style={styles.textFields}
                 />
                 <Text style={styles.text}>INSURER</Text>
-                <CustomSelectList
+                {/* <CustomSelectList
                     value={insurer}
                     setValue={setInsurer}
                     items={insurerItems}
                     notFoundText="Insurer not found"
                     style={styles.textFields}
+                /> */}
+                <CustomPicker
+                    selectedValue={insurer}
+                    setSelectedValue={setInsurer}
+                    items={insurerItems}
+                    style={styles.textFields}
+
                 />
                 <Text style={styles.text}>ANY ALLERGIES?</Text>
                 <CustomSelectList
