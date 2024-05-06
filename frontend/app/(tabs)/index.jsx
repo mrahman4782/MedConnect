@@ -36,7 +36,6 @@ const Homepage = () => {
 
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            //console.log("user: ", user);
             setUser(user);
             if (user) {
                 setUsername(user.displayName) //need api to get username. or atleast set up displayname

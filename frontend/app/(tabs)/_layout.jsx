@@ -2,7 +2,6 @@ import { Tabs } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../FireBaseConfig';
-import { View, Text } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 const RootLayout = () => {
@@ -12,7 +11,6 @@ const RootLayout = () => {
 
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            //console.log("user: ", user);
             setUser(user);
             setLoading(false);
         })

@@ -1,5 +1,6 @@
 import axios from "axios";
 import sessionStorage from "./sessionStorage.js";
+import apiRoute from '../../config/apiRoute.json';
 
 export async function chatWithGPT(message, chatHistory) {
   try {
@@ -8,7 +9,7 @@ export async function chatWithGPT(message, chatHistory) {
     let token = await sessionStorage.sessionKey;
     console.log("message frontend", message);
     console.log("token", token);
-    const response = await axios.post("http://localhost:3000/api/chat", {
+    const response = await axios.post(`${apiRoute.endpoint}/api/chat`, {
       message: message,
       token: token,
       conversationHistory: chatHistory,
@@ -20,8 +21,6 @@ export async function chatWithGPT(message, chatHistory) {
     const errorMessage = error.message;
     console.log("error code", errorCode);
     console.log("error message", errorMessage);
-    console.log("AHHHHHHHHHHHHHHHHHhh");
-
     return error;
   }
 }

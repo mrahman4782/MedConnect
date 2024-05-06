@@ -1,9 +1,10 @@
 import axios from 'axios';
+import apiRoute from '../../config/apiRoute.json';
 
 export async function userRegister(email, password) {
   try {
     // Make request to backend
-    const response = await axios.post('http://localhost:3000/api/registerUser', { email: email, password: password });
+    const response = await axios.post(`${apiRoute.endpoint}/api/registerUser`, { email: email, password: password });
     return response;
 
   } catch (error) {
@@ -11,9 +12,7 @@ export async function userRegister(email, password) {
     const errorMessage = error.message;
     console.log("Code: ", errorCode);
     console.log("Msg :", errorMessage);
-    // console.log('AHHHHHHHHHHHHHHHHHhh');
-    // return error; 
-    throw error; //worked better for me
+    return error; 
   }
 }
 

@@ -23,12 +23,11 @@ const Map = () => {
         let res = await providerRetrieve(specialty);
         if (res.status == 200){
             console.log("Information received from API");
-            console.log(res.data);
             setFullData(res.data);
             setErrorMessage("");
 
             if (res.data == ''){
-                console.log("womp");
+                console.log("womp womp");
                 setErrorMessage("No results found. Please check your spelling or try another specialty.");
             }
         }

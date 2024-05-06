@@ -1,14 +1,14 @@
 import axios from 'axios';
 import sessionStorage from './sessionStorage.js';
+import apiRoute from '../../config/apiRoute.json';
 
 export async function providerRetrieve(userData) {
     try {
 
         let token = sessionStorage.sessionKey;
         let userId = sessionStorage.userId;
-        // Make request to backend
-        const response = await axios.post('http://localhost:3000/api/getProviders', { token: token, data: userData});
-        console.log("Success!");
+        const response = await axios.post(`${apiRoute.endpoint}/api/getProviders`, { token: token, data: userData});
+        console.log("Successfully retrieved providers!");
         return response;
 
     } catch (error) {
@@ -20,6 +20,5 @@ export async function providerRetrieve(userData) {
         return error;
     }
 }
-
 
 export default providerRetrieve;
