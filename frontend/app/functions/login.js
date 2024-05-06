@@ -16,7 +16,9 @@ export async function userLogin(email, password) {
     const token = await getIdToken(user, true);
 
     // Make request to backend. Response handling needed
+
     const response = await axios.post(`${apiRoute.endpoint}/api/verifyLogin`, { token: token });
+
 
     // Store Async session token to Async Storage
     sessionStorage.setSessionKey(token);

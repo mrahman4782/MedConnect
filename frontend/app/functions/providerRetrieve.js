@@ -7,7 +7,9 @@ export async function providerRetrieve(userData) {
 
         let token = sessionStorage.sessionKey;
         let userId = sessionStorage.userId;
+
         const response = await axios.post(`${apiRoute.endpoint}/api/getProviders`, { token: token, data: userData});
+
         console.log("Successfully retrieved providers!");
         return response;
 
