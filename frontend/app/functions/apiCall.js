@@ -8,7 +8,7 @@ export async function chatWithGPT(message, chatHistory) {
     let token = await sessionStorage.sessionKey;
     console.log("message frontend", message);
     console.log("token", token);
-    const response = await axios.post("http://localhost:3000/api/chat", {
+    const response = await axios.post(`http://localhost:3000/api/chat`, {
       message: message,
       token: token,
       conversationHistory: chatHistory,

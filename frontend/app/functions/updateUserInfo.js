@@ -8,8 +8,8 @@ export async function updateUserInfo(userData) {
         let userId = sessionStorage.userId;
         // Make request to backend
         console.log(userId);
-        const response = await axios.post('http://localhost:3000/api/updateUser', { token: token, data: userData});
-        console.log("Success!");
+        const response = await axios.post(`http://localhost:3000/api/updateUser`, { token: token, data: userData});
+        console.log("Successfully updated user!");
         return response;
 
     } catch (error) {
