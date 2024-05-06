@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Button, Text, Linking} from 'react-native';
+import { View, TouchableOpacity, Animated, StyleSheet, Button, Text, Linking, Image} from 'react-native';
 import GoogleMapReact from 'google-map-react';
 import CustomButton from "../CustomButton";
 import geocodeGet from '../../functions/geocodeGet.js'
+import getUserInfo from '../../functions/getUserInfo.js'
 import googleMapsConfig from '../../../config/googleMapsConfig.json';
 import blackPin from '../../../assets/blackPin-bg-removed.png';
+import redPin from '../../../assets/redPin-bg-removed.png';
 
 const defaultLocation = {
   center: {
@@ -54,6 +56,15 @@ const MarkerComponent = ({ text, zoom }) => (
 
 const Marker = ({type, text, zoom}) => {
 
+  return (
+    <View style={styles.outerMarkerContainer}>
+      <View style={styles.markerContainer}>
+        {type == 'user' ?  <Image source={blackPin} style={styles.markerImage} />
+        : <Image source={redPin} style={styles.markerImage} />}
+        {zoom > 11 && (<Text style={styles.markerText}>{text}</Text>)}
+      </View>
+    </View>
+  );
   
 }
 
@@ -65,16 +76,34 @@ const CustomExpandableCard = (provider) => {
     const [providerLat, setProviderLat] = useState('');
     const [providerLon, setProviderLon] = useState('');
     const [zoom, setZoom] = useState(defaultLocation.zoom);  
+    const [user, setUser] = useState('');
+    const [userLat, setUserLat] = useState('');
+    const [userLon, setUserLon] = useState('');
 
     useEffect(() => {
 
       async function getProviderGeocode(){
+
         if (provider) {
+
+          try {
+
+            let user = await getUserInfo();
+            let userGeo = await geocodeGet(`${user.data.address} ${user.data.city}, ${user.data.state} ${user.data.zip}`);
+            setUserLon(userGeo.data.lon);
+            setUserLat(userGeo.data.lat);
+            console.log(userGeo);
+          
+          } catch (error) {
+            console.log(error);  
+          }
 
           let providerGeo = await geocodeGet(`${provider.provider.address} ${provider.provider.city}, ${provider.provider.state} ${provider.provider.zip}`);
           setProviderLon(providerGeo.data.lon);
           setProviderLat(providerGeo.data.lat);
+ 
           console.log(providerGeo);
+
         }
       }
       getProviderGeocode();
@@ -126,16 +155,24 @@ const CustomExpandableCard = (provider) => {
               <View style={styles.mapContainer}>
                 {loaded ? 
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: googleMapsConfig}}
+                    bootstrapURLKeys={{ key: googleMapsConfig.apiKey}}
                     defaultCenter={defaultLocation.center}
                     defaultZoom={defaultLocation.zoom}
                     onChange={({ zoom }) => setZoom(zoom)}
                   >
-                    <MarkerComponent
+                    <Marker
                       lat={providerLat}
                       lng={providerLon} 
                       text={provider.provider.name}
                       zoom={zoom}
+                      type={'provider'}
+                    />
+                    <Marker
+                      lat={userLat}
+                      lng={userLon} 
+                      text={'Home'}
+                      zoom={zoom}
+                      type={'user'}
                     />
                   </GoogleMapReact>
                 : null} 
@@ -170,13 +207,27 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent'
     },
     markerText: {
-      //transform: 'translateX(-10%)',
+      position: 'absolute', 
+      top: 60, 
+      width: '100%', 
+      textAlign: 'center', 
       color: 'black',
       fontSize: 12,
       fontWeight: 'bold',
-      marginLeft: -7,
       whiteSpace: 'nowrap'
     },
+    markerContainer: {
+      alignItems: 'center', // Centers the marker image and text horizontally
+      position: 'absolute', // Uses absolute positioning similar to the web example
+      top: '50%', // Adjust these percentages to properly align the marker
+      left: '50%',
+      transform: [{ translateX: -20 }, { translateY: -40 }],
+    },
+    markerImage: {
+      width: 60, // Ensure the image fits the container
+      height: 60,
+    },
+
     mapContainer: {
       width: '100%',
       height: '80%',

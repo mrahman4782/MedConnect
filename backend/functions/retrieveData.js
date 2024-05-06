@@ -12,7 +12,7 @@ let response = {
 export async function retrieveUserData(session) {
   // verify the user is logged in
   let checkUserLogin = await loginVerify(session);
-
+  console.log(session);
   if (checkUserLogin.status == 200) {
     try {
       let docRef = await db.collection("users").doc(checkUserLogin.data.uid);

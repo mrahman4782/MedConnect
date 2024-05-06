@@ -11,6 +11,8 @@ import { assistantAI } from "./assistantai.js";
 import { updateProfile } from "./updateProfile.js";
 import { zocdocExtracter2 } from "./zocdocExtracter2.js";
 import { geocodeHandler } from "./geocode.js";
+import { retrieveUserData } from "./retrieveData.js";
+
 
 const app = express();
 const port = 3000;
@@ -22,6 +24,14 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.status(200).send(`<h1>Successfully Connected to Server</h1>`);
 });
+app.post("/api/getUser", async (req, res) => {
+  console.log(req);
+  let token = req.body.token;
+  let returnMessage = await retrieveUserData(token);
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
+
 
 // POST Requests
 app.post("/api/verifyLogin", async (req, res) => {
@@ -97,6 +107,8 @@ app.post("/api/getGeocode", async (req, res) => {
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
 });
+
+
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
