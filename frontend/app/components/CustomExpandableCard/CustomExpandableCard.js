@@ -3,7 +3,8 @@ import { View, TouchableOpacity, Animated, StyleSheet, Button, Text, Linking} fr
 import GoogleMapReact from 'google-map-react';
 import CustomButton from "../CustomButton";
 import geocodeGet from '../../functions/geocodeGet.js'
-
+import googleMapsConfig from '../../../config/googleMapsConfig.json';
+import blackPin from '../../../assets/blackPin-bg-removed.png';
 
 const defaultLocation = {
   center: {
@@ -50,6 +51,11 @@ const MarkerComponent = ({ text, zoom }) => (
     )}
   </div>
 );
+
+const Marker = ({type, text, zoom}) => {
+
+  
+}
 
 const CustomExpandableCard = (provider) => {
 
@@ -120,7 +126,7 @@ const CustomExpandableCard = (provider) => {
               <View style={styles.mapContainer}>
                 {loaded ? 
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: 'AIzaSyBJX_S6YGC-kIExuWzU_stPGi8gi7r9W1M'}}
+                    bootstrapURLKeys={{ key: googleMapsConfig}}
                     defaultCenter={defaultLocation.center}
                     defaultZoom={defaultLocation.zoom}
                     onChange={({ zoom }) => setZoom(zoom)}
