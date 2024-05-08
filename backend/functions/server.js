@@ -16,8 +16,9 @@ import { retrieveUserData } from "./retrieveData.js";
 
 const app = express();
 const port = 3000;
-app.use(cors());
 
+app.use(cors());
+app.set('trust proxy', 1);
 app.use(express.json());
 
 // GET Requests
