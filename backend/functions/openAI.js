@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../../.env" });
 import axios from "axios";
 import { retrieveUserData } from "./retrieveData.js";
+import * as functions from 'firebase-functions';
 
 
 let response = {
@@ -61,7 +62,7 @@ function createPrompt(firstName, insurance){
 const config = {
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+    Authorization: `Bearer ${functions.config().openai_api.key}`,
   },
 };
 

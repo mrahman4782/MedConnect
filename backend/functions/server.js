@@ -15,7 +15,7 @@ import { retrieveUserData } from "./retrieveData.js";
 
 
 const app = express();
-const port = 3000;
+// const port = 3000;
 app.use(cors());
 
 app.use(express.json());
@@ -108,7 +108,7 @@ app.post("/api/getGeocode", async (req, res) => {
   res.status(returnMessage.status).send(returnMessage.data);
 });
 
+//app.listen(port, () => console.log(`Listening on port ${port}`));
 
-
-
-app.listen(port, () => console.log(`Listening on port ${port}`));
+// Firebase Function export
+module.exports = app;

@@ -6,12 +6,12 @@ import axios from "axios";
 import { retrieveUserData } from "./retrieveData.js";
 import { updateThreadId } from "./updateThreadId.js";
 import { chatWithBaseGPT } from "./api.js";
+import * as functions from 'firebase-functions';
 
-// retrieving the keys from env file
-
-const openai_key = process.env.OPENAI_API_KEY;
-const summary_key = process.env.SUMMARIZER_API_KEY;
-const assistant_key = process.env.OPENAI_ASSISTANT_ID;
+// Retrieving keys from firebase
+const openai_key = functions.config().openai_api.key;
+const summary_key = functions.config().openai_api.key;
+const assistant_key = functions.config().openai_assistant.id;
 
 const model = "gpt-4-turbo-preview";
 

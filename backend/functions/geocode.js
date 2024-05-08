@@ -2,6 +2,8 @@ import axios from "axios";
 import dotenv from 'dotenv';
 dotenv.config({path: '../../.env'}); 
 import {loginVerify} from './loginHandler.js';
+import * as functions from 'firebase-functions';
+
 
 let response = {
     status: '',
@@ -26,7 +28,7 @@ let response = {
 export async function geocodeHandler(address, session){
 
     address = reformatAddress(address);
-    const urlNew = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_PLACES_KEY}`
+    const urlNew = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${functions.config().geocode.key}`
     
     //const url = `https://geocode.maps.co/search?q=${address}&api_key=${process.env.GEOCODE_KEY}`;
 
