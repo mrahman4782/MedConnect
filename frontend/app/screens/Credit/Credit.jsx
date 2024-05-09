@@ -8,6 +8,7 @@ import MR from '../../../assets/Mohammad Rahman.png'
 import NT from '../../../assets/Namgyal Thily.png'
 import YL from '../../../assets/Yeongho Lee.png'
 import RY from '../../../assets/Richard Yeung.png'
+import backIcon from '../../../assets/back-button-icon-white.png'
 
 const Credit = () => {
 
@@ -28,7 +29,11 @@ const Credit = () => {
                                     pathname: '/',
                                 })
                             }>
-                            <FontAwesome size={40} name="arrow-circle-o-left" color={color} />
+                            {/* <FontAwesome size={40} name="arrow-circle-o-left" color={color} /> */}
+                            <Image
+                                source={backIcon}
+                                style={{ height: 50, width: 50 }}
+                            />
                         </Pressable>
                 }}
             />
