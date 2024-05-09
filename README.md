@@ -1,6 +1,6 @@
 # MedConnect
 
-https://medconnect-csc59867.netlify.app/
+https://medconnect-app.web.app/
 
 ## Table Of Content
 
