@@ -8,7 +8,7 @@ export async function updateUserInfo(userData) {
         let token = sessionStorage.sessionKey;
         let userId = sessionStorage.userId;
         console.log(userId);
-        const response = await axios.post(`http://localhost:3000/api/updateUser`, { token: token, data: userData});
+        const response = await axios.post(`${apiRoute.endpoint}/api/updateUser`, { token: token, data: userData});
         console.log("Successfully updated user!");
         return response;
 

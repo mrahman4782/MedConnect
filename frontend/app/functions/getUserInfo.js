@@ -7,7 +7,7 @@ export async function getUserInfo() {
 
         let token = sessionStorage.sessionKey;
         // Make request to backend
-        const response = await axios.post(`http://localhost:3000/api/getUser`, { token: token});
+        const response = await axios.post(`${apiRoute.endpoint}/api/getUser`, { token: token});
         console.log("Success!");
         return response;
 
