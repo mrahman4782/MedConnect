@@ -8,6 +8,8 @@ import CustomButton from '../../components/CustomButton';
 import chatWithGPT from '../../functions/apiCall';
 import { Stack, router } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import backIcon from '../../../assets/back-button-icon-white.png'
+
 const Chatbot = () => {
   const [input, setInput] = useState('');
   const [inputHeight, setInputHeight] = useState(40);
@@ -18,7 +20,7 @@ const Chatbot = () => {
   const dot1 = useRef(new Animated.Value(1)).current;
   const dot2 = useRef(new Animated.Value(1)).current;
   const dot3 = useRef(new Animated.Value(1)).current;
-  
+
 
   useEffect(() => {
     scrollViewRef.current.scrollToEnd({ animated: true });
@@ -81,7 +83,7 @@ const Chatbot = () => {
       setInputHeight(40);
 
       // Set message history
-      if (messageHistory.len >= 6){
+      if (messageHistory.len >= 6) {
         setMessageHistory(curHistory => curHistory.slice(1));
         setMessageHistory(curHistory => [...curHistory, input]);
       }
@@ -103,7 +105,7 @@ const Chatbot = () => {
   const handleInputChange = (text) => {
     setInput(text);
     if (text === '') {
-      setInputHeight(40); 
+      setInputHeight(40);
     }
   };
 
@@ -125,9 +127,9 @@ const Chatbot = () => {
       margin: 15,
     },
 
-//    gptMessage: {
-//      backgroundColor: "#111823",
-//    }
+    //    gptMessage: {
+    //      backgroundColor: "#111823",
+    //    }
 
 
     gptMessage: {
@@ -155,9 +157,9 @@ const Chatbot = () => {
     },
     inputContainer: {
 
-//      flexDirection: "row",
-//      alignItems: "center",
-//      padding: 10,
+      //      flexDirection: "row",
+      //      alignItems: "center",
+      //      padding: 10,
 
       flexDirection: 'row',
       alignItems: 'flex-end',
@@ -194,13 +196,13 @@ const Chatbot = () => {
       alignItems: "center",
       marginVertical: 4,
 
-//      backgroundColor: "#111823",
-//      borderTopLeftRadius: 20,
-//      borderBottomLeftRadius: 20,
-//      borderTopRightRadius: 20,
-//      alignSelf: "flex-end",
-//      maxWidth: "80%",
-//      padding: 10,
+      //      backgroundColor: "#111823",
+      //      borderTopLeftRadius: 20,
+      //      borderBottomLeftRadius: 20,
+      //      borderTopRightRadius: 20,
+      //      alignSelf: "flex-end",
+      //      maxWidth: "80%",
+      //      padding: 10,
       backgroundColor: "#90ee90",
       borderTopLeftRadius: 20,
       borderBottomRightRadius: 20,
@@ -245,7 +247,11 @@ const Chatbot = () => {
                   pathname: '/',
                 })
               }>
-              <FontAwesome size={40} name="arrow-circle-o-left" color='white' />
+              {/* <FontAwesome size={40} name="arrow-circle-o-left" color='white' /> */}
+              <Image
+                source={backIcon}
+                style={{ height: 50, width: 50 }}
+              />
             </Pressable>
         }}
       />
